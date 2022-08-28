@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    // Sử dụng userModel nhá bro không dùng cái này cái này để làm màu thôi
     /**
      * The attributes that are mass assignable.
      *
