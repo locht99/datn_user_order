@@ -5,6 +5,7 @@ import Cart from "./components/user/CartComponent"
 import Order from "./components/user/OrderComponent"
 import Transaction from "./components/user/TransactionComponent"
 import Contact from "./components/user/ContactComponent"
+import ProfileComponent from "./components/ProfileComponent"
 
 const routes = [,
     {
@@ -31,6 +32,10 @@ const routes = [,
                 component: Contact
             },
         ]
+    },
+    {
+        path: '/profile',
+        component: ProfileComponent
     },
     { path: '/:catchAll(.*)', redirect: '/' },
 ];
