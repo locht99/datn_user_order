@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::post('/extension-login', [ExtensionController::class, 'login']);
 Route::post('/create-cart', [ExtensionController::class, 'createCart']);
+Route::get('/get-exchange-rate', [ExtensionController::class, 'getExchangeRate']);
