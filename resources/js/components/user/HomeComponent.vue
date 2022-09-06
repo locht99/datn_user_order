@@ -9,7 +9,7 @@
 
       <table class="w-full">
         <thead>
-          <tr class="bg-slate-400 h-10">
+          <tr class="bg-gray-100 h-12">
             <th class="w-1/3 text-left pl-20">Đơn hàng</th>
             <th class="w-1/3 text-left pl-20">Mã đơn</th>
             <th class="w-1/3 text-left pl-20">Trạng thái</th>
@@ -18,7 +18,7 @@
         <tbody>
           <tr class="border-b border-gray-300">
             <td class="py-4 flex items-center pl-20 mt-1">
-              <img src="/images/1688-logo.png" alt="" />
+              <img src="/images/product-demo.png" class="max-h-16" alt="" />
               <a href="" class="mx-2 underline">2022春夏新...</a>
               <span>x1</span>
             </td>
@@ -28,7 +28,7 @@
           
           <tr class="w-full h-16 border-b border-gray-300">
             <td class="py-4 flex items-center pl-20 mt-1">
-              <img src="/images/1688-logo.png" alt="" />
+              <img src="/images/product-demo.png" class="max-h-16" alt="" />
               <a href="" class="mx-2 underline">2022春夏新...</a>
               <span>x1</span>
             </td>
@@ -38,7 +38,7 @@
 
           <tr class="w-full h-16 border-b border-gray-300">
             <td class="py-4 flex items-center pl-20 mt-1">
-              <img src="/images/1688-logo.png" alt="" />
+              <img src="/images/product-demo.png" class="max-h-16" alt="" />
               <a href="" class="mx-2 underline">2022春夏新...</a>
               <span>x1</span>
             </td>
@@ -59,8 +59,26 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  setup() {},
+  data(){
+    return {
+
+    }
+  },
+
+  methods: {
+    getAll(){
+      axios.get('getUser').then(res => {
+        console.log(res.data)
+      })
+    }
+  },
+
+  mounted() {
+    this.getAll()
+  }
+  
 };
 </script>
 
