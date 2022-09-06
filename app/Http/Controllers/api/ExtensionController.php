@@ -124,7 +124,7 @@ class ExtensionController extends Controller
             "price_table" => $data["prices_config"] ?? null,
             "quantity" => $quantity,
             "quantity_min" => 0,
-            "stock" => $data["stock"] ?? 0,
+            "stock" => $data["stock"] ?? 99,
             "url" => $data["item_link"] ?? null,
             "image" => $data["image_link"] ?? null,
             "image_detail" => null,
