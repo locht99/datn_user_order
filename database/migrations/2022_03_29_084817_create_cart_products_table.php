@@ -31,9 +31,9 @@ class CreateCartProductsTable extends Migration
             $table->integer('quantity')->nullable()->default(0);
             $table->integer('quantity_min')->nullable()->default(0);
             $table->integer('stock')->nullable();
-            $table->string('url', 1000)->nullable()->default('');
-            $table->string('image', 1000)->nullable()->default('');
-            $table->string('image_detail', 1000)->nullable()->default('');
+            $table->string('url', 3000)->nullable()->default('');
+            $table->string('image', 3000)->nullable()->default('');
+            $table->string('image_detail', 3000)->nullable()->default('');
             $table->text('note')->nullable();
             $table->integer('is_delete')->nullable()->default(0);
             $table->dateTime('create_at')->nullable();

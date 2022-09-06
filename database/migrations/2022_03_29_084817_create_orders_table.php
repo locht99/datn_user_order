@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('order_status_id');
             $table->bigInteger('shop_id')->nullable()->default(0);
             $table->string('shop_name', 150)->nullable()->default('');
-            $table->string('shop_url', 1000)->nullable()->default('')->comment('địa chỉ shop');
+            $table->string('shop_url', 3000)->nullable()->default('')->comment('địa chỉ shop');
             $table->decimal('global_shipping_fee', 15)->nullable()->default(0);
             $table->decimal('china_shipping_fee', 15)->nullable()->default(0);
             $table->decimal('purchase_fee', 15)->nullable()->default(0);

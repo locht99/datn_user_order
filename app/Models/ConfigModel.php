@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ConfigModel extends Model
 {
     use HasFactory;
+    protected $table = "configs";
+
+    protected $fillable = [
+        'value'
+    ];
+    public $timestamps = false;
 }
