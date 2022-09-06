@@ -5,16 +5,18 @@ import Cart from "./components/user/CartComponent"
 import Order from "./components/user/OrderComponent"
 import Transaction from "./components/user/TransactionComponent"
 import Contact from "./components/user/ContactComponent"
+import Signup from "./components/auth/SignupComponent"
+import Signin from "./components/auth/SigninComponent"
+
 
 const routes = [,
     {
         path: '/',
         component: UserLayout,
-        children: [
-            {
+        children: [{
                 path: '/',
                 component: Home,
-            },{
+            }, {
                 path: '/cart',
                 component: Cart,
             },
@@ -32,6 +34,11 @@ const routes = [,
             },
         ]
     },
+
+    { path: '/signin', component: Signin },
+
+    { path: '/signup', component: Signup },
+
     { path: '/:catchAll(.*)', redirect: '/' },
 ];
 
