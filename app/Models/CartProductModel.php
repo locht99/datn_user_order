@@ -11,11 +11,6 @@ class CartProductModel extends Model
 
     protected $table = "cart_products";
 
-    public $timestamps = true;
-
-    const UPDATED_AT = null;
-    const CREATED_AT = "create_at";
-
     protected $fillable = [
         "cart_id",
         "partner_id",
