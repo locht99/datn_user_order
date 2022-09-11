@@ -14,7 +14,7 @@ class CreateOrderProductsTable extends Migration
     public function up()
     {
         Schema::create('order_products', function (Blueprint $table) {
-            $table->bigInteger('id', true);
+            $table->id();
             $table->integer('partner_id');
             $table->integer('user_id');
             $table->integer('order_id');
@@ -31,11 +31,11 @@ class CreateOrderProductsTable extends Migration
             $table->integer('quantity_bought')->nullable()->default(0)->comment('số lượng người dùng mua');
             $table->integer('quantity_received')->nullable()->default(0)->comment('số lượng mình mua được');
             $table->integer('stock')->nullable()->default(0)->comment('số lượng hàng còn trong kho');
-            $table->string('url', 3000)->nullable()->default('')->comment('link mua hàng');
-            $table->string('image_link', 3000)->nullable()->default('')->comment('link ảnh đại diện của hàng');
-            $table->string('image_detail', 3000)->nullable()->default('');
+            $table->string('url', 1000)->nullable()->default('')->comment('link mua hàng');
+            $table->string('image_link', 1000)->nullable()->default('')->comment('link ảnh đại diện của hàng');
+            $table->string('image_detail', 1000)->nullable()->default('');
             $table->integer('is_delete')->nullable()->default(0);
-            $table->dateTime('create_at')->nullable();
+            $table->dateTime('created_at')->nullable();
         });
     }
 
