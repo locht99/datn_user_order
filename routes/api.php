@@ -30,6 +30,6 @@ Route::post('/login', [UserController::class, 'getLogin']);
 // protected api
 Route::middleware('auth:api')->group(function () {
     Route::prefix('order')->group(function () {
-        Route::get('/', [OrderController::class, 'getOrder']);
+        Route::get('getOrder', [OrderController::class, 'getOrder']);
     });
 });
