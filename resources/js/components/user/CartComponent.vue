@@ -1,6 +1,6 @@
 <template>
   <section
-    style="height: 590px; max-height: 590px"
+    style="height: 568px; max-height: 568px"
     class="border rounded-xl shadow-md shadow-gray-400 my-10"
   >
 
@@ -24,7 +24,7 @@
     </section>
 
     <!-- Content cart -->
-    <section style="max-height: 435px" class="overflow-auto">
+    <section style="max-height: 424px" class="overflow-auto">
       <section class="py-5 px-5">
         <div class="rounded-xl shadow-md shadow-gray-400">
           <div
@@ -364,7 +364,7 @@
 
   <!-- Footer cart -->
     <section
-      class="sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-3"
+      class="sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2"
     >
       <span class="font-semibold text-xl text-gray-700"
         >Tổng thanh toán ( 0 sản phẩm ):

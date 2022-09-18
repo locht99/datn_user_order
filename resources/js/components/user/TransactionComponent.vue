@@ -1,6 +1,6 @@
 <template>
   <section
-    style="height: 590px; max-height: 590px"
+    style="height: 568px; max-height: 568px"
     class="border rounded-xl shadow-md shadow-gray-400 px-5 mt-10"
   >
     <p class="flex my-8 items-center">
