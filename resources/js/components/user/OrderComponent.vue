@@ -1,6 +1,6 @@
 <template>
   <section
-    style="height: 590px; max-height: 590px"
+    style="height: 568px; max-height: 568px"
     class="flex rounded-xl w-full border my-10 shadow-md shadow-gray-400"
   >
     <section class="w-1/4 border-r-2 px-8 py-5">
@@ -8,7 +8,7 @@
         <i class="fa-solid fa-filter text-2xl text-gray-700 mr-5"></i>
         <span class="text-xl font-bold">Bộ lọc</span>
       </div>
-      <div style="max-height: 435px" class="overflow-auto">
+      <div style="max-height: 430px" class="overflow-auto">
         <ul class="pt-3 pb-5">
           <li class="flex items-center text-xl">
             <i class="fa-solid fa-caret-right cursor-pointer"></i>
@@ -128,7 +128,7 @@
 
       <div class="border-t-2">
         <button
-          class="text-center block m-auto mt-4 text-white px-10 py-2 rounded-lg"
+          class="text-center block m-auto mt-2 text-white px-10 py-2 rounded-lg"
         >
           Hoàn tác
         </button>
@@ -137,7 +137,7 @@
 
     <section class="w-3/4">
       <div
-        class="sticky w-full flex justify-between px-5 py-5 mt-1 bg-white rounded-xl"
+        class="sticky w-full flex justify-between p-5 bg-white rounded-xl"
       >
         <div class="flex items-center">
           <i class="fa-solid fa-receipt text-red-500 text-2xl"></i>

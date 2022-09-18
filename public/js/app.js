@@ -20229,7 +20229,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getAll: function getAll() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('getUser').then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("getUser").then(function (res) {
         console.log(res.data);
       });
     }
@@ -20252,7 +20252,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    var menuItem = document.querySelectorAll(".menuItem");
+    menuItem.forEach(function (e) {
+      e.addEventListener("click", function () {
+        menuItem.forEach(function (e) {
+          e.style.backgroundColor = "transparent";
+        });
+        e.style.backgroundColor = "#E93B3B";
+      });
+    });
+  }
+});
 
 /***/ }),
 
@@ -20540,19 +20552,19 @@ var _withScopeId = function _withScopeId(n) {
 
 var _hoisted_1 = {
   style: {
-    "height": "590px",
-    "max-height": "590px"
+    "height": "568px",
+    "max-height": "568px"
   },
   "class": "border rounded-xl shadow-md shadow-gray-400 my-10"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/trolley.png\" alt=\"\" data-v-196dcf64><b class=\"mx-2 text-lg\" data-v-196dcf64>Giỏ hàng</b></div><label for=\"search\" class=\"border-b-2 border-b-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-magnifying-glass\" data-v-196dcf64></i><input type=\"text\" id=\"search\" placeholder=\"Tìm kiếm sản phẩm\" class=\"border-none focus:ring-0\" data-v-196dcf64></label></section>", 1);
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section style=\"max-height:435px;\" class=\"overflow-auto\" data-v-196dcf64><section class=\"py-5 px-5\" data-v-196dcf64><div class=\"rounded-xl shadow-md shadow-gray-400\" data-v-196dcf64><div class=\"px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/1688-logo.png\" alt=\"\" data-v-196dcf64><p class=\"ml-10 text-xl\" data-v-196dcf64>白沟新城朵黛帽子商行</p></div><div class=\"flex items-center\" data-v-196dcf64><label for=\"kiemhang\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"kiemhang\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box-open mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Kiểm hàng</span></label><label for=\"donggo\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggo\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ</span></label><label for=\"donggorieng\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggorieng\" name=\"ff\" class=\"mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ riêng</span></label></div></div><div class=\"w-full flex\" data-v-196dcf64><div class=\"w-3/4 border-r-2\" data-v-196dcf64><table class=\"w-full\" data-v-196dcf64><thead class=\"h-14 border-b-2\" data-v-196dcf64><tr data-v-196dcf64><th class=\"text-left pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Sản phẩm</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Số lượng</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Tiền hàng</th></tr></thead><tbody data-v-196dcf64><tr class=\"items-center\" data-v-196dcf64><td class=\"pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></td><td class=\"pl-8 items-center\" data-v-196dcf64><img src=\"images/product-demo.png\" alt=\"\" class=\"w-24 py-4 pr-2 float-left\" data-v-196dcf64><a href=\"\" class=\"mt-8 underline block\" data-v-196dcf64>2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a></td><td class=\"pl-8\" data-v-196dcf64><input type=\"text\" value=\"1\" class=\"w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0\" data-v-196dcf64></td><td class=\"pl-8\" data-v-196dcf64><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>¥45</p><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>171.000 đ</p></td></tr></tbody></table></div><div class=\"text-xl px-5 w-1/4\" data-v-196dcf64><div class=\"h-14 flex items-center\" data-v-196dcf64><span data-v-196dcf64>Tổng tiền: </span><span class=\"text-red-500 font-semibold ml-3\" data-v-196dcf64>171.000 đ</span></div><div data-v-196dcf64><textarea name=\"\" id=\"\" class=\"h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0\" placeholder=\"Chú thích cho đơn hàng...\" data-v-196dcf64></textarea><button class=\"w-full mt-2 mb-4 rounded-md text-white py-1\" data-v-196dcf64> Đặt hàng </button></div></div></div></div></section><section class=\"py-5 px-5\" data-v-196dcf64><div class=\"rounded-xl shadow-md shadow-gray-400\" data-v-196dcf64><div class=\"px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/1688-logo.png\" alt=\"\" data-v-196dcf64><p class=\"ml-10 text-xl\" data-v-196dcf64>白沟新城朵黛帽子商行</p></div><div class=\"flex items-center\" data-v-196dcf64><label for=\"kiemhang\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"kiemhang\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box-open mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Kiểm hàng</span></label><label for=\"donggo\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggo\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ</span></label><label for=\"donggorieng\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggorieng\" name=\"ff\" class=\"mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ riêng</span></label></div></div><div class=\"w-full flex\" data-v-196dcf64><div class=\"w-3/4 border-r-2\" data-v-196dcf64><table class=\"w-full\" data-v-196dcf64><thead class=\"h-14 border-b-2\" data-v-196dcf64><tr data-v-196dcf64><th class=\"text-left pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Sản phẩm</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Số lượng</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Tiền hàng</th></tr></thead><tbody data-v-196dcf64><tr class=\"items-center\" data-v-196dcf64><td class=\"pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></td><td class=\"pl-8 items-center\" data-v-196dcf64><img src=\"images/product-demo.png\" alt=\"\" class=\"w-24 py-4 pr-2 float-left\" data-v-196dcf64><a href=\"\" class=\"mt-8 underline block\" data-v-196dcf64>2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a></td><td class=\"pl-8\" data-v-196dcf64><input type=\"text\" value=\"1\" class=\"w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0\" data-v-196dcf64></td><td class=\"pl-8\" data-v-196dcf64><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>¥45</p><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>171.000 đ</p></td></tr></tbody></table></div><div class=\"text-xl px-5 w-1/4\" data-v-196dcf64><div class=\"h-14 flex items-center\" data-v-196dcf64><span data-v-196dcf64>Tổng tiền: </span><span class=\"text-red-500 font-semibold ml-3\" data-v-196dcf64>171.000 đ</span></div><div data-v-196dcf64><textarea name=\"\" id=\"\" class=\"h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0\" placeholder=\"Chú thích cho đơn hàng...\" data-v-196dcf64></textarea><button class=\"w-full mt-2 mb-4 rounded-md text-white py-1\" data-v-196dcf64> Đặt hàng </button></div></div></div></div></section></section>", 1);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section style=\"max-height:424px;\" class=\"overflow-auto\" data-v-196dcf64><section class=\"py-5 px-5\" data-v-196dcf64><div class=\"rounded-xl shadow-md shadow-gray-400\" data-v-196dcf64><div class=\"px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/1688-logo.png\" alt=\"\" data-v-196dcf64><p class=\"ml-10 text-xl\" data-v-196dcf64>白沟新城朵黛帽子商行</p></div><div class=\"flex items-center\" data-v-196dcf64><label for=\"kiemhang\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"kiemhang\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box-open mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Kiểm hàng</span></label><label for=\"donggo\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggo\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ</span></label><label for=\"donggorieng\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggorieng\" name=\"ff\" class=\"mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ riêng</span></label></div></div><div class=\"w-full flex\" data-v-196dcf64><div class=\"w-3/4 border-r-2\" data-v-196dcf64><table class=\"w-full\" data-v-196dcf64><thead class=\"h-14 border-b-2\" data-v-196dcf64><tr data-v-196dcf64><th class=\"text-left pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Sản phẩm</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Số lượng</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Tiền hàng</th></tr></thead><tbody data-v-196dcf64><tr class=\"items-center\" data-v-196dcf64><td class=\"pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></td><td class=\"pl-8 items-center\" data-v-196dcf64><img src=\"images/product-demo.png\" alt=\"\" class=\"w-24 py-4 pr-2 float-left\" data-v-196dcf64><a href=\"\" class=\"mt-8 underline block\" data-v-196dcf64>2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a></td><td class=\"pl-8\" data-v-196dcf64><input type=\"text\" value=\"1\" class=\"w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0\" data-v-196dcf64></td><td class=\"pl-8\" data-v-196dcf64><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>¥45</p><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>171.000 đ</p></td></tr></tbody></table></div><div class=\"text-xl px-5 w-1/4\" data-v-196dcf64><div class=\"h-14 flex items-center\" data-v-196dcf64><span data-v-196dcf64>Tổng tiền: </span><span class=\"text-red-500 font-semibold ml-3\" data-v-196dcf64>171.000 đ</span></div><div data-v-196dcf64><textarea name=\"\" id=\"\" class=\"h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0\" placeholder=\"Chú thích cho đơn hàng...\" data-v-196dcf64></textarea><button class=\"w-full mt-2 mb-4 rounded-md text-white py-1\" data-v-196dcf64> Đặt hàng </button></div></div></div></div></section><section class=\"py-5 px-5\" data-v-196dcf64><div class=\"rounded-xl shadow-md shadow-gray-400\" data-v-196dcf64><div class=\"px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/1688-logo.png\" alt=\"\" data-v-196dcf64><p class=\"ml-10 text-xl\" data-v-196dcf64>白沟新城朵黛帽子商行</p></div><div class=\"flex items-center\" data-v-196dcf64><label for=\"kiemhang\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"kiemhang\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box-open mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Kiểm hàng</span></label><label for=\"donggo\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggo\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ</span></label><label for=\"donggorieng\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggorieng\" name=\"ff\" class=\"mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ riêng</span></label></div></div><div class=\"w-full flex\" data-v-196dcf64><div class=\"w-3/4 border-r-2\" data-v-196dcf64><table class=\"w-full\" data-v-196dcf64><thead class=\"h-14 border-b-2\" data-v-196dcf64><tr data-v-196dcf64><th class=\"text-left pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Sản phẩm</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Số lượng</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Tiền hàng</th></tr></thead><tbody data-v-196dcf64><tr class=\"items-center\" data-v-196dcf64><td class=\"pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></td><td class=\"pl-8 items-center\" data-v-196dcf64><img src=\"images/product-demo.png\" alt=\"\" class=\"w-24 py-4 pr-2 float-left\" data-v-196dcf64><a href=\"\" class=\"mt-8 underline block\" data-v-196dcf64>2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a></td><td class=\"pl-8\" data-v-196dcf64><input type=\"text\" value=\"1\" class=\"w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0\" data-v-196dcf64></td><td class=\"pl-8\" data-v-196dcf64><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>¥45</p><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>171.000 đ</p></td></tr></tbody></table></div><div class=\"text-xl px-5 w-1/4\" data-v-196dcf64><div class=\"h-14 flex items-center\" data-v-196dcf64><span data-v-196dcf64>Tổng tiền: </span><span class=\"text-red-500 font-semibold ml-3\" data-v-196dcf64>171.000 đ</span></div><div data-v-196dcf64><textarea name=\"\" id=\"\" class=\"h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0\" placeholder=\"Chú thích cho đơn hàng...\" data-v-196dcf64></textarea><button class=\"w-full mt-2 mb-4 rounded-md text-white py-1\" data-v-196dcf64> Đặt hàng </button></div></div></div></div></section></section>", 1);
 
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
-    "class": "sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-3"
+    "class": "sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "font-semibold text-xl text-gray-700"
   }, "Tổng thanh toán ( 0 sản phẩm ): "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
@@ -20634,7 +20646,7 @@ var _hoisted_1 = {
   "class": "homepage-content grid gap-4 mt-10"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"border rounded-xl shadow-md shadow-gray-400 px-5\" data-v-05716405><p class=\"flex my-8 items-center\" data-v-05716405><img src=\"/images/trolley.png\" alt=\"\" data-v-05716405><b class=\"mx-2 text-lg\" data-v-05716405>Đơn hàng mới: </b><span class=\"text-lg font-semibold text-gray-500\" data-v-05716405>3 đơn</span></p><table class=\"w-full\" data-v-05716405><thead data-v-05716405><tr class=\"bg-gray-100 h-12\" data-v-05716405><th class=\"w-1/3 text-left pl-20\" data-v-05716405>Đơn hàng</th><th class=\"w-1/3 text-left pl-20\" data-v-05716405>Mã đơn</th><th class=\"w-1/3 text-left pl-20\" data-v-05716405>Trạng thái</th></tr></thead><tbody data-v-05716405><tr class=\"border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr></tbody></table></section><section class=\"border rounded-xl shadow-md shadow-gray-400\" data-v-05716405><p class=\"flex justify-center items-center my-8\" data-v-05716405><img src=\"/images/payper-send.png\" alt=\"\" class=\"mx-2\" data-v-05716405><b class=\"mx-2 text-lg\" data-v-05716405>Hoạt động mới</b></p></section>", 2);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"border rounded-xl shadow-md shadow-gray-400 px-5 max-h-[568px] h-auto overflow-hidden\" data-v-05716405><p class=\"my-5 items-center flex\" data-v-05716405><img src=\"/images/trolley.png\" alt=\"\" data-v-05716405><b class=\"mx-2 text-lg\" data-v-05716405>Đơn hàng mới: </b><span class=\"text-lg font-semibold text-gray-500\" data-v-05716405>5 đơn</span></p><table class=\"w-full\" data-v-05716405><thead class=\"sticky\" data-v-05716405><tr class=\"bg-gray-100 h-12 table w-full box-border\" data-v-05716405><th class=\"w-1/3 text-left pl-20\" data-v-05716405>Đơn hàng</th><th class=\"w-1/3 text-left pl-20\" data-v-05716405>Mã đơn</th><th class=\"w-1/3 text-left pl-20\" data-v-05716405>Trạng thái</th></tr></thead><tbody class=\"block max-h-[438px] overflow-y-auto\" data-v-05716405><tr class=\"h-16 border-b border-gray-300 table w-full box-border\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr><tr class=\"h-16 border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-300\" data-v-05716405><td class=\"py-4 flex items-center pl-20 mt-1\" data-v-05716405><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-05716405><a href=\"\" class=\"mx-2 underline\" data-v-05716405>2022春夏新...</a><span data-v-05716405>x1</span></td><td class=\"w-1/3 pl-20\" data-v-05716405>MD001</td><td class=\"w-1/3 pl-20\" data-v-05716405>Chờ xác nhận</td></tr></tbody></table></section><section class=\"border rounded-xl shadow-md shadow-gray-400\" data-v-05716405><p class=\"flex justify-center items-center my-8\" data-v-05716405><img src=\"/images/payper-send.png\" alt=\"\" class=\"mx-2\" data-v-05716405><b class=\"mx-2 text-lg\" data-v-05716405>Hoạt động mới</b></p></section>", 2);
 
 var _hoisted_4 = [_hoisted_2];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -20663,7 +20675,10 @@ var _hoisted_2 = {
   "class": "w-full m-auto"
 };
 var _hoisted_3 = {
-  "class": "my-6"
+  "class": "menuItem my-6 rounded-lg",
+  style: {
+    "background-color": "#E93B3B"
+  }
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -20682,7 +20697,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "my-6"
+  "class": "menuItem my-6 rounded-lg"
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -20699,7 +20714,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = {
-  "class": "my-6"
+  "class": "menuItem my-6 rounded-lg"
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -20716,7 +20731,7 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_13 = {
-  "class": "my-6"
+  "class": "menuItem my-6 rounded-lg"
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -20733,7 +20748,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_16 = {
-  "class": "my-6"
+  "class": "menuItem my-6 rounded-lg"
 };
 
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -20754,7 +20769,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/",
-    "class": "text-white flex font-semibold text-lg bg-gray-500/25 w-full pl-3 py-2 rounded-lg"
+    "class": "text-white flex font-semibold text-lg w-full pl-3 py-2 rounded-lg"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4, _hoisted_5, _hoisted_6];
@@ -20827,13 +20842,13 @@ var _withScopeId = function _withScopeId(n) {
 
 var _hoisted_1 = {
   style: {
-    "height": "590px",
-    "max-height": "590px"
+    "height": "568px",
+    "max-height": "568px"
   },
   "class": "flex rounded-xl w-full border my-10 shadow-md shadow-gray-400"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"w-1/4 border-r-2 px-8 py-5\" data-v-235a34b8><div class=\"sticky border-b-2 pb-4 pt-2\" data-v-235a34b8><i class=\"fa-solid fa-filter text-2xl text-gray-700 mr-5\" data-v-235a34b8></i><span class=\"text-xl font-bold\" data-v-235a34b8>Bộ lọc</span></div><div style=\"max-height:435px;\" class=\"overflow-auto\" data-v-235a34b8><ul class=\"pt-3 pb-5\" data-v-235a34b8><li class=\"flex items-center text-xl\" data-v-235a34b8><i class=\"fa-solid fa-caret-right cursor-pointer\" data-v-235a34b8></i><h3 class=\"ml-2\" data-v-235a34b8>Theo website</h3></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"1688\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"1688\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>1688.com</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"tmall\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"tmall\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>tmall.com</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"taobao\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"taobao\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>taobao.com</label></li></ul><ul class=\"pt-3 pb-5\" data-v-235a34b8><li class=\"flex items-center text-xl\" data-v-235a34b8><i class=\"fa-solid fa-caret-right cursor-pointer\" data-v-235a34b8></i><h3 class=\"ml-2\" data-v-235a34b8>Theo trạng thái</h3></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"all\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"all\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Tất cả</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"deposit\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"deposit\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Đã đặt cọc</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"is_active\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"is_active\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Đang hoạt động</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"delivering\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"delivering\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Đang giao hàng</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"out_of_stock\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"out_of_stock\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Hết hàng</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"canceled\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"canceled\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Hủy bỏ</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"lost\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"lost\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Thất lạc</label></li></ul><!-- Theo trạng thái --><ul class=\"pt-3 pb-5\" data-v-235a34b8><li class=\"flex items-center text-xl\" data-v-235a34b8><i class=\"fa-solid fa-caret-right cursor-pointer\" data-v-235a34b8></i><h3 class=\"ml-2\" data-v-235a34b8>Chờ xác nhận (3)</h3></li></ul></div><div class=\"border-t-2\" data-v-235a34b8><button class=\"text-center block m-auto mt-4 text-white px-10 py-2 rounded-lg\" data-v-235a34b8> Hoàn tác </button></div></section><section class=\"w-3/4\" data-v-235a34b8><div class=\"sticky w-full flex justify-between px-5 py-5 mt-1 bg-white rounded-xl\" data-v-235a34b8><div class=\"flex items-center\" data-v-235a34b8><i class=\"fa-solid fa-receipt text-red-500 text-2xl\" data-v-235a34b8></i><p class=\"mx-4 text-lg font-bold\" data-v-235a34b8>Đơn hàng</p></div><label for=\"search\" class=\"border-b-2 border-b-gray-400\" data-v-235a34b8><i class=\"fa-solid fa-magnifying-glass\" data-v-235a34b8></i><input type=\"text\" id=\"search\" placeholder=\"Tìm kiếm sản phẩm\" class=\"border-none focus:ring-0\" data-v-235a34b8></label></div><div class=\"px-5 overflow-auto\" data-v-235a34b8><table class=\"w-full\" data-v-235a34b8><thead data-v-235a34b8><tr class=\"bg-gray-100 h-14\" data-v-235a34b8><th class=\"w-1/3 text-left pl-20\" data-v-235a34b8>Thông tin đơn hàng</th><th class=\"w-1/3 text-left pl-20\" data-v-235a34b8>Mã đơn hàng</th><th class=\"w-1/3 text-left pl-20\" data-v-235a34b8>Trạng thái</th></tr></thead><tbody data-v-235a34b8><tr class=\"border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-red-700 font-semibold\" data-v-235a34b8>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-red-700 font-semibold\" data-v-235a34b8>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-yellow-400 font-semibold\" data-v-235a34b8>Đã nhận hàng</td></tr><tr class=\"w-full h-16 border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-gray-500 font-semibold\" data-v-235a34b8>Đã hủy</td></tr></tbody></table></div></section>", 2);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"w-1/4 border-r-2 px-8 py-5\" data-v-235a34b8><div class=\"sticky border-b-2 pb-4 pt-2\" data-v-235a34b8><i class=\"fa-solid fa-filter text-2xl text-gray-700 mr-5\" data-v-235a34b8></i><span class=\"text-xl font-bold\" data-v-235a34b8>Bộ lọc</span></div><div style=\"max-height:430px;\" class=\"overflow-auto\" data-v-235a34b8><ul class=\"pt-3 pb-5\" data-v-235a34b8><li class=\"flex items-center text-xl\" data-v-235a34b8><i class=\"fa-solid fa-caret-right cursor-pointer\" data-v-235a34b8></i><h3 class=\"ml-2\" data-v-235a34b8>Theo website</h3></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"1688\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"1688\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>1688.com</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"tmall\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"tmall\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>tmall.com</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"taobao\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"taobao\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>taobao.com</label></li></ul><ul class=\"pt-3 pb-5\" data-v-235a34b8><li class=\"flex items-center text-xl\" data-v-235a34b8><i class=\"fa-solid fa-caret-right cursor-pointer\" data-v-235a34b8></i><h3 class=\"ml-2\" data-v-235a34b8>Theo trạng thái</h3></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"all\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"all\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Tất cả</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"deposit\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"deposit\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Đã đặt cọc</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"is_active\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"is_active\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Đang hoạt động</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"delivering\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"delivering\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Đang giao hàng</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"out_of_stock\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"out_of_stock\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Hết hàng</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"canceled\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"canceled\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Hủy bỏ</label></li><li class=\"flex items-center text-lg my-2\" data-v-235a34b8><input type=\"checkbox\" name=\"\" id=\"lost\" class=\"rounded-md ml-4 focus:ring-0 cursor-pointer\" data-v-235a34b8><label for=\"lost\" class=\"cursor-pointer pl-2 select-none\" data-v-235a34b8>Thất lạc</label></li></ul><!-- Theo trạng thái --><ul class=\"pt-3 pb-5\" data-v-235a34b8><li class=\"flex items-center text-xl\" data-v-235a34b8><i class=\"fa-solid fa-caret-right cursor-pointer\" data-v-235a34b8></i><h3 class=\"ml-2\" data-v-235a34b8>Chờ xác nhận (3)</h3></li></ul></div><div class=\"border-t-2\" data-v-235a34b8><button class=\"text-center block m-auto mt-2 text-white px-10 py-2 rounded-lg\" data-v-235a34b8> Hoàn tác </button></div></section><section class=\"w-3/4\" data-v-235a34b8><div class=\"sticky w-full flex justify-between p-5 bg-white rounded-xl\" data-v-235a34b8><div class=\"flex items-center\" data-v-235a34b8><i class=\"fa-solid fa-receipt text-red-500 text-2xl\" data-v-235a34b8></i><p class=\"mx-4 text-lg font-bold\" data-v-235a34b8>Đơn hàng</p></div><label for=\"search\" class=\"border-b-2 border-b-gray-400\" data-v-235a34b8><i class=\"fa-solid fa-magnifying-glass\" data-v-235a34b8></i><input type=\"text\" id=\"search\" placeholder=\"Tìm kiếm sản phẩm\" class=\"border-none focus:ring-0\" data-v-235a34b8></label></div><div class=\"px-5 overflow-auto\" data-v-235a34b8><table class=\"w-full\" data-v-235a34b8><thead data-v-235a34b8><tr class=\"bg-gray-100 h-14\" data-v-235a34b8><th class=\"w-1/3 text-left pl-20\" data-v-235a34b8>Thông tin đơn hàng</th><th class=\"w-1/3 text-left pl-20\" data-v-235a34b8>Mã đơn hàng</th><th class=\"w-1/3 text-left pl-20\" data-v-235a34b8>Trạng thái</th></tr></thead><tbody data-v-235a34b8><tr class=\"border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-red-700 font-semibold\" data-v-235a34b8>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-red-700 font-semibold\" data-v-235a34b8>Chờ xác nhận</td></tr><tr class=\"w-full h-16 border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-yellow-400 font-semibold\" data-v-235a34b8>Đã nhận hàng</td></tr><tr class=\"w-full h-16 border-b border-gray-200\" data-v-235a34b8><td class=\"py-3 flex items-center pl-20 mt-1\" data-v-235a34b8><img src=\"/images/product-demo.png\" class=\"max-h-16\" alt=\"\" data-v-235a34b8><a href=\"\" class=\"mx-2 underline\" data-v-235a34b8>2022春夏新...</a><span data-v-235a34b8>x1</span></td><td class=\"w-1/3 pl-20\" data-v-235a34b8>MD001</td><td class=\"w-1/3 pl-20 text-gray-500 font-semibold\" data-v-235a34b8>Đã hủy</td></tr></tbody></table></div></section>", 2);
 
 var _hoisted_4 = [_hoisted_2];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -20857,8 +20872,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   style: {
-    "height": "590px",
-    "max-height": "590px"
+    "height": "568px",
+    "max-height": "568px"
   },
   "class": "border rounded-xl shadow-md shadow-gray-400 px-5 mt-10"
 };
@@ -22898,7 +22913,7 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
 }
 
 // HELPER FUNCTIONS
-// ================
+// ==
 
 var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
 
@@ -23113,7 +23128,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.homepage-content[data-v-05716405] {\r\n  grid-template-columns: 2fr 1fr;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.homepage-content[data-v-05716405] {\r\n    grid-template-columns: 2fr 1fr;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45240,13 +45255,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _App_vue_vue_type_template_id_f348271a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue?vue&type=template&id=f348271a */ "./resources/js/App.vue?vue&type=template&id=f348271a");
 /* harmony import */ var _App_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue?vue&type=script&lang=js */ "./resources/js/App.vue?vue&type=script&lang=js");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
+
 ;
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_App_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_App_vue_vue_type_template_id_f348271a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/App.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_App_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_App_vue_vue_type_template_id_f348271a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/App.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45269,7 +45292,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProfileComponent_vue_vue_type_template_id_a8276c82_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=template&id=a8276c82&scoped=true */ "./resources/js/components/ProfileComponent.vue?vue&type=template&id=a8276c82&scoped=true");
 /* harmony import */ var _ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=script&lang=js */ "./resources/js/components/ProfileComponent.vue?vue&type=script&lang=js");
 /* harmony import */ var _ProfileComponent_vue_vue_type_style_index_0_id_a8276c82_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=style&index=0&id=a8276c82&scoped=true&lang=css */ "./resources/js/components/ProfileComponent.vue?vue&type=style&index=0&id=a8276c82&scoped=true&lang=css");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 
 
 
@@ -45277,7 +45304,11 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ProfileComponent_vue_vue_type_template_id_a8276c82_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-a8276c82"],['__file',"resources/js/components/ProfileComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ProfileComponent_vue_vue_type_template_id_a8276c82_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-a8276c82"],['__file',"resources/js/components/ProfileComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45300,7 +45331,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CartComponent_vue_vue_type_template_id_196dcf64_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CartComponent.vue?vue&type=template&id=196dcf64&scoped=true */ "./resources/js/components/user/CartComponent.vue?vue&type=template&id=196dcf64&scoped=true");
 /* harmony import */ var _CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CartComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/CartComponent.vue?vue&type=script&lang=js");
 /* harmony import */ var _CartComponent_vue_vue_type_style_index_0_id_196dcf64_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CartComponent.vue?vue&type=style&index=0&id=196dcf64&scoped=true&lang=css */ "./resources/js/components/user/CartComponent.vue?vue&type=style&index=0&id=196dcf64&scoped=true&lang=css");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 
 
 
@@ -45308,7 +45343,11 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CartComponent_vue_vue_type_template_id_196dcf64_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-196dcf64"],['__file',"resources/js/components/user/CartComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CartComponent_vue_vue_type_template_id_196dcf64_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-196dcf64"],['__file',"resources/js/components/user/CartComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45330,13 +45369,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ContactComponent_vue_vue_type_template_id_3685ace6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactComponent.vue?vue&type=template&id=3685ace6 */ "./resources/js/components/user/ContactComponent.vue?vue&type=template&id=3685ace6");
 /* harmony import */ var _ContactComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/ContactComponent.vue?vue&type=script&lang=js");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
+
 ;
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ContactComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ContactComponent_vue_vue_type_template_id_3685ace6__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/user/ContactComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ContactComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ContactComponent_vue_vue_type_template_id_3685ace6__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/user/ContactComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45359,7 +45406,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HomeComponent_vue_vue_type_template_id_05716405_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=template&id=05716405&scoped=true */ "./resources/js/components/user/HomeComponent.vue?vue&type=template&id=05716405&scoped=true");
 /* harmony import */ var _HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/HomeComponent.vue?vue&type=script&lang=js");
 /* harmony import */ var _HomeComponent_vue_vue_type_style_index_0_id_05716405_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=style&index=0&id=05716405&scoped=true&lang=css */ "./resources/js/components/user/HomeComponent.vue?vue&type=style&index=0&id=05716405&scoped=true&lang=css");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 
 
 
@@ -45367,7 +45418,11 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HomeComponent_vue_vue_type_template_id_05716405_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-05716405"],['__file',"resources/js/components/user/HomeComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HomeComponent_vue_vue_type_template_id_05716405_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-05716405"],['__file',"resources/js/components/user/HomeComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45389,13 +45444,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _MenuUserComponent_vue_vue_type_template_id_170b3d0c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MenuUserComponent.vue?vue&type=template&id=170b3d0c */ "./resources/js/components/user/MenuUserComponent.vue?vue&type=template&id=170b3d0c");
 /* harmony import */ var _MenuUserComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MenuUserComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/MenuUserComponent.vue?vue&type=script&lang=js");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
+
 ;
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MenuUserComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MenuUserComponent_vue_vue_type_template_id_170b3d0c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/user/MenuUserComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MenuUserComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MenuUserComponent_vue_vue_type_template_id_170b3d0c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/user/MenuUserComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45418,7 +45481,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _OrderComponent_vue_vue_type_template_id_235a34b8_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OrderComponent.vue?vue&type=template&id=235a34b8&scoped=true */ "./resources/js/components/user/OrderComponent.vue?vue&type=template&id=235a34b8&scoped=true");
 /* harmony import */ var _OrderComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrderComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/OrderComponent.vue?vue&type=script&lang=js");
 /* harmony import */ var _OrderComponent_vue_vue_type_style_index_0_id_235a34b8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OrderComponent.vue?vue&type=style&index=0&id=235a34b8&scoped=true&lang=css */ "./resources/js/components/user/OrderComponent.vue?vue&type=style&index=0&id=235a34b8&scoped=true&lang=css");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 
 
 
@@ -45426,7 +45493,11 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_OrderComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_OrderComponent_vue_vue_type_template_id_235a34b8_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-235a34b8"],['__file',"resources/js/components/user/OrderComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_OrderComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_OrderComponent_vue_vue_type_template_id_235a34b8_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-235a34b8"],['__file',"resources/js/components/user/OrderComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45448,13 +45519,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _TransactionComponent_vue_vue_type_template_id_3fbff268__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TransactionComponent.vue?vue&type=template&id=3fbff268 */ "./resources/js/components/user/TransactionComponent.vue?vue&type=template&id=3fbff268");
 /* harmony import */ var _TransactionComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TransactionComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/TransactionComponent.vue?vue&type=script&lang=js");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
+
 ;
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_TransactionComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_TransactionComponent_vue_vue_type_template_id_3fbff268__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/user/TransactionComponent.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_TransactionComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_TransactionComponent_vue_vue_type_template_id_3fbff268__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/user/TransactionComponent.vue"]])
+
 /* hot reload */
 if (false) {}
 
@@ -45477,7 +45556,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserLayout_vue_vue_type_template_id_635b0fb9_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserLayout.vue?vue&type=template&id=635b0fb9&scoped=true */ "./resources/js/layouts/UserLayout.vue?vue&type=template&id=635b0fb9&scoped=true");
 /* harmony import */ var _UserLayout_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserLayout.vue?vue&type=script&lang=js */ "./resources/js/layouts/UserLayout.vue?vue&type=script&lang=js");
 /* harmony import */ var _UserLayout_vue_vue_type_style_index_0_id_635b0fb9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserLayout.vue?vue&type=style&index=0&id=635b0fb9&scoped=true&lang=css */ "./resources/js/layouts/UserLayout.vue?vue&type=style&index=0&id=635b0fb9&scoped=true&lang=css");
+
+/* harmony import */ var C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 /* harmony import */ var E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
 
 
 
@@ -45485,7 +45568,11 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
+
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_UserLayout_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UserLayout_vue_vue_type_template_id_635b0fb9_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-635b0fb9"],['__file',"resources/js/layouts/UserLayout.vue"]])
+
 const __exports__ = /*#__PURE__*/(0,E_laragon_www_du_an_tot_nghiep_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_UserLayout_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UserLayout_vue_vue_type_template_id_635b0fb9_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-635b0fb9"],['__file',"resources/js/layouts/UserLayout.vue"]])
+
 /* hot reload */
 if (false) {}
 
