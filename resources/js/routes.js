@@ -6,16 +6,17 @@ import Order from "./components/user/OrderComponent"
 import Transaction from "./components/user/TransactionComponent"
 import Contact from "./components/user/ContactComponent"
 import ProfileComponent from "./components/ProfileComponent"
+import LoginComponent from "./components/auth/LoginComponent"
+import RegisterComponent from "./components/auth/RegisterComponent"
 
 const routes = [,
     {
         path: '/',
         component: UserLayout,
-        children: [
-            {
+        children: [{
                 path: '/',
                 component: Home,
-            },{
+            }, {
                 path: '/cart',
                 component: Cart,
             },
@@ -36,6 +37,14 @@ const routes = [,
     {
         path: '/profile',
         component: ProfileComponent
+    },
+    {
+        path: '/login',
+        component: LoginComponent
+    },
+    {
+        path: '/register',
+        component: RegisterComponent
     },
     { path: '/:catchAll(.*)', redirect: '/' },
 ];
