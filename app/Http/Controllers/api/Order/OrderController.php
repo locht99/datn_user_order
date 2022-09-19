@@ -18,9 +18,12 @@ class OrderController extends Controller
 
         return response()->json([
             'status' => 200,
-            'oderProducts' => $oderProducts,
-            'getCartNotifications' => $getCartNotifications,
-            'getOrderNotifications' => $getOrderNotifications,
+            'data' => [
+                'oderProducts' => $oderProducts,
+                'getCartNotifications' => $getCartNotifications,
+                'getOrderNotifications' => $getOrderNotifications,
+            ]
         ]);
     }
+
 }
