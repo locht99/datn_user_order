@@ -8,7 +8,6 @@ use App\Http\Controllers\api\Transaction\TransactionController;
 use App\Http\Controllers\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
