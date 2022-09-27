@@ -16,11 +16,6 @@ class User extends Authenticatable
 
     protected $table = "users";
 
-    public $timestamps = true;
-
-    const UPDATED_AT = null;
-    const CREATED_AT = "create_at";
-
     protected $fillable = [
         'username',
         'email',

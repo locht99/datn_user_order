@@ -13,5 +13,4 @@ class ConfigModel extends Model
     protected $fillable = [
         'value'
     ];
-    public $timestamps = false;
 }

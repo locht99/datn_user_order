@@ -135,10 +135,10 @@ class ExtensionController extends Controller
         // Create or update cart product
         if ($cart_product) {
             $cart_product->update($cart_product_data);
-        } else {
+        } else {         
             CartProductModel::create($cart_product_data);
         }
-
+        
         // Update total price in cart
         $total_price = CartProductModel::where("user_id", $uid)
                         ->where("cart_id", $cart->id)
@@ -146,7 +146,6 @@ class ExtensionController extends Controller
         $cart->update([
             "total_price" => $total_price ?? 0
         ]);
-
 
         return response()->json([
             'message' => "Đã thêm sản phẩm vào giỏ hàng"
