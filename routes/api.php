@@ -4,7 +4,7 @@ use App\Http\Controllers\api\CreateCartConTroller;
 use App\Http\Controllers\api\ExtensionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TestController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::post('/extension-login', [ExtensionController::class, 'login']);
 Route::post('/create-cart', [ExtensionController::class, 'createCart']);
 Route::get('/get-exchange-rate', [ExtensionController::class, 'getExchangeRate']);
+Route::get('/test',[TestController::class,'index']);
