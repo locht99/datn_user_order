@@ -41,10 +41,9 @@ class OrderController extends Controller
             'data' => [
                 'filterStatus'            => $filterStatus,
                 'countStatusConfirmation' => $countStatusConfirmation,
-                'filterDataOder'   => $filterDataOder,
+                'filterDataOder'          => $filterDataOder,
             ]
 
         ],200);
     }
-
 }
