@@ -18,6 +18,6 @@ class TransactionController extends Controller
             'data' => [
                 'getTransactions' => $getTransactions,
             ]
-        ]);
+        ],200);
     }
 }
