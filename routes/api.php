@@ -34,6 +34,8 @@ Route::middleware('auth:api')->group(function ()
     Route::prefix('order')->group(function () {
 
         Route::get('get-order', [OrderController::class, 'getOrder']);
+
+        Route::post('get-filter-order', [OrderController::class, 'getFilterOrder']);
     });
 
     Route::prefix('transaction')->group(function () {
