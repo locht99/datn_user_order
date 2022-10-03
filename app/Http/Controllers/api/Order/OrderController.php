@@ -8,13 +8,17 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    private $getOrderEntity;
+
+    public function __construct()
+    {
+        $this->getOrderEntity = new GetOrderEntity();
+    }
     public function getOrder(){
 
-        $getOrderEntity = new GetOrderEntity();
-    
-        $oderProducts = $getOrderEntity->oderProducts();
-        $getCartNotifications = $getOrderEntity->getCartNotifications();
-        $getOrderNotifications = $getOrderEntity->getOrderNotifications();
+        $oderProducts = $this->getOrderEntity->oderProducts();
+        $getCartNotifications = $this->getOrderEntity->getCartNotifications();
+        $getOrderNotifications = $this->getOrderEntity->getOrderNotifications();
 
         return response()->json([
             'status' => 200,
@@ -26,15 +30,11 @@ class OrderController extends Controller
         ],200);
     }
 
-    public function getFilterOrder(){
-        $source = ['1688', 'tmall'];
-        $order_status_id = '1';
-        $search = '1688';
-        $getOrderEntity = new GetOrderEntity();
+    public function getFilterOrder(Request $dataOder){
 
-        $filterStatus = $getOrderEntity->filterStatus($source);
-        $countStatusConfirmation = $getOrderEntity->countStatusConfirmation();
-        $filterDataOder = $getOrderEntity->filterDataOder($source ,$order_status_id, $search);
+        $filterStatus = $this->getOrderEntity->filterStatus($dataOder->source);
+        $countStatusConfirmation = $this->getOrderEntity->countStatusConfirmation();
+        $filterDataOder = $this->getOrderEntity->filterDataOder($dataOder->source ,$dataOder->order_status_id, $dataOder->search);
         return response()->json([
 
             'status' => 200,
@@ -45,5 +45,10 @@ class OrderController extends Controller
             ]
 
         ],200);
+    }
+
+    public function createOrder(Request $dataOrder){
+
+        
     }
 }
