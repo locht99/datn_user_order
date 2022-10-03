@@ -1,6 +1,6 @@
 <template>
   <section
-    style="height: 590px; max-height: 590px"
+    style="height: 568px; max-height: 568px"
     class="border rounded-xl shadow-md shadow-gray-400 my-10"
   >
 
@@ -24,7 +24,7 @@
     </section>
 
     <!-- Content cart -->
-    <section style="max-height: 435px" class="overflow-auto">
+    <section style="max-height: 424px" class="overflow-auto">
       <section class="py-5 px-5">
         <div class="rounded-xl shadow-md shadow-gray-400">
           <div
@@ -153,7 +153,7 @@
                       <a href="" class="mt-8 underline block">2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a>
                     </td>
                     <td class="pl-8">
-                      <input type="text" value="1" class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
+                      <input type="number" value="1" class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
                     </td>
                     <td class="pl-8">
                       <p class="text-red-500 font-semibold text-xl">¥45</p>
@@ -320,7 +320,7 @@
                       <a href="" class="mt-8 underline block">2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a>
                     </td>
                     <td class="pl-8">
-                      <input type="text" value="1" class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
+                      <input type="number" value="1" class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
                     </td>
                     <td class="pl-8">
                       <p class="text-red-500 font-semibold text-xl">¥45</p>
@@ -364,7 +364,7 @@
 
   <!-- Footer cart -->
     <section
-      class="sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-3"
+      class="sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2"
     >
       <span class="font-semibold text-xl text-gray-700"
         >Tổng thanh toán ( 0 sản phẩm ):
