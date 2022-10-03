@@ -8,11 +8,17 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    private $getTransaction;
+
+    public function __construct()
+    {
+        $this->getTransaction = new GetTransaction();
+    }
     
     public function getTransaction(){
         
-        $getTransaction = new GetTransaction();
-        $getTransactions = $getTransaction->getTransactions();
+       
+        $getTransactions = $this->getTransaction->getTransactions();
         return response()->json([
             'status' => 200,
             'data' => [
