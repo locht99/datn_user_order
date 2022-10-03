@@ -20,4 +20,6 @@ class CartModel extends Model
         "shop_url",
         "total_price",
     ];
+
+    const UPDATED_AT = null;
 }
