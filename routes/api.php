@@ -27,9 +27,11 @@ Route::get('/test', [TestController::class, 'index']);
 ///////////////
 //public api
 Route::post('/login', [UserController::class, 'getLogin']);
+
 // protected api
-Route::middleware('auth:api')->group(function () 
+Route::middleware('auth:api,web')->group(function () 
 {
+    Route::get('/user', [UserController::class, 'getUserInfo']);
     Route::prefix('order')->group(function () {
 
         Route::get('get-order', [OrderController::class, 'getOrder']);
