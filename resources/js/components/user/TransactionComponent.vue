@@ -40,7 +40,7 @@ export default {
 
   methods: {
     getDataTrans() {
-      axios.get("api/transaction").then((res) => {
+      axios.get("api/transaction/get-transaction").then((res) => {
         this.dataTrans = res.data;
         console.log(res);
       });

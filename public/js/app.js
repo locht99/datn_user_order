@@ -20364,7 +20364,7 @@ __webpack_require__.r(__webpack_exports__);
     getDataTrans: function getDataTrans() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/transaction").then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/transaction/get-transaction").then(function (res) {
         _this.dataTrans = res.data;
         console.log(res);
       });
