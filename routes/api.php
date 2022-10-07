@@ -24,6 +24,9 @@ Route::post('/extension-login', [ExtensionController::class, 'login']);
 Route::post('/create-cart', [ExtensionController::class, 'createCart']);
 Route::get('/get-exchange-rate', [ExtensionController::class, 'getExchangeRate']);
 Route::get('/test', [TestController::class, 'index']);
+Route::get('/abc', function(){
+    return "hello";
+});
 
 ///////////////
 //public api
@@ -41,7 +44,7 @@ Route::middleware('auth:api')->group(function ()
         Route::post('create-order', [OrderController::class, 'createOrder']);
     });
 
-    //Thông báo
+    //Giao dịch
     Route::prefix('transaction')->group(function () {
 
         Route::get('get-transaction', [TransactionController::class, 'getTransaction']);
@@ -54,4 +57,5 @@ Route::middleware('auth:api')->group(function ()
 
 
     });
+
 });
