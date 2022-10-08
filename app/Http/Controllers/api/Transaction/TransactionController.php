@@ -16,14 +16,10 @@ class TransactionController extends Controller
     }
     
     public function getTransaction(){
-        
+    
+        $getTransaction = new GetTransaction();
+        $transactions = $getTransaction->getTransactions();
+        return response()->json($transactions);
        
-        $getTransactions = $this->getTransaction->getTransactions();
-        return response()->json([
-            'status' => 200,
-            'data' => [
-                'getTransactions' => $getTransactions,
-            ]
-        ],200);
     }
 }

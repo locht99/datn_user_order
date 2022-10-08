@@ -28,9 +28,12 @@ Route::get('/test', [TestController::class, 'index']);
 ///////////////
 //public api
 Route::post('/login', [UserController::class, 'getLogin']);
+
 // protected api
-Route::middleware('auth:api')->group(function () 
+Route::middleware('auth:api,web')->group(function () 
 {
+
+    Route::get('/user', [UserController::class, 'getUserInfo']);
     //Đơn hàng
     Route::prefix('order')->group(function () {
 

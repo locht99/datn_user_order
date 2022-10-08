@@ -33,7 +33,7 @@
                 </div>
             </form>
             <div class="text-center font-semibold">
-                <a class="hover:text-red-500" href="">Quên mật khẩu</a> / <a class="hover:text-red-500" href="">Đăng nhập</a>
+                <router-link class="hover:text-red-500" to="">Quên mật khẩu</router-link> / <router-link class="hover:text-red-500" to="/login">Đăng nhập</router-link>
             </div>
         </div>
     </div>
