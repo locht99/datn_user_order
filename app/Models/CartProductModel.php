@@ -36,6 +36,8 @@ class CartProductModel extends Model
         "unit_price_vn",
     ];
 
+    const UPDATED_AT = null;
+
     public static function boot()
     {
         parent::boot();
