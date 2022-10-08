@@ -220,15 +220,13 @@ export default {
                     this.statusLogin = true
                     this.statusMessage = "Đăng nhập thành công!"
                     this.lazyLoad = false
-                    this.$router.replace("/");
+                    this.$router.back();
                 }).catch(error => {
                     this.statusLogin = false
                     this.statusMessage = error.response.data.message
                 });
         },
     },
-    computed: {},
-    mounted() {},
 };
 </script>
 <style></style>
