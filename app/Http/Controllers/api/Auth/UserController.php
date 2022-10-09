@@ -45,4 +45,8 @@ class UserController extends Controller
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
         ]);
     }
+
+    public function getUserInfo(){
+        return response()->json(Auth::user());
+    }
 }
