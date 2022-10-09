@@ -110,6 +110,14 @@ class ExtensionController extends Controller
         if ($cart_product) {
             $quantity += $cart_product->quantity;
         }
+        $unit_price_cn = $unit_price_vn = 0;
+        if (isset($data["promotion_price"])) {
+            $unit_price_cn = $data["promotion_price"];
+        }
+        else if (isset($data["original_price"])) {
+            $unit_price_cn = $data["original_price"];
+        }
+        $unit_price_vn = $unit_price_cn * $exchangeRate;
         $cart_product_data = [
             "cart_id" => $cart->id,
             "partner_id" => 1,
@@ -124,13 +132,13 @@ class ExtensionController extends Controller
             "price_table" => $data["prices_config"] ?? null,
             "quantity" => $quantity,
             "quantity_min" => 0,
-            "stock" => $data["stock"] ?? 0,
+            "stock" => $data["stock"] ?? 99,
             "url" => $data["item_link"] ?? null,
             "image" => $data["image_link"] ?? null,
             "image_detail" => null,
             "note" => null,
-            "unit_price_cn" => 0,
-            "unit_price_vn" => 0,
+            "unit_price_cn" => $unit_price_cn,
+            "unit_price_vn" => $unit_price_vn,
         ];
         // Create or update cart product
         if ($cart_product) {

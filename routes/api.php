@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\Auth\UserController;
+use App\Http\Controllers\api\Cart\CartController;
 use App\Http\Controllers\api\CreateCartConTroller;
 use App\Http\Controllers\api\ExtensionController;
 use App\Http\Controllers\api\Order\OrderController;
@@ -41,4 +42,12 @@ Route::middleware('auth:api')->group(function ()
 
         Route::get('get-transaction', [TransactionController::class, 'getTransaction']);
     });
+
+    Route::prefix('cart')->group(function () {
+        Route::get('list', [CartController::class, 'getCart']);
+        Route::post('create', [CartController::class, 'cartCreate']);
+    });
+    Route::delete("cart-product/{id}", [CartController:: class, 'removeProduct']);
+    Route::post("cart-checkout", [CartController::class, "cartCheckout"]);
+
 });

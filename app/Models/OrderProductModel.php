@@ -9,7 +9,29 @@ use Illuminate\Support\Facades\DB;
 
 class OrderProductModel extends Model
 {
-    use HasFactory;
+    protected $table = "order_products";
 
-    
+    public $timestamps = true;
+
+    const UPDATED_AT = null;
+
+    protected $fillable = [
+        'user_id',
+        'partner_id',
+        'order_id',
+        'product_id',
+        'product_name',
+        'propertiesId',
+        'properties',
+        'quantity_bought',
+        'price',
+        'quantity_min',
+        'price_table',
+        'original_price',
+        'promotion_price',
+        'stock',
+        'url',
+        'image_link',
+        'image_detail',
+    ];
 }
