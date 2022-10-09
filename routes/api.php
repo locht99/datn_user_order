@@ -49,5 +49,4 @@ Route::middleware('auth:api')->group(function ()
     });
     Route::delete("cart-product/{id}", [CartController:: class, 'removeProduct']);
     Route::post("cart-checkout", [CartController::class, "cartCheckout"]);
-
 });
