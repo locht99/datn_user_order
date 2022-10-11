@@ -1284,6 +1284,14 @@ input:checked + .toggle-bg {
   height: 1rem;
 }
 
+.h-\[620px\] {
+  height: 620px;
+}
+
+.h-\[650px\] {
+  height: 650px;
+}
+
 .max-h-32 {
   max-height: 8rem;
 }
