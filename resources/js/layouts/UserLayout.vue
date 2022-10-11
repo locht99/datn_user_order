@@ -1,6 +1,6 @@
 <template>
-  <div class="flex m-auto wrapper overflow-hidden h-screen py-4">
-    <aside class="w-72 rounded-xl h-full relative z-10">
+  <div class="flex m-auto w-[98%] overflow-hidden h-screen py-4">
+    <aside class="w-72 rounded-xl h-full relative z-10 bg-[#ff3f3a]">
       <div class="logo w-3/4 m-auto p-6 border-b border-solid">
         <img class="border-none m-auto" src="/images/logo.png" alt="" />
       </div>
@@ -21,21 +21,30 @@
             <b>{{ userInfo.username }}</b>
             <p>Ví: {{ formatPrice(userInfo.point) }}</p>
           </div>
-          <img @click="boxUserInfo = true" src="/images/user-default.png" alt=" "
+          <img @click="boxUserInfo = !boxUserInfo" src="/images/user-default.png" alt=" "
             class="w-12 h-12 rounded-full border-2 border-orange-500 overflow-hidden select-auto cursor-pointer" />
-          <div class="absolute top-14 right-0 w-60 rounded-lg shadow-md shadow-gray-400 h-20 bg-gray-400 z-50">
-            <ul>
-              <li>
-                <router-link to="">Thông tin cá nhân</router-link>
-              </li>
-              <li>
-                <router-link to="">s</router-link>
-              </li>
-              <li>
-                <router-link to="" @click="logout()">Đăng xuất</router-link>
-              </li>
-            </ul>
-          </div>
+          <Transition name="slide-fade">
+            <div v-if="boxUserInfo"
+              class="absolute top-14 right-0 w-60 rounded-lg shadow-md shadow-gray-400 bg-[#ff3f3a] text-white px-5 z-50">
+              <ul>
+                <li class="border-b py-3">
+                  <router-link to="/profile" class="text-base font-semibold">Thông tin cá nhân</router-link>
+                </li>
+                <li class="border-b py-3">
+                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
+                </li>
+                <li class="border-b py-3">
+                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
+                </li>
+                <li class="border-b py-3">
+                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
+                </li>
+                <li class="py-3">
+                  <router-link to="" @click="logout()" class="text-base font-semibold">Đăng xuất</router-link>
+                </li>
+              </ul>
+            </div>
+          </Transition>
         </div>
       </header>
 
@@ -73,9 +82,9 @@ export default {
         currency: "VND",
       }).format(value);
     },
-    logout(){
+    logout() {
       let token = localStorage.getItem('token')
-      if(token){
+      if (token) {
         localStorage.removeItem('token')
         this.$router.replace("/login")
       }
@@ -89,15 +98,21 @@ export default {
   background-color: #f5f5f5;
 }
 
-.wrapper {
-  width: 98%;
-}
-
-aside {
-  background-color: #ff3f3a;
-}
-
 .bg-layout-bar {
   background-image: url("/images/bg-layout-user.png");
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>
