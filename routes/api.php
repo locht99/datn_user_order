@@ -28,6 +28,7 @@ Route::get('/test', [TestController::class, 'index']);
 ///////////////
 //public api
 Route::post('/login', [UserController::class, 'getLogin']);
+Route::post('/register', [UserController::class, 'getRegister']);
 
 // protected api
 Route::middleware('auth:api,web')->group(function () 

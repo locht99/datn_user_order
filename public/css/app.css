@@ -1284,6 +1284,14 @@ input:checked + .toggle-bg {
   height: 1rem;
 }
 
+.h-\[620px\] {
+  height: 620px;
+}
+
+.h-\[650px\] {
+  height: 650px;
+}
+
 .max-h-32 {
   max-height: 8rem;
 }
@@ -1362,6 +1370,10 @@ input:checked + .toggle-bg {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-\[98\%\] {
+  width: 98%;
 }
 
 .min-w-max {
@@ -1729,6 +1741,36 @@ input:checked + .toggle-bg {
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
+.bg-slate-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+}
+
+.bg-slate-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#ff3f3a\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 63 58 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.bg-zinc-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 216 / var(--tw-bg-opacity));
+}
+
+.bg-orange-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(208 56 1 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1919,6 +1961,11 @@ input:checked + .toggle-bg {
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold {

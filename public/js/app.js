@@ -20266,10 +20266,11 @@ __webpack_require__.r(__webpack_exports__);
           _this.lazyLoad = false;
 
           _this.$router.back();
-        }, 3000);
+        }, 1500);
       })["catch"](function (error) {
         _this.statusLogin = false;
         _this.statusMessage = error.response.data.message;
+        _this.lazyLoad = false;
       });
     }
   }
@@ -20288,7 +20289,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony import */ var _config_user__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config/user */ "./resources/js/config/user.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {};
+  },
+  methods: {
+    registerUser: function registerUser() {
+      (0,_config_user__WEBPACK_IMPORTED_MODULE_0__.register)().then(function (res) {
+        console.log(res);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -21058,40 +21072,48 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_3 = {
-  "class": "w-[460px] h-[610px] bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg"
+  "class": "w-[460px] h-[650px] bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<form class=\"mx-[55px] font-bold\"><div class=\"text-[30px] my-11\"><p class=\"text-center\">Đăng ký</p></div><div class=\"text-[#6B6B6B]\"><div class=\"mb-5\"><input type=\"text\" placeholder=\"Tên tài khoản\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"text\" placeholder=\"Địa chỉ\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"text\" placeholder=\"Số điện thoại\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"password\" placeholder=\"Mật khẩu\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"password\" placeholder=\"Nhập lại mật khẩu\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"text-center m-5\"><button class=\"rounded-2xl text-white px-7 border-solid border-[#B6B4B4] bg-[#FF3F3A] p-6\"><img src=\"images/menu-icon/right-arrow-30.png\" alt=\"icon\"></button></div></div></form>", 1);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"text-[30px] my-11\"><p class=\"text-center\">Đăng ký</p></div><div class=\"text-[#6B6B6B]\"><div class=\"mb-5\"><input type=\"text\" placeholder=\"Tên tài khoản\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"text\" placeholder=\"Email\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"text\" placeholder=\"Địa chỉ\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"text\" placeholder=\"Số điện thoại\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"password\" placeholder=\"Mật khẩu\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"mb-5\"><input type=\"password\" placeholder=\"Nhập lại mật khẩu\" class=\"block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500\"></div><div class=\"text-center m-5\"><button class=\"rounded-2xl text-white px-7 border-solid border-[#B6B4B4] bg-[#FF3F3A] p-6\"><img src=\"images/menu-icon/right-arrow-30.png\" alt=\"icon\"></button></div></div>", 2);
 
-var _hoisted_5 = {
+var _hoisted_6 = [_hoisted_4];
+var _hoisted_7 = {
   "class": "text-center font-semibold"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Quên mật khẩu");
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Quên mật khẩu");
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" / ");
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" / ");
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đăng nhập");
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đăng nhập");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    "class": "mx-[55px] font-bold",
+    onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+      return $options.registerUser();
+    }, ["prevent"]))
+  }, _hoisted_6, 32
+  /* HYDRATE_EVENTS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     "class": "hover:text-red-500",
     to: ""
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_6];
+      return [_hoisted_8];
     }),
     _: 1
     /* STABLE */
 
-  }), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     "class": "hover:text-red-500",
     to: "/login"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_8];
+      return [_hoisted_10];
     }),
     _: 1
     /* STABLE */

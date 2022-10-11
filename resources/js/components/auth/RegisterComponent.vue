@@ -1,14 +1,18 @@
 <template>
     <div class="m-auto">
         <img src="images/background-user.png" alt="background" class="w-full h-screen">
-        <div class="w-[460px] h-[610px] bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg">
-            <form class="mx-[55px] font-bold">
+        <div class="w-[460px] h-[650px] bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg">
+            <form class="mx-[55px] font-bold" @submit.prevent="registerUser()">
                 <div class="text-[30px] my-11 ">
                     <p class="text-center">Đăng ký</p>
                 </div>
                 <div class="text-[#6B6B6B]">
                     <div class="mb-5">
                         <input type="text" placeholder="Tên tài khoản"
+                            class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500 " />
+                    </div>
+                    <div class="mb-5">
+                        <input type="text" placeholder="Email"
                             class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500 " />
                     </div>
                     <div class="mb-5">
@@ -39,7 +43,21 @@
     </div>
 </template>
 <script>
-    export default {};
+import { register } from "../../config/user";
+    export default {
+        data() {
+            return {
+                
+            }
+        },
+        methods: {
+            registerUser(){
+                register().then(res => {
+                    console.log(res)
+                })
+            }
+        },
+    };
 </script>
 <style>
 </style>

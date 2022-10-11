@@ -143,10 +143,11 @@ export default {
                     setTimeout(() => {
                         this.lazyLoad = false
                         this.$router.back();
-                    }, 3000)
+                    }, 1500)
                 }).catch(error => {
                     this.statusLogin = false
                     this.statusMessage = error.response.data.message
+                    this.lazyLoad = false
                 });
         },
     },
