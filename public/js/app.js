@@ -21119,20 +21119,268 @@ var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-196dcf64"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
 
-var _hoisted_1 = {
-  style: {
-    "height": "568px",
-    "max-height": "568px"
-  },
-  "class": "border rounded-xl shadow-md shadow-gray-400 my-10"
-};
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/trolley.png\" alt=\"\" data-v-196dcf64><b class=\"mx-2 text-lg\" data-v-196dcf64>Giỏ hàng</b></div><label for=\"search\" class=\"border-b-2 border-b-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-magnifying-glass\" data-v-196dcf64></i><input type=\"text\" id=\"search\" placeholder=\"Tìm kiếm sản phẩm\" class=\"border-none focus:ring-0\" data-v-196dcf64></label></section>", 1);
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section style=\"max-height:424px;\" class=\"overflow-auto\" data-v-196dcf64><section class=\"py-5 px-5\" data-v-196dcf64><div class=\"rounded-xl shadow-md shadow-gray-400\" data-v-196dcf64><div class=\"px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/1688-logo.png\" alt=\"\" data-v-196dcf64><p class=\"ml-10 text-xl\" data-v-196dcf64>白沟新城朵黛帽子商行</p></div><div class=\"flex items-center\" data-v-196dcf64><label for=\"kiemhang\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"kiemhang\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box-open mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Kiểm hàng</span></label><label for=\"donggo\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggo\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ</span></label><label for=\"donggorieng\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggorieng\" name=\"ff\" class=\"mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ riêng</span></label></div></div><div class=\"w-full flex\" data-v-196dcf64><div class=\"w-3/4 border-r-2\" data-v-196dcf64><table class=\"w-full\" data-v-196dcf64><thead class=\"h-14 border-b-2\" data-v-196dcf64><tr data-v-196dcf64><th class=\"text-left pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Sản phẩm</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Số lượng</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Tiền hàng</th></tr></thead><tbody data-v-196dcf64><tr class=\"items-center\" data-v-196dcf64><td class=\"pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></td><td class=\"pl-8 items-center\" data-v-196dcf64><img src=\"images/product-demo.png\" alt=\"\" class=\"w-24 py-4 pr-2 float-left\" data-v-196dcf64><a href=\"\" class=\"mt-8 underline block\" data-v-196dcf64>2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a></td><td class=\"pl-8\" data-v-196dcf64><input type=\"number\" value=\"1\" class=\"w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0\" data-v-196dcf64></td><td class=\"pl-8\" data-v-196dcf64><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>¥45</p><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>171.000 đ</p></td></tr></tbody></table></div><div class=\"text-xl px-5 w-1/4\" data-v-196dcf64><div class=\"h-14 flex items-center\" data-v-196dcf64><span data-v-196dcf64>Tổng tiền: </span><span class=\"text-red-500 font-semibold ml-3\" data-v-196dcf64>171.000 đ</span></div><div data-v-196dcf64><textarea name=\"\" id=\"\" class=\"h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0\" placeholder=\"Chú thích cho đơn hàng...\" data-v-196dcf64></textarea><button class=\"w-full mt-2 mb-4 rounded-md text-white py-1\" data-v-196dcf64> Đặt hàng </button></div></div></div></div></section><section class=\"py-5 px-5\" data-v-196dcf64><div class=\"rounded-xl shadow-md shadow-gray-400\" data-v-196dcf64><div class=\"px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl\" data-v-196dcf64><div class=\"flex items-center\" data-v-196dcf64><img src=\"/images/1688-logo.png\" alt=\"\" data-v-196dcf64><p class=\"ml-10 text-xl\" data-v-196dcf64>白沟新城朵黛帽子商行</p></div><div class=\"flex items-center\" data-v-196dcf64><label for=\"kiemhang\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"kiemhang\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box-open mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Kiểm hàng</span></label><label for=\"donggo\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggo\" name=\"ff\" class=\"mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ</span></label><label for=\"donggorieng\" class=\"mx-4 cursor-pointer select-none\" data-v-196dcf64><input type=\"radio\" id=\"donggorieng\" name=\"ff\" class=\"mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64><i class=\"fa-solid fa-box mx-2 text-lg text-gray-700\" data-v-196dcf64></i><span class=\"text-lg font-semibold text-gray-600\" data-v-196dcf64>Đóng gỗ riêng</span></label></div></div><div class=\"w-full flex\" data-v-196dcf64><div class=\"w-3/4 border-r-2\" data-v-196dcf64><table class=\"w-full\" data-v-196dcf64><thead class=\"h-14 border-b-2\" data-v-196dcf64><tr data-v-196dcf64><th class=\"text-left pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Sản phẩm</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Số lượng</th><th class=\"text-xl text-left pl-8\" data-v-196dcf64>Tiền hàng</th></tr></thead><tbody data-v-196dcf64><tr class=\"items-center\" data-v-196dcf64><td class=\"pl-8\" data-v-196dcf64><input type=\"checkbox\" name=\"\" id=\"\" class=\"rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400\" data-v-196dcf64></td><td class=\"pl-8 items-center\" data-v-196dcf64><img src=\"images/product-demo.png\" alt=\"\" class=\"w-24 py-4 pr-2 float-left\" data-v-196dcf64><a href=\"\" class=\"mt-8 underline block\" data-v-196dcf64>2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a></td><td class=\"pl-8\" data-v-196dcf64><input type=\"number\" value=\"1\" class=\"w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0\" data-v-196dcf64></td><td class=\"pl-8\" data-v-196dcf64><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>¥45</p><p class=\"text-red-500 font-semibold text-xl\" data-v-196dcf64>171.000 đ</p></td></tr></tbody></table></div><div class=\"text-xl px-5 w-1/4\" data-v-196dcf64><div class=\"h-14 flex items-center\" data-v-196dcf64><span data-v-196dcf64>Tổng tiền: </span><span class=\"text-red-500 font-semibold ml-3\" data-v-196dcf64>171.000 đ</span></div><div data-v-196dcf64><textarea name=\"\" id=\"\" class=\"h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0\" placeholder=\"Chú thích cho đơn hàng...\" data-v-196dcf64></textarea><button class=\"w-full mt-2 mb-4 rounded-md text-white py-1\" data-v-196dcf64> Đặt hàng </button></div></div></div></div></section></section>", 1);
-
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+    style: {
+      "height": "568px",
+      "max-height": "568px"
+    },
+    "class": "border rounded-xl shadow-md shadow-gray-400 my-10"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Header cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+    "class": "sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "/images/trolley.png",
+    alt: ""
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", {
+    "class": "mx-2 text-lg"
+  }, "Giỏ hàng")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "search",
+    "class": "border-b-2 border-b-gray-400"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-magnifying-glass"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    id: "search",
+    placeholder: "Tìm kiếm sản phẩm",
+    "class": "border-none focus:ring-0"
+  })])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+    style: {
+      "max-height": "424px"
+    },
+    "class": "overflow-auto"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+    "class": "py-5 px-5"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "rounded-xl shadow-md shadow-gray-400"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "/images/1688-logo.png",
+    alt: ""
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "ml-10 text-xl"
+  }, "白沟新城朵黛帽子商行")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "kiemhang",
+    "class": "mx-4 cursor-pointer select-none"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    id: "kiemhang",
+    name: "ff",
+    "class": "mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-box-open mx-2 text-lg text-gray-700"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-lg font-semibold text-gray-600"
+  }, "Kiểm hàng")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "donggo",
+    "class": "mx-4 cursor-pointer select-none"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    id: "donggo",
+    name: "ff",
+    "class": "mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-lg font-semibold text-gray-600"
+  }, "Đóng gỗ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "donggorieng",
+    "class": "mx-4 cursor-pointer select-none"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    id: "donggorieng",
+    name: "ff",
+    "class": "mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-box mx-2 text-lg text-gray-700"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-lg font-semibold text-gray-600"
+  }, "Đóng gỗ riêng")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "w-full flex"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "w-3/4 border-r-2"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", {
+    "class": "w-full"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+    "class": "h-14 border-b-2"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-left pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "checkbox",
+    name: "",
+    id: "",
+    "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-xl text-left pl-8"
+  }, "Sản phẩm"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-xl text-left pl-8"
+  }, "Số lượng"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-xl text-left pl-8"
+  }, "Tiền hàng")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
+    "class": "items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "checkbox",
+    name: "",
+    id: "",
+    "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8 items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "images/product-demo.png",
+    alt: "",
+    "class": "w-24 py-4 pr-2 float-left"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "",
+    "class": "mt-8 underline block"
+  }, "2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "number",
+    value: "1",
+    "class": "w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-red-500 font-semibold text-xl"
+  }, "¥45"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-red-500 font-semibold text-xl"
+  }, "171.000 đ")])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-xl px-5 w-1/4"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "h-14 flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Tổng tiền: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-red-500 font-semibold ml-3"
+  }, "171.000 đ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    name: "",
+    id: "",
+    "class": "h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0",
+    placeholder: "Chú thích cho đơn hàng..."
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "w-full mt-2 mb-4 rounded-md text-white py-1"
+  }, " Đặt hàng ")])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+    "class": "py-5 px-5"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "rounded-xl shadow-md shadow-gray-400"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "px-5 py-3 flex justify-between items-center bg-gray-100 rounded-xl"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "/images/1688-logo.png",
+    alt: ""
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "ml-10 text-xl"
+  }, "白沟新城朵黛帽子商行")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "kiemhang",
+    "class": "mx-4 cursor-pointer select-none"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    id: "kiemhang",
+    name: "ff",
+    "class": "mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-box-open mx-2 text-lg text-gray-700"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-lg font-semibold text-gray-600"
+  }, "Kiểm hàng")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "donggo",
+    "class": "mx-4 cursor-pointer select-none"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    id: "donggo",
+    name: "ff",
+    "class": "mb-1 rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-lg font-semibold text-gray-600"
+  }, "Đóng gỗ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "donggorieng",
+    "class": "mx-4 cursor-pointer select-none"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    id: "donggorieng",
+    name: "ff",
+    "class": "mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-box mx-2 text-lg text-gray-700"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-lg font-semibold text-gray-600"
+  }, "Đóng gỗ riêng")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "w-full flex"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "w-3/4 border-r-2"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", {
+    "class": "w-full"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+    "class": "h-14 border-b-2"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-left pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "checkbox",
+    name: "",
+    id: "",
+    "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-xl text-left pl-8"
+  }, "Sản phẩm"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-xl text-left pl-8"
+  }, "Số lượng"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+    "class": "text-xl text-left pl-8"
+  }, "Tiền hàng")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
+    "class": "items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "checkbox",
+    name: "",
+    id: "",
+    "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8 items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "images/product-demo.png",
+    alt: "",
+    "class": "w-24 py-4 pr-2 float-left"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "",
+    "class": "mt-8 underline block"
+  }, "2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "number",
+    value: "1",
+    "class": "w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "pl-8"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-red-500 font-semibold text-xl"
+  }, "¥45"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-red-500 font-semibold text-xl"
+  }, "171.000 đ")])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-xl px-5 w-1/4"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "h-14 flex items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Tổng tiền: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-red-500 font-semibold ml-3"
+  }, "171.000 đ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    name: "",
+    id: "",
+    "class": "h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0",
+    placeholder: "Chú thích cho đơn hàng..."
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "w-full mt-2 mb-4 rounded-md text-white py-1"
+  }, " Đặt hàng ")])])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Footer cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
     "class": "sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "font-semibold text-xl text-gray-700"
@@ -21140,13 +21388,22 @@ var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
     "class": "text-red-600 text-xl font-semibold"
   }, "¥0 ~ 0 đ"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "mx-10 py-2 px-12 border-none text-xl rounded-md text-white"
-  }, " Thanh toán ")], -1
+  }, " Thanh toán ")])], -1
   /* HOISTED */
   );
 });
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Header cart "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content cart "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Footer cart "), _hoisted_4]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "fade-in"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_1];
+    }),
+    _: 1
+    /* STABLE */
+
+  });
 }
 
 /***/ }),
@@ -21647,10 +21904,10 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "flex m-auto wrapper overflow-hidden h-screen py-4"
+  "class": "flex m-auto w-[98%] overflow-hidden h-screen py-4"
 };
 var _hoisted_2 = {
-  "class": "w-72 rounded-xl h-full relative z-10"
+  "class": "w-72 rounded-xl h-full relative z-10 bg-[#ff3f3a]"
 };
 
 var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
@@ -21689,14 +21946,38 @@ var _hoisted_9 = {
   "class": "mr-5"
 };
 var _hoisted_10 = {
-  "class": "absolute top-14 right-0 w-60 rounded-lg shadow-md shadow-gray-400 h-20 bg-gray-400 z-50"
+  key: 0,
+  "class": "absolute top-14 right-0 w-60 rounded-lg shadow-md shadow-gray-400 bg-[#ff3f3a] text-white px-5 z-50"
+};
+var _hoisted_11 = {
+  "class": "border-b py-3"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Thông tin cá nhân");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Thông tin cá nhân");
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("s");
+var _hoisted_13 = {
+  "class": "border-b py-3"
+};
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đăng xuất");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đổi mật khẩu");
+
+var _hoisted_15 = {
+  "class": "border-b py-3"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đổi mật khẩu");
+
+var _hoisted_17 = {
+  "class": "border-b py-3"
+};
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đổi mật khẩu");
+
+var _hoisted_19 = {
+  "class": "py-3"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đăng xuất");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_menu_user_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("menu-user-component");
@@ -21711,42 +21992,74 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $data.boxUserInfo = true;
+      return $data.boxUserInfo = !$data.boxUserInfo;
     }),
     src: "/images/user-default.png",
     alt: " ",
     "class": "w-12 h-12 rounded-full border-2 border-orange-500 overflow-hidden select-auto cursor-pointer"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: ""
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "slide-fade"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_11];
+      return [$data.boxUserInfo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: "/profile",
+        "class": "text-base font-semibold"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_12];
+        }),
+        _: 1
+        /* STABLE */
+
+      })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: "",
+        "class": "text-base font-semibold"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_14];
+        }),
+        _: 1
+        /* STABLE */
+
+      })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: "",
+        "class": "text-base font-semibold"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_16];
+        }),
+        _: 1
+        /* STABLE */
+
+      })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: "",
+        "class": "text-base font-semibold"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_18];
+        }),
+        _: 1
+        /* STABLE */
+
+      })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: "",
+        onClick: _cache[1] || (_cache[1] = function ($event) {
+          return $options.logout();
+        }),
+        "class": "text-base font-semibold"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_20];
+        }),
+        _: 1
+        /* STABLE */
+
+      })])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: ""
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_12];
-    }),
-    _: 1
-    /* STABLE */
-
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "",
-    onClick: _cache[1] || (_cache[1] = function ($event) {
-      return $options.logout();
-    })
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_13];
-    }),
-    _: 1
-    /* STABLE */
-
-  })])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view)])])]);
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view)])])]);
 }
 
 /***/ }),
@@ -24044,7 +24357,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-196dcf64] {\r\n  background-color: #ff3f3a;\n}\ntable tbody td[data-v-196dcf64]{\r\n  max-width: 250px;\n}\n[data-v-196dcf64]::-webkit-scrollbar {\r\n    width: 20px;\r\n    height: 20px;\n}\n[data-v-196dcf64]::-webkit-scrollbar-track {\r\n    border-radius: 100vh;\r\n    background: #f7f4ed;\n}\n[data-v-196dcf64]::-webkit-scrollbar-thumb {\r\n    background: #e0cbcb;\r\n    border-radius: 100vh;\r\n    border: 3px solid #f6f7ed;\n}\n[data-v-196dcf64]::-webkit-scrollbar-thumb:hover {\r\n    background: #c0a0b9;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-196dcf64] {\r\n  background-color: #ff3f3a;\n}\ntable tbody td[data-v-196dcf64] {\r\n  max-width: 250px;\n}\n[data-v-196dcf64]::-webkit-scrollbar {\r\n  width: 20px;\r\n  height: 20px;\n}\n[data-v-196dcf64]::-webkit-scrollbar-track {\r\n  border-radius: 100vh;\r\n  background: #f7f4ed;\n}\n[data-v-196dcf64]::-webkit-scrollbar-thumb {\r\n  background: #e0cbcb;\r\n  border-radius: 100vh;\r\n  border: 3px solid #f6f7ed;\n}\n[data-v-196dcf64]::-webkit-scrollbar-thumb:hover {\r\n  background: #c0a0b9;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -24140,7 +24453,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-635b0fb9] {\r\n  background-color: #f5f5f5;\n}\n.wrapper[data-v-635b0fb9] {\r\n  width: 98%;\n}\naside[data-v-635b0fb9] {\r\n  background-color: #ff3f3a;\n}\n.bg-layout-bar[data-v-635b0fb9] {\r\n  background-image: url(\"/images/bg-layout-user.png\");\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-635b0fb9] {\r\n  background-color: #f5f5f5;\n}\n.bg-layout-bar[data-v-635b0fb9] {\r\n  background-image: url(\"/images/bg-layout-user.png\");\n}\n.slide-fade-enter-active[data-v-635b0fb9] {\r\n  transition: all 0.3s ease-out;\n}\n.slide-fade-leave-active[data-v-635b0fb9] {\r\n  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter-from[data-v-635b0fb9],\r\n.slide-fade-leave-to[data-v-635b0fb9] {\r\n  transform: translateX(20px);\r\n  opacity: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
