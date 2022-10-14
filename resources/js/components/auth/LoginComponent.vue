@@ -1,7 +1,7 @@
 <template>
     <div class="m-auto">
         <img src="images/background-user.png" alt="background" class="w-full h-screen" />
-        <div class="w-[460px] h-[610px] bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg">
+        <div class="w-[460px] h-fit pb-8 bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg">
             <form action="" @submit.prevent="submitLogin()">
                 <div v-if="statusLogin" class="bg-green-500 text-white font-bold py-2 p-4">
                     {{ statusMessage }}
@@ -142,7 +142,8 @@ export default {
                     this.statusMessage = "Đăng nhập thành công!"
                     setTimeout(() => {
                         this.lazyLoad = false
-                        this.$router.back();
+                        console.log(this.$router.getRoutes())
+                        // this.$router.back();
                     }, 1500)
                 }).catch(error => {
                     this.statusLogin = false
