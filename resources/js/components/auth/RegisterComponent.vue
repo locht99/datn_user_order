@@ -5,9 +5,7 @@
             <div v-if="statusRegister" class="bg-green-500 text-white font-bold py-2 p-4">
                 {{ statusMessage }}
             </div>
-            <!-- <div v-if="statusRegister === false" class="bg-red-700 text-white font-bold py-2 p-4">
-                {{ statusMessage }}
-            </div> -->
+        
             <form class="mx-[55px] font-bold" @submit.prevent="registerUser()">
                 <div class="text-[30px] my-11 ">
                     <p class="text-center">Đăng ký</p>
@@ -93,12 +91,6 @@ export default {
                 confirm_password: ""
             },
             errors: [],
-            usernameFocus: false,
-            emailFocus: false,
-            addressFocus: false,
-            phoneFocus: false,
-            passwordFocus: false,
-            confirmPasswordFocus: false,
 
             statusRegister: 0,
             statusMessage: "",
