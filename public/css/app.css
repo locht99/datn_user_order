@@ -2041,10 +2041,6 @@ input:checked + .toggle-bg {
           text-decoration-line: underline;
 }
 
-.opacity-80 {
-  opacity: 0.8;
-}
-
 .opacity-25 {
   opacity: 0.25;
 }

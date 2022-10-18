@@ -6,7 +6,7 @@
                 <div v-if="statusLogin" class="bg-green-500 text-white font-bold py-2 p-4">
                     {{ statusMessage }}
                 </div>
-                <div v-if="statusLogin === false" class="bg-red-700 text-white font-bold py-2 p-4">
+                <div v-if="statusMessage != '' && !statusMessage.username && !statusMessage.password" class="bg-red-700 text-white font-bold py-2 p-4">
                     {{ statusMessage }}
                 </div>
                 <div class="mx-[55px] font-bold">
@@ -15,23 +15,17 @@
                     </div>
                     <div class="text-[#6B6B6B]">
                         <div class="mb-5">
-                            <input type="text" v-model="credentials.username" @focus="userNameFocus = true"
-                                placeholder="Tên tài khoản"
+                            <input type="text" v-model="credentials.username" placeholder="Tên tài khoản"
                                 class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500" />
-                            <span v-if="
-                                credentials.username.length == 0 &&
-                                userNameFocus
-                            " class="text-sm text-red-700 ml-2 font-semibold">Tài khoản không được để trống!</span>
+                            <span v-if="statusMessage.username" class="text-sm text-red-700 ml-2 font-semibold">{{
+                            statusMessage.username[0] }}</span>
                         </div>
                         <div class="mb-5">
                             <input type="password" v-model="credentials.password" placeholder="Mật khẩu"
-                                @focus="passwordFocus = true"
                                 class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none focus:ring focus:ring-red-500"
                                 autocomplete="on" />
-                            <span v-if="
-                                credentials.password.length == 0 &&
-                                passwordFocus
-                            " class="text-sm text-red-700 ml-2 font-semibold">Mật khẩu không được để trống!</span>
+                            <span v-if="statusMessage.password" class="text-sm text-red-700 ml-2 font-semibold">{{
+                            statusMessage.password[0] }}</span>
                         </div>
                         <div class="mb-5">
                             <div class="text-center text-black font-semibold">
@@ -82,12 +76,7 @@
                         </div>
                         <div class="text-center m-5 flex justify-center">
                             <button
-                                class="rounded-2xl text-white px-7 border-solid border-[#B6B4B4] bg-[#FF3F3A] p-6 flex items-center justify-center"
-                                :disabled="
-                                    credentials.username.length == 0 ||
-                                    credentials.password.length == 0
-                                " :class="{  'opacity-80' : credentials.username.length == 0 ||
-                                credentials.password.length == 0 }">
+                                class="rounded-2xl text-white px-7 border-solid border-[#B6B4B4] bg-[#FF3F3A] p-6 flex items-center justify-center">
                                 <svg v-if="lazyLoad" class="animate-spin h-7 w-7 text-white"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
@@ -120,12 +109,15 @@ export default {
                 username: "",
                 password: "",
             },
-            userNameFocus: false,
-            passwordFocus: false,
             statusLogin: 0,
             statusMessage: "",
             lazyLoad: false,
+            lastPath: "",
+            errors: []
         };
+    },
+    created() {
+        this.lastPath = this.$router.options.history.state.back
     },
     methods: {
         submitLogin() {
@@ -142,8 +134,11 @@ export default {
                     this.statusMessage = "Đăng nhập thành công!"
                     setTimeout(() => {
                         this.lazyLoad = false
-                        console.log(this.$router.getRoutes())
-                        // this.$router.back();
+                        if(this.$router.options.history.base == ""){
+                            return this.$router.replace('/')
+                        }else{
+                            this.$router.back();
+                        }
                     }, 1500)
                 }).catch(error => {
                     this.statusLogin = false
