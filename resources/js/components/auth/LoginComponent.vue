@@ -6,7 +6,7 @@
                 <div v-if="statusLogin" class="bg-green-500 text-white font-bold py-2 p-4">
                     {{ statusMessage }}
                 </div>
-                <div v-if="statusMessage != '' && !statusMessage.username && !statusMessage.password" class="bg-red-700 text-white font-bold py-2 p-4">
+                <div v-if="!statusLogin && statusMessage != '' && !statusMessage.username && !statusMessage.password" class="bg-red-700 text-white font-bold py-2 p-4">
                     {{ statusMessage }}
                 </div>
                 <div class="mx-[55px] font-bold">
