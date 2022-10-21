@@ -6,7 +6,6 @@ import Order from "./components/user/OrderComponent"
 import Transaction from "./components/user/TransactionComponent"
 import Contact from "./components/user/ContactComponent"
 import ProfileComponent from "./components/ProfileComponent"
-
 const routes = [,
     {
         path: '/',
