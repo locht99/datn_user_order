@@ -20264,6 +20264,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      this.userInfo = data;
+
       (0,_config_user__WEBPACK_IMPORTED_MODULE_0__.updateUser)(data).then(function (response) {
         _this2.$swal('Chỉnh sửa thành công !');
       })["catch"](function (error) {

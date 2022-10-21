@@ -151,6 +151,7 @@ export default {
                     data[target.elements[i].name] = target.elements[i].value;
                 }
             }
+            this.userInfo = data
             updateUser(data)
                 .then((response) => {
                     this.$swal('Chỉnh sửa thành công !');
