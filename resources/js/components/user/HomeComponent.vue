@@ -17,9 +17,8 @@
                     </tr>
                 </thead>
                 <tbody class="block max-h-[438px] overflow-y-auto">
-                    <tr v-for="item in listItem"
-                        class="h-16 border-b border-gray-300 table w-full box-border">
-                        <td class="py-4 flex items-center pl-20 mt-1"> 
+                    <tr v-for="item in listItem" class="h-16 border-b border-gray-300 table w-full box-border">
+                        <td class="py-4 flex items-center pl-20 mt-1">
                             <a href="" class="mx-2 underline">{{item.product_name}}</a>
                             <span>x{{item.quantity_bought}}</span>
                         </td>
@@ -42,7 +41,7 @@
 
 <script>
 import axios from "axios";
-import {getItem} from "../../config/home"
+import { getItem } from "../../config/home"
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
@@ -55,18 +54,23 @@ export default {
             listItem: [],
             dataPagination: {},
             lazyLoad: false,
+            listLimit: [],
         };
     },
-   
+
     methods: {
         getAllItem() {
             this.is_loading = true
             getItem().then(res => {
                 this.listItem = res.data.data.oderProducts;
-                console.log(this.listItem)
-                console.log(res.data.data.oderProducts)
-            }) 
-            .catch((error) => {
+                this.listItem.forEach(item => {
+                    this.listLimit.push(item)
+                    if (this.listLimit.length > 5) {
+                        return ;
+                    }
+                })
+            })
+                .catch((error) => {
                     this.is_loading = false;
                 })
                 .finally(() => {
@@ -74,10 +78,10 @@ export default {
                 });
             ;
         },
-    },              
+    },
 
     mounted() {
-        this.getAllItem();                       
+        this.getAllItem();
     },
 };
 </script>

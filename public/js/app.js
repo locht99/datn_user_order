@@ -20399,7 +20399,8 @@ __webpack_require__.r(__webpack_exports__);
       is_loading: false,
       listItem: [],
       dataPagination: {},
-      lazyLoad: false
+      lazyLoad: false,
+      listLimit: []
     };
   },
   methods: {
@@ -20409,8 +20410,14 @@ __webpack_require__.r(__webpack_exports__);
       this.is_loading = true;
       (0,_config_home__WEBPACK_IMPORTED_MODULE_1__.getItem)().then(function (res) {
         _this.listItem = res.data.data.oderProducts;
-        console.log(_this.listItem);
-        console.log(res.data.data.oderProducts);
+
+        _this.listItem.forEach(function (item) {
+          _this.listLimit.push(item);
+
+          if (_this.listLimit.length > 5) {
+            return;
+          }
+        });
       })["catch"](function (error) {
         _this.is_loading = false;
       })["finally"](function () {
