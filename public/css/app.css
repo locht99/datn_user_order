@@ -1013,12 +1013,12 @@ input:checked + .toggle-bg {
   z-index: -10;
 }
 
-.z-\[100\] {
-  z-index: 100;
-}
-
 .z-50 {
   z-index: 50;
+}
+
+.z-\[100\] {
+  z-index: 100;
 }
 
 .z-20 {
@@ -1252,6 +1252,10 @@ input:checked + .toggle-bg {
   height: 1.75rem;
 }
 
+.h-\[650px\] {
+  height: 650px;
+}
+
 .h-5 {
   height: 1.25rem;
 }
@@ -1284,14 +1288,6 @@ input:checked + .toggle-bg {
   height: 1rem;
 }
 
-.h-\[620px\] {
-  height: 620px;
-}
-
-.h-\[650px\] {
-  height: 650px;
-}
-
 .max-h-32 {
   max-height: 8rem;
 }
@@ -1322,6 +1318,10 @@ input:checked + .toggle-bg {
 
 .w-72 {
   width: 18rem;
+}
+
+.w-\[98\%\] {
+  width: 98%;
 }
 
 .w-3\/4 {
@@ -1370,10 +1370,6 @@ input:checked + .toggle-bg {
 
 .w-1\/2 {
   width: 50%;
-}
-
-.w-\[98\%\] {
-  width: 98%;
 }
 
 .min-w-max {
@@ -1692,9 +1688,9 @@ input:checked + .toggle-bg {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
-.bg-gray-400 {
+.bg-\[\#ff3f3a\] {
   --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+  background-color: rgb(255 63 58 / var(--tw-bg-opacity));
 }
 
 .bg-green-500 {
@@ -1739,36 +1735,6 @@ input:checked + .toggle-bg {
 .bg-gray-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
-}
-
-.bg-slate-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
-}
-
-.bg-slate-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-}
-
-.bg-\[\#ff3f3a\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 63 58 / var(--tw-bg-opacity));
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
-
-.bg-zinc-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(212 212 216 / var(--tw-bg-opacity));
-}
-
-.bg-orange-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(208 56 1 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -1846,14 +1812,14 @@ input:checked + .toggle-bg {
   padding-right: 1.25rem;
 }
 
-.px-7 {
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-}
-
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .py-1 {
@@ -1949,6 +1915,11 @@ input:checked + .toggle-bg {
   line-height: 1.75rem;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-\[30px\] {
   font-size: 30px;
 }
@@ -1961,11 +1932,6 @@ input:checked + .toggle-bg {
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
 }
 
 .font-bold {
