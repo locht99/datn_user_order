@@ -24,10 +24,10 @@ class ApiUserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            "username" => "required|min:6",
-            "email" => "required|email",
+            "username" => "required|min:6|unique:users,username",
+            "email" => "required|email|unique:users,email",
             "address" => "required",
-            "phone" => "required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10",
+            "phone" => "required|regex:^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g",
             "password" => "required_with:confirm_password|min:6",
             "confirm_password" => "required|same:password"
         ];
@@ -38,8 +38,10 @@ class ApiUserRegisterRequest extends FormRequest
         return [
             "username.required" => "Tên đăng nhập không được để trống",
             "username.min" => "Tên đăng nhập phải lớn hơn 6 kí tự",
+            "username.unique" => "Tên đăng nhập đã tồn tại",
             "email.required" => "Email không được để trống",
             "email.email" => "Email không đúng định dạng",
+            "email.unique" => "Email đã tồn tại",
             "address.required" => "Địa chỉ không được để trống",
             "phone.required" => "Số điện thoại không được để trống",
             "phone.regex" => "Số điện thoại không đúng định dạng",

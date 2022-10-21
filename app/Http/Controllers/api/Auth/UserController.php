@@ -26,7 +26,7 @@ class UserController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json([
-                'message' => $validator->errors()->first()
+                'message' => $validator->errors(),
             ], ResponseAlias::HTTP_BAD_REQUEST);
         }
 

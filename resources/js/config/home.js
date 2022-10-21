@@ -1,6 +1,6 @@
 import instance from './config'
 
-export function getAllItem() {
+export function getItem() {
 
-    return instance.get("/transaction/get-transaction?page=");
+    return instance.get("/order/get-order?");
 }

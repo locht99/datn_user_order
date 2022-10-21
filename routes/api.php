@@ -30,9 +30,9 @@ Route::get('/test', [TestController::class, 'index']);
 Route::post('/login', [UserController::class, 'getLogin']);
 Route::post('/register', [UserController::class, 'getRegister']);
 
+
 // protected api
-Route::middleware('auth:api,web')->group(function () 
-{
+Route::middleware('auth:api,web')->group(function () {
 
     Route::get('/user', [UserController::class, 'getUserInfo']);
     //Đơn hàng
@@ -55,7 +55,6 @@ Route::middleware('auth:api,web')->group(function ()
         Route::get('list', [CartController::class, 'getCart']);
         Route::post('create', [CartController::class, 'cartCreate']);
     });
-    Route::delete("cart-product/{id}", [CartController:: class, 'removeProduct']);
+    Route::delete("cart-product/{id}", [CartController::class, 'removeProduct']);
     Route::post("cart-checkout", [CartController::class, "cartCheckout"]);
-    
 });

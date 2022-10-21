@@ -12,7 +12,7 @@ class GetOrderEntity extends Controller
 
         $oderProducts = DB::table('order_products')
             ->orderBy('created_at', 'DESC')
-            ->where('user_id', auth()->user()->id)
+            ->where('user_id', auth()->id())
             ->select('id', 'order_id', 'product_name', 'quantity_bought', 'order_status_id')
             ->get()->map(function ($oderProduct) {
                 $oderProduct->status_name = DB::table('order_statuses')
