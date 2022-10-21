@@ -1,42 +1,62 @@
-import UserLayout from "./layouts/UserLayout"
-import MenuUser from "./components/user/MenuUserComponent"
-import Home from "./components/user/HomeComponent"
-import Cart from "./components/user/CartComponent"
-import Order from "./components/user/OrderComponent"
-import Transaction from "./components/user/TransactionComponent"
-import Contact from "./components/user/ContactComponent"
-import ProfileComponent from "./components/ProfileComponent"
-const routes = [,
+import UserLayout from "./layouts/UserLayout";
+import MenuUser from "./components/user/MenuUserComponent";
+import Home from "./components/user/HomeComponent";
+import Cart from "./components/user/CartComponent";
+import Order from "./components/user/OrderComponent";
+import OrderDetail from "./components/user/OrderDetailComponent"
+import Transaction from "./components/user/TransactionComponent";
+import Contact from "./components/user/ContactComponent";
+import ProfileComponent from "./components/ProfileComponent";
+import LoginComponent from "./components/auth/LoginComponent";
+import RegisterComponent from "./components/auth/RegisterComponent";
+
+const routes = [
     {
-        path: '/',
+        path: "/",
         component: UserLayout,
+        meta: { requiresAuth: true },
         children: [
             {
-                path: '/',
+                path: "/",
                 component: Home,
-            },{
-                path: '/cart',
+            },
+            {
+                path: "/cart",
                 component: Cart,
             },
             {
-                path: '/order',
-                component: Order
+                path: "/order",
+                component: Order,
             },
             {
-                path: '/transaction',
-                component: Transaction
+                path: "/order-detail",
+                component: OrderDetail,
             },
             {
-                path: '/contact',
-                component: Contact
+                path: "/transaction",
+                component: Transaction,
             },
-        ]
+            {
+                path: "/contact",
+                component: Contact,
+            },
+        ],
     },
     {
-        path: '/profile',
-        component: ProfileComponent
+        path: "/profile",
+        component: ProfileComponent,
     },
-    { path: '/:catchAll(.*)', redirect: '/' },
+    {
+        path: "/login",
+        component: LoginComponent,
+        meta: {notLogin: true}
+    },
+    {
+        path: "/register",
+        component: RegisterComponent,
+        meta: {notLogin: true}
+    },
+    { path: "/:catchAll(.*)", redirect: "/" },
 ];
 
 export default routes;
