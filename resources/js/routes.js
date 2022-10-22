@@ -8,7 +8,7 @@ import Contact from "./components/user/ContactComponent";
 import ProfileComponent from "./components/ProfileComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
-
+import CreateTransaction from './components/user/Transaction/CreateTransactionComponent.vue';
 const routes = [
     {
         path: "/",
@@ -30,6 +30,10 @@ const routes = [
             {
                 path: "/transaction",
                 component: Transaction,
+            },
+            {
+                path: "/transaction/create",
+                component: CreateTransaction
             },
             {
                 path: "/contact",

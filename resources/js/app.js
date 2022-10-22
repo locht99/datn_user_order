@@ -6,6 +6,8 @@ import App from "./App.vue";
 import { getUser } from "./config/user";
 import routes from "./routes";
 import Pagination from "./helpers/pagination.vue";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 const router = createRouter({
     history: createWebHistory(),
     routes,
@@ -47,4 +49,6 @@ router.beforeEach((to, from, next) => {
 const app = createApp(App);
 app.component("Pagination", Pagination);
 app.use(router);
+app.use(VueSweetalert2);
+
 app.mount("#app");
