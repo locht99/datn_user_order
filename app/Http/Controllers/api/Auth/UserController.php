@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApiUserRegisterRequest;
+use App\Models\Address;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +47,29 @@ class UserController extends Controller
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
         ]);
+    }
+
+    public function getRegister(ApiUserRegisterRequest $request){
+        try {
+            $newUser = User::query()->create([
+                'partner_id' => 1,
+                'username' => $request->username,
+                'email' => $request->email, 
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
+                'uid' => 0
+            ]); 
+          
+            $address = Address::create([
+                'user_id' => $newUser->id,
+                'address' => $request->address,
+                'name' => $newUser->username,
+                'phone' => $newUser->phone,
+            ]);
+            return response()->json("Đăng kí tài khoản thành công");
+        } catch (\Throwable $th) {
+            return response()->json('Có lỗi xảy ra, vui lòng thử lại sau.', 500);
+        }
     }
 
     public function getUserInfo(){

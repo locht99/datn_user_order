@@ -20,4 +20,12 @@ class GetTransaction extends Controller
 
         return $getTransactions;
     }
+    public function getTypeTransactions(){
+        $getTypeTransactions = DB::table('type_transactions')->get();
+        return $getTypeTransactions;
+    }
+    public function getTypePayment(){
+        $getTypePayment = DB::table('banking')->get();
+        return $getTypePayment;
+    }
 }
