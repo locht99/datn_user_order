@@ -27,7 +27,7 @@ class ApiUserRegisterRequest extends FormRequest
             "username" => "required|min:6|unique:users,username",
             "email" => "required|email|unique:users,email",
             "address" => "required",
-            "phone" => "required|regex:^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g",
+            "phone" => ["required", "regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/"],
             "password" => "required_with:confirm_password|min:6",
             "confirm_password" => "required|same:password"
         ];

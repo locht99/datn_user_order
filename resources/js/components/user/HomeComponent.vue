@@ -1,12 +1,11 @@
 <template>
     <section class="homepage-content grid gap-4 mt-10">
-        <section
-            class="border rounded-xl shadow-md shadow-gray-400 px-5 max-h-[568px] h-auto overflow-hidden"
-        >
+        <section class="border rounded-xl shadow-md shadow-gray-400 px-5 max-h-[568px] h-auto overflow-hidden relative">
+            <loading v-model:active="is_loading" :is-full-page="false" />
             <p class="my-5 items-center flex">
                 <img src="/images/trolley.png" alt="" />
                 <b class="mx-2 text-lg">Đơn hàng mới: </b>
-                <span class="text-lg font-semibold text-gray-500">5 đơn</span>
+                <span class="text-lg font-semibold text-gray-500">{{listItem.length}} đơn</span>
             </p>
 
             <table class="w-full">
@@ -18,75 +17,15 @@
                     </tr>
                 </thead>
                 <tbody class="block max-h-[438px] overflow-y-auto">
-                    <tr class="h-16 border-b border-gray-300 table w-full box-border">
+                    <tr v-for="item in listItem" class="h-16 border-b border-gray-300 table w-full box-border">
                         <td class="py-4 flex items-center pl-20 mt-1">
-                            <img
-                                src="/images/product-demo.png"
-                                class="max-h-16"
-                                alt=""
-                            />
-                            <a href="" class="mx-2 underline">2022春夏新...</a>
-                            <span>x1</span>
+                            <a href="" class="mx-2 underline">{{item.product_name}}</a>
+                            <span>x{{item.quantity_bought}}</span>
                         </td>
-                        <td class="w-1/3 pl-20">MD001</td>
-                        <td class="w-1/3 pl-20">Chờ xác nhận</td>
+                        <td class="w-1/3 pl-20"># {{item.id}}</td>
+                        <td class="w-1/3 pl-20">{{item.status_name}}</td>
                     </tr>
 
-                    <tr class="h-16 border-b border-gray-300">
-                        <td class="py-4 flex items-center pl-20 mt-1">
-                            <img
-                                src="/images/product-demo.png"
-                                class="max-h-16"
-                                alt=""
-                            />
-                            <a href="" class="mx-2 underline">2022春夏新...</a>
-                            <span>x1</span>
-                        </td>
-                        <td class="w-1/3 pl-20">MD001</td>
-                        <td class="w-1/3 pl-20">Chờ xác nhận</td>
-                    </tr>
-
-                    <tr class="w-full h-16 border-b border-gray-300">
-                        <td class="py-4 flex items-center pl-20 mt-1">
-                            <img
-                                src="/images/product-demo.png"
-                                class="max-h-16"
-                                alt=""
-                            />
-                            <a href="" class="mx-2 underline">2022春夏新...</a>
-                            <span>x1</span>
-                        </td>
-                        <td class="w-1/3 pl-20">MD001</td>
-                        <td class="w-1/3 pl-20">Chờ xác nhận</td>
-                    </tr>
-
-                    <tr class="w-full h-16 border-b border-gray-300">
-                        <td class="py-4 flex items-center pl-20 mt-1">
-                            <img
-                                src="/images/product-demo.png"
-                                class="max-h-16"
-                                alt=""
-                            />
-                            <a href="" class="mx-2 underline">2022春夏新...</a>
-                            <span>x1</span>
-                        </td>
-                        <td class="w-1/3 pl-20">MD001</td>
-                        <td class="w-1/3 pl-20">Chờ xác nhận</td>
-                    </tr>
-
-                    <tr class="w-full h-16 border-b border-gray-300">
-                        <td class="py-4 flex items-center pl-20 mt-1">
-                            <img
-                                src="/images/product-demo.png"
-                                class="max-h-16"
-                                alt=""
-                            />
-                            <a href="" class="mx-2 underline">2022春夏新...</a>
-                            <span>x1</span>
-                        </td>
-                        <td class="w-1/3 pl-20">MD001</td>
-                        <td class="w-1/3 pl-20">Chờ xác nhận</td>
-                    </tr>
                 </tbody>
             </table>
         </section>
@@ -102,21 +41,47 @@
 
 <script>
 import axios from "axios";
+import { getItem } from "../../config/home"
+import loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+    components: {
+        loading,
+    },
     data() {
-        return {};
+        return {
+            is_loading: false,
+            listItem: [],
+            dataPagination: {},
+            lazyLoad: false,
+            listLimit: [],
+        };
     },
 
     methods: {
-        getAll() {
-            axios.get("getUser").then((res) => {
-                console.log(res.data);
-            });
+        getAllItem() {
+            this.is_loading = true
+            getItem().then(res => {
+                this.listItem = res.data.data.oderProducts;
+                this.listItem.forEach(item => {
+                    this.listLimit.push(item)
+                    if (this.listLimit.length > 5) {
+                        return ;
+                    }
+                })
+            })
+                .catch((error) => {
+                    this.is_loading = false;
+                })
+                .finally(() => {
+                    this.is_loading = false;
+                });
+            ;
         },
     },
 
     mounted() {
-        this.getAll();
+        this.getAllItem();
     },
 };
 </script>
