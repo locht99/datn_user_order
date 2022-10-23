@@ -1,6 +1,11 @@
 import instance from "./config";
 
 export function getCart() {
-
     return instance.get("/cart/list");
+}
+export function cartCheckout(data) {
+    return instance.post("/cart-checkout",data);
+}
+export function deleteCart(id) {
+     return instance.delete(`/cart-product/${id}`);
 }

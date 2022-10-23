@@ -29,9 +29,9 @@
               rounded-xl
             ">
               <div class="flex items-center">
-                <img src="/images/1688-logo.png" alt="" v-if="cart.source == '1688' "/>
-                <img src="/images/tmall-logo.png" alt="" v-else-if="cart.source == 'TMALL' "/>
-                <img src="/images/taobao-logo.png" alt="" v-else-if="cart.source == 'TAOBAO' "/>
+                <img src="/images/1688-logo.png" alt="" v-if="cart.source == '1688' " />
+                <img src="/images/tmall-logo.png" alt="" v-else-if="cart.source == 'TMALL' " />
+                <img src="/images/taobao-logo.png" alt="" v-else-if="cart.source == 'TAOBAO' " />
                 <p class="ml-10 text-xl" v-if="cart.shop_name">{{ cart.shop_name }}</p>
                 <p class="ml-10 text-xl" v-else>Không xác định</p>
               </div>
@@ -100,7 +100,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="items-center" v-for="(listCartProduct, index) in cart.cart_products" :key="index">
+                    <tr class="items-center" v-for="(listCartProduct,index2) in cart.cart_products" :key="index2">
                       <td class="pl-8">
                         <input type="checkbox" name="" id="" class="
                           rounded-md
@@ -116,16 +116,18 @@
                         <a href="" class="mt-8 underline block">{{ listCartProduct.product_name }}</a>
                       </td>
                       <td class="pl-8">
-                        <input type="number" :value="listCartProduct.quantity"
+                        <input type="number" v-on:change="cartQuantity(listCartProduct,index,index2)"
+                          v-model="listCartProduct.quantity"
                           class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
                       </td>
                       <td class="pl-8">
                         <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ</p>
+                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ
+                        </p>
                       </td>
                       <td class="pl-8">
-                        <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ</p>
+                        <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.price_cn }}</p>
+                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.price) }} đ</p>
                       </td>
                     </tr>
                   </tbody>
@@ -134,7 +136,7 @@
               <div class="text-xl px-5 w-1/4">
                 <div class="h-14 flex items-center">
                   <span>Tổng tiền: </span>
-                  <span class="text-red-500 font-semibold ml-3">171.000 đ</span>
+                  <span class="text-red-500 font-semibold ml-3">{{formatPrice(cart.total_price)}}</span>
                 </div>
                 <div>
                   <textarea name="" id="" class="
@@ -159,9 +161,9 @@
 
       <!-- Footer cart -->
       <section class="sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
-        <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( 0 sản phẩm ):
+        <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{totalQuantityShop}} sản phẩm ):
         </span>
-        <span class="text-red-600 text-xl font-semibold">¥0 ~ 0 đ</span>
+        <span class="text-red-600 text-xl font-semibold">¥0 ~ {{formatPrice(totalPriceShop)}}</span>
         <button class="mx-10 py-2 px-12 border-none text-xl rounded-md text-white">
           Thanh toán
         </button>
@@ -183,12 +185,19 @@ export default {
     return {
       is_loading: false,
       listCart: [],
+      totalPriceShop: 0,
+      totalQuantityShop: 0,
       lazyLoad: false,
+      checkBox: []
     };
+  },
+  created() {
+    this.listCart = JSON.parse(window.localStorage.getItem("cart"));
   },
   mounted() {
     this.getCartByUser();
   },
+
   methods: {
     formatPrice(value) {
       return new Intl.NumberFormat("en-US", {
@@ -196,19 +205,68 @@ export default {
         currency: "VND",
       }).format(value);
     },
-    getCartByUser(){
+    getTotal(index) {
+      let totalPrice = 0;
+      let totalShop = 0;
+      this.listCart[index].cart_products.forEach((element) => {
+        totalPrice += +element.price;
+      })
+      this.listCart[index].total_price = totalPrice;
+      this.listCart.forEach((element) => {
+        totalShop += + element.total_price;
+      })
+      this.totalPriceShop = totalShop;
+    },
+    getTotalQuantity(index, index2) {
+      let quantityItem = 0;
+      this.listCart.forEach((element) => {
+        element.cart_products.forEach((ele) => {
+          quantityItem += +ele.quantity;
+        })
+      })
+      this.totalQuantityShop = quantityItem;
+    },
+    getCartByUser() {
+      let totalShop = 0;
+      let quantityShop = 0;
+      let quantityItem = 0;
       this.is_loading = true;
-      getCart()
-      .then((res) => {
-          this.listCart = res.data.data;
-        })
-        .catch((error) => {
-          this.is_loading = false;
-        })
+      getCart().then((res) => {
+        this.listCart = res.data.data;
+        window.localStorage.setItem("cart", JSON.stringify(this.listCart));
+      }).then(() => {
+        this.listCart = JSON.parse(window.localStorage.getItem("cart"));
+      }).catch((error) => {
+        this.is_loading = false;
+      })
         .finally(() => {
           this.is_loading = false;
         });
+      this.listCart.forEach((element) => {
+        totalShop += + element.total_price;
+      })
+      this.listCart.forEach((element) => {
+        element.cart_products.forEach((ele) => {
+          quantityItem += +ele.quantity;
+        })
+      })
+      this.totalQuantityShop = quantityItem;
+      this.totalPriceShop = totalShop;
     },
+
+    cartQuantity(product, index, index2) {
+
+      this.listCart[index].cart_products[index2].quantity = product.quantity;
+      this.listCart[index].cart_products[index2].price = product.quantity * product.unit_price_vn;
+      this.listCart[index].cart_products[index2].price_cn = product.quantity * product.unit_price_cn;
+      this.getTotal(index);
+      this.getTotalQuantity(index, index2);
+      window.localStorage.setItem("cart", JSON.stringify(this.listCart));
+    },
+
+    getCartCheckout() {
+
+    }
   }
 };
 </script>
