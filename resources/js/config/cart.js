@@ -4,8 +4,11 @@ export function getCart() {
     return instance.get("/cart/list");
 }
 export function cartCheckout(data) {
-    return instance.post("/cart-checkout",data);
+    return instance.post("/cart-checkout", data);
+}
+export function createCart(data) {
+    return instance.post("/cart/create",data);
 }
 export function deleteCart(id) {
-     return instance.delete(`/cart-product/${id}`);
+    return instance.delete(`/cart-product/${id}`);
 }

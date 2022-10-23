@@ -102,7 +102,7 @@
                   <tbody>
                     <tr class="items-center" v-for="(listCartProduct,index2) in cart.cart_products" :key="index2">
                       <td class="pl-8">
-                        <input type="checkbox" name="" id="" class="
+                        <input type="checkbox" v-model="ids[listCartProduct.id]" @click="clickCheckbox()" class="
                           rounded-md
                           cursor-pointer
                           focus:ring-0
@@ -164,7 +164,7 @@
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{totalQuantityShop}} sản phẩm ):
         </span>
         <span class="text-red-600 text-xl font-semibold">¥0 ~ {{formatPrice(totalPriceShop)}}</span>
-        <button class="mx-10 py-2 px-12 border-none text-xl rounded-md text-white">
+        <button @click="createOrder()" class="mx-10 py-2 px-12 border-none text-xl rounded-md text-white">
           Thanh toán
         </button>
       </section>
@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import { getCart } from "../../config/cart";
+import { getCart, createCart } from "../../config/cart";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 
@@ -186,6 +186,8 @@ export default {
       is_loading: false,
       listCart: [],
       totalPriceShop: 0,
+      ids: [],
+      quantity: [],
       totalQuantityShop: 0,
       lazyLoad: false,
       checkBox: []
@@ -205,6 +207,9 @@ export default {
         currency: "VND",
       }).format(value);
     },
+    clickCheckbox() {
+      console.log(this.ids);
+    },
     getTotal(index) {
       let totalPrice = 0;
       let totalShop = 0;
@@ -221,9 +226,10 @@ export default {
       let quantityItem = 0;
       this.listCart.forEach((element) => {
         element.cart_products.forEach((ele) => {
+          this.quantity[ele.id] = ele.quantity;
           quantityItem += +ele.quantity;
         })
-      })
+      });
       this.totalQuantityShop = quantityItem;
     },
     getCartByUser() {
@@ -255,7 +261,6 @@ export default {
     },
 
     cartQuantity(product, index, index2) {
-
       this.listCart[index].cart_products[index2].quantity = product.quantity;
       this.listCart[index].cart_products[index2].price = product.quantity * product.unit_price_vn;
       this.listCart[index].cart_products[index2].price_cn = product.quantity * product.unit_price_cn;
@@ -264,8 +269,28 @@ export default {
       window.localStorage.setItem("cart", JSON.stringify(this.listCart));
     },
 
-    getCartCheckout() {
+    createOrder() {
+      if (this.ids.length == 0) {
+        return this.$swal('Vui lòng chọn ít nhất 1 sản phẩm');
+      }
+      const data = {
+        'money_deposite': this.totalPriceShop,
+        'data': { ids: this.ids, data: this.listCart, note: '', quantity: this.quantity },
+      };
+      createCart(data).then((response) => {
+        // console.log(response);
+        window.localStorage.removeItem("cart");
+        this.$swal('Thanh toán đơn hàng thành công');
+        this.data = [];
+        this.totalPriceShop = 0
+        this.ids = [];
+        this.listCart = [];
+        this.quantity = [];
 
+      }).catch((error) => {
+        console.log(error);
+        this.$swal(error.response.data.message);
+      })
     }
   }
 };

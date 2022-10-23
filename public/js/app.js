@@ -20398,6 +20398,8 @@ __webpack_require__.r(__webpack_exports__);
       is_loading: false,
       listCart: [],
       totalPriceShop: 0,
+      ids: [],
+      quantity: [],
       totalQuantityShop: 0,
       lazyLoad: false,
       checkBox: []
@@ -20416,6 +20418,9 @@ __webpack_require__.r(__webpack_exports__);
         currency: "VND"
       }).format(value);
     },
+    clickCheckbox: function clickCheckbox() {
+      console.log(this.ids);
+    },
     getTotal: function getTotal(index) {
       var totalPrice = 0;
       var totalShop = 0;
@@ -20429,29 +20434,31 @@ __webpack_require__.r(__webpack_exports__);
       this.totalPriceShop = totalShop;
     },
     getTotalQuantity: function getTotalQuantity(index, index2) {
+      var _this = this;
       var quantityItem = 0;
       this.listCart.forEach(function (element) {
         element.cart_products.forEach(function (ele) {
+          _this.quantity[ele.id] = ele.quantity;
           quantityItem += +ele.quantity;
         });
       });
       this.totalQuantityShop = quantityItem;
     },
     getCartByUser: function getCartByUser() {
-      var _this = this;
+      var _this2 = this;
       var totalShop = 0;
       var quantityShop = 0;
       var quantityItem = 0;
       this.is_loading = true;
       (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.getCart)().then(function (res) {
-        _this.listCart = res.data.data;
-        window.localStorage.setItem("cart", JSON.stringify(_this.listCart));
+        _this2.listCart = res.data.data;
+        window.localStorage.setItem("cart", JSON.stringify(_this2.listCart));
       }).then(function () {
-        _this.listCart = JSON.parse(window.localStorage.getItem("cart"));
+        _this2.listCart = JSON.parse(window.localStorage.getItem("cart"));
       })["catch"](function (error) {
-        _this.is_loading = false;
+        _this2.is_loading = false;
       })["finally"](function () {
-        _this.is_loading = false;
+        _this2.is_loading = false;
       });
       this.listCart.forEach(function (element) {
         totalShop += +element.total_price;
@@ -20472,7 +20479,34 @@ __webpack_require__.r(__webpack_exports__);
       this.getTotalQuantity(index, index2);
       window.localStorage.setItem("cart", JSON.stringify(this.listCart));
     },
-    getCartCheckout: function getCartCheckout() {}
+    createOrder: function createOrder() {
+      var _this3 = this;
+      if (this.ids.length == 0) {
+        return this.$swal('Vui lòng chọn ít nhất 1 sản phẩm');
+      }
+      var data = {
+        'money_deposite': this.totalPriceShop,
+        'data': {
+          ids: this.ids,
+          data: this.listCart,
+          note: '',
+          quantity: this.quantity
+        }
+      };
+      (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.createCart)(data).then(function (response) {
+        // console.log(response);
+        window.localStorage.removeItem("cart");
+        _this3.$swal('Thanh toán đơn hàng thành công');
+        _this3.data = [];
+        _this3.totalPriceShop = 0;
+        _this3.ids = [];
+        _this3.listCart = [];
+        _this3.quantity = [];
+      })["catch"](function (error) {
+        console.log(error);
+        _this3.$swal(error.response.data.message);
+      });
+    }
   }
 });
 
@@ -21602,59 +21636,53 @@ var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
     "class": "text-xl text-left pl-8"
   }, "Tổng tiền hàng")])], -1 /* HOISTED */);
 });
-var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
-    "class": "pl-8"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "checkbox",
-    name: "",
-    id: "",
-    "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
-  })], -1 /* HOISTED */);
-});
-var _hoisted_18 = {
+var _hoisted_17 = {
+  "class": "pl-8"
+};
+var _hoisted_18 = ["onUpdate:modelValue"];
+var _hoisted_19 = {
   "class": "pl-8 items-center"
 };
-var _hoisted_19 = ["src"];
-var _hoisted_20 = {
+var _hoisted_20 = ["src"];
+var _hoisted_21 = {
   href: "",
   "class": "mt-8 underline block"
 };
-var _hoisted_21 = {
+var _hoisted_22 = {
   "class": "pl-8"
 };
-var _hoisted_22 = ["onChange", "onUpdate:modelValue"];
-var _hoisted_23 = {
-  "class": "pl-8"
-};
+var _hoisted_23 = ["onChange", "onUpdate:modelValue"];
 var _hoisted_24 = {
-  "class": "text-red-500 font-semibold text-xl"
+  "class": "pl-8"
 };
 var _hoisted_25 = {
   "class": "text-red-500 font-semibold text-xl"
 };
 var _hoisted_26 = {
-  "class": "pl-8"
+  "class": "text-red-500 font-semibold text-xl"
 };
 var _hoisted_27 = {
-  "class": "text-red-500 font-semibold text-xl"
+  "class": "pl-8"
 };
 var _hoisted_28 = {
   "class": "text-red-500 font-semibold text-xl"
 };
 var _hoisted_29 = {
-  "class": "text-xl px-5 w-1/4"
+  "class": "text-red-500 font-semibold text-xl"
 };
 var _hoisted_30 = {
+  "class": "text-xl px-5 w-1/4"
+};
+var _hoisted_31 = {
   "class": "h-14 flex items-center"
 };
-var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Tổng tiền: ", -1 /* HOISTED */);
 });
-var _hoisted_32 = {
+var _hoisted_33 = {
   "class": "text-red-500 font-semibold ml-3"
 };
-var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_34 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     name: "",
     id: "",
@@ -21664,21 +21692,15 @@ var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
     "class": "w-full mt-2 mb-4 rounded-md text-white py-1"
   }, " Đặt hàng ")], -1 /* HOISTED */);
 });
-var _hoisted_34 = {
+var _hoisted_35 = {
   "class": "sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2"
 };
-var _hoisted_35 = {
+var _hoisted_36 = {
   "class": "font-semibold text-xl text-gray-700"
 };
-var _hoisted_36 = {
+var _hoisted_37 = {
   "class": "text-red-600 text-xl font-semibold"
 };
-var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "mx-10 py-2 px-12 border-none text-xl rounded-md text-white"
-  }, " Thanh toán ", -1 /* HOISTED */);
-});
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
@@ -21699,11 +21721,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
             "class": "items-center",
             key: index2
-          }, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+            type: "checkbox",
+            "onUpdate:modelValue": function onUpdateModelValue($event) {
+              return $data.ids[listCartProduct.id] = $event;
+            },
+            onClick: _cache[1] || (_cache[1] = function ($event) {
+              return $options.clickCheckbox();
+            }),
+            "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
+          }, null, 8 /* PROPS */, _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.ids[listCartProduct.id]]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
             src: listCartProduct.image,
             alt: "",
             "class": "w-24 py-4 pr-2 float-left"
-          }, null, 8 /* PROPS */, _hoisted_19), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(listCartProduct.product_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+          }, null, 8 /* PROPS */, _hoisted_20), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(listCartProduct.product_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
             type: "number",
             onChange: function onChange($event) {
               return $options.cartQuantity(listCartProduct, index, index2);
@@ -21712,9 +21743,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return listCartProduct.quantity = $event;
             },
             "class": "w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_22), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, listCartProduct.quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_24, "¥" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(listCartProduct.unit_price_cn), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(listCartProduct.unit_price_vn)) + " đ ", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_27, "¥" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(listCartProduct.price_cn), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(listCartProduct.price)) + " đ", 1 /* TEXT */)])]);
-        }), 128 /* KEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(cart.total_price)), 1 /* TEXT */)]), _hoisted_33])])])]);
-      }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Footer cart "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_35, "Tổng thanh toán ( " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.totalQuantityShop) + " sản phẩm ): ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_36, "¥0 ~ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.totalPriceShop)), 1 /* TEXT */), _hoisted_37])])];
+          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_23), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, listCartProduct.quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_25, "¥" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(listCartProduct.unit_price_cn), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(listCartProduct.unit_price_vn)) + " đ ", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_28, "¥" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(listCartProduct.price_cn), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(listCartProduct.price)) + " đ", 1 /* TEXT */)])]);
+        }), 128 /* KEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(cart.total_price)), 1 /* TEXT */)]), _hoisted_34])])])]);
+      }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Footer cart "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_36, "Tổng thanh toán ( " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.totalQuantityShop) + " sản phẩm ): ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_37, "¥0 ~ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.totalPriceShop)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[2] || (_cache[2] = function ($event) {
+          return $options.createOrder();
+        }),
+        "class": "mx-10 py-2 px-12 border-none text-xl rounded-md text-white"
+      }, " Thanh toán ")])])];
     }),
     _: 1 /* STABLE */
   });
@@ -22573,6 +22609,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "cartCheckout": () => (/* binding */ cartCheckout),
+/* harmony export */   "createCart": () => (/* binding */ createCart),
 /* harmony export */   "deleteCart": () => (/* binding */ deleteCart),
 /* harmony export */   "getCart": () => (/* binding */ getCart)
 /* harmony export */ });
@@ -22583,6 +22620,9 @@ function getCart() {
 }
 function cartCheckout(data) {
   return _config__WEBPACK_IMPORTED_MODULE_0__["default"].post("/cart-checkout", data);
+}
+function createCart(data) {
+  return _config__WEBPACK_IMPORTED_MODULE_0__["default"].post("/cart/create", data);
 }
 function deleteCart(id) {
   return _config__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/cart-product/".concat(id));
