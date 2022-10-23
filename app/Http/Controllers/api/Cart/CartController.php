@@ -75,9 +75,9 @@ class CartController extends Controller
                     $newCarts[$key]["cart_products"] = $newCartProducts[$cartId];
                 }
             }
-            $result["newCarts"] = $newCarts;
+            // $result["newCarts"] = $newCarts;
             return response()->json([
-                'data' => $result,
+                'data' => $newCarts,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

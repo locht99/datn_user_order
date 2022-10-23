@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\Transaction\TransactionController;
 use App\Http\Controllers\TestController;
+use App\Http\Transaction\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/getUser', [TestController::class, 'index'])->middleware();
+Route::post('/getRequest',[TransactionController::class,'sendTransaction'])->name('routesss');
+Route::get('/getRequest',[TransactionController::class,'sendTransaction'])->name('routesss');
 Route::get('/{any}', function () {
     return view('index');
 })->where('any', '^(?!api).*$');

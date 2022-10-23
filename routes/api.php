@@ -7,6 +7,8 @@ use App\Http\Controllers\api\ExtensionController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Transaction\TransactionController;
 use App\Http\Controllers\TestController;
+use App\Http\GenerateCodeOrder\GenerateCode;
+use App\Http\Transaction\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -48,15 +50,17 @@ Route::middleware('auth:api,web')->group(function ()
 
     //Thông báo
     Route::prefix('transaction')->group(function () {
-
+        Route::post('create',[TransactionController::class,'createTransaction']);
+        Route::get('type-transaction',[TransactionController::class,'getTypeTransaction']);
+        Route::get('type-payment',[TransactionController::class,'getTypePayment']);
         Route::get('get-transaction', [TransactionController::class, 'getTransaction']);
+        Route::get('generateCode',[GenerateCode::class,'generateCodeTransaction']);
+        Route::get("fetchTransaction",[TransactionController::class,'fetchTransaction']);
     });
-
     Route::prefix('cart')->group(function () {
         Route::get('list', [CartController::class, 'getCart']);
         Route::post('create', [CartController::class, 'cartCreate']);
     });
-    Route::delete("cart-product/{id}", [CartController:: class, 'removeProduct']);
+    Route::delete("cart-product/{id}", [CartController::class, 'removeProduct']);
     Route::post("cart-checkout", [CartController::class, "cartCheckout"]);
-    
 });

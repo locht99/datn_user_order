@@ -50,4 +50,5 @@ const app = createApp(App);
 app.component("Pagination", Pagination);
 app.use(router);
 app.use(VueSweetalert2);
+
 app.mount("#app");
