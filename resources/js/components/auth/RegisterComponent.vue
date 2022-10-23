@@ -141,19 +141,15 @@
                 </div>
             </form>
             <div class="text-center font-semibold">
-                <router-link class="hover:text-red-500" to=""
-                    >Quên mật khẩu</router-link
-                >
-                /
-                <router-link class="hover:text-red-500" to="/login"
-                    >Đăng nhập</router-link
-                >
+                <router-link class="hover:text-red-500" to="">Quên mật khẩu</router-link> / <router-link
+                    class="hover:text-red-500" to="/login">Đăng nhập</router-link>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { register } from "../../config/user";
+import { register } from '../../config/user';
+
 
 export default {
     data() {
@@ -164,7 +160,7 @@ export default {
                 address: "",
                 phone: "",
                 password: "",
-                confirm_password: "",
+                confirm_password: ""
             },
             errors: [],
 
@@ -176,22 +172,22 @@ export default {
     methods: {
         registerUser() {
             this.lazyLoad = true;
-            register(this.dataRegister)
-                .then((res) => {
-                    this.statusRegister = true;
-                    this.statusMessage = res.data;
-                    setTimeout(() => {
-                        this.lazyLoad = false;
-                        this.$router.replace("/login");
-                    }, 2000);
-                })
-                .catch((error) => {
-                    this.statusRegister = false;
-                    this.errors = error.response.data.errors;
-                    this.lazyLoad = false;
-                });
-        },
+            register(this.dataRegister).then(res => {
+                this.statusRegister = true
+                this.statusMessage = res.data
+                setTimeout(() => {
+                    this.lazyLoad = false
+                    this.$router.replace('/login')
+                }, 2000)
+            }).catch(error => {
+                this.statusRegister = false
+                this.errors = error.response.data.errors
+                this.lazyLoad = false
+            });
+        }
     },
 };
 </script>
-<style></style>
+<style>
+
+</style>

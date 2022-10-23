@@ -31,13 +31,13 @@ Route::get('/test', [TestController::class, 'index']);
 //public api
 Route::post('/login', [UserController::class, 'getLogin']);
 Route::post('/register', [UserController::class, 'getRegister']);
-Route::post("sendTransaction",[TransactionController::class,'sendTransaction'])->name('sendTransaction');
-
 
 // protected api
-Route::middleware('auth:api,web')->group(function () {
+Route::middleware('auth:api,web')->group(function () 
+{
 
     Route::get('/user', [UserController::class, 'getUserInfo']);
+    Route::put('/update-user', [UserController::class, 'UpdateUser']);
     //Đơn hàng
     Route::prefix('order')->group(function () {
 

@@ -96,11 +96,10 @@
                       <th class="text-xl text-left pl-8">Sản phẩm</th>
                       <th class="text-xl text-left pl-8">Số lượng</th>
                       <th class="text-xl text-left pl-8">Tiền hàng</th>
-                      <th class="text-xl text-left pl-8">Tổng tiền hàng</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="items-center" v-for="(listCartProduct, index) in cart.cart_products" :key="index">
+                    <tr class="items-center">
                       <td class="pl-8">
                         <input type="checkbox" name="" id="" class="
                           rounded-md
@@ -112,20 +111,16 @@
                         " />
                       </td>
                       <td class="pl-8 items-center">
-                        <img :src="listCartProduct.image" alt="" class="w-24 py-4 pr-2 float-left" />
-                        <a href="" class="mt-8 underline block">{{ listCartProduct.product_name }}</a>
+                        <img src="images/product-demo.png" alt="" class="w-24 py-4 pr-2 float-left" />
+                        <a href="" class="mt-8 underline block">2022春夏新款交叉印字瑜伽芭比裤女 高腰提臀显瘦紧身运动健身裤</a>
                       </td>
                       <td class="pl-8">
-                        <input type="number" :value="listCartProduct.quantity"
+                        <input type="number" value="1"
                           class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
                       </td>
                       <td class="pl-8">
-                        <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ</p>
-                      </td>
-                      <td class="pl-8">
-                        <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ</p>
+                        <p class="text-red-500 font-semibold text-xl">¥45</p>
+                        <p class="text-red-500 font-semibold text-xl">171.000 đ</p>
                       </td>
                     </tr>
                   </tbody>
@@ -154,6 +149,7 @@
             </div>
           </div>
         </section>
+
       </section>
 
 

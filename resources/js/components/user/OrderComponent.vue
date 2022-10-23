@@ -156,54 +156,76 @@
 
       <div class="px-5 overflow-auto">
         <table class="w-full">
-        <thead>
-          <tr class="bg-gray-100 h-14">
-            <th class="w-1/3 text-left pl-20">Thông tin đơn hàng</th>
-            <th class="w-1/3 text-left pl-20">Mã đơn hàng</th>
-            <th class="w-1/3 text-left pl-20">Trạng thái</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-gray-200">
-            <td class="py-3 flex items-center pl-20 mt-1">
-              <img src="/images/product-demo.png" class="max-h-16" alt="" />
-              <a href="" class="mx-2 underline">2022春夏新...</a>
-              <span>x1</span>
-            </td>
-            <td class=" w-1/3 pl-20">MD001</td>
-            <td class="w-1/3 pl-20 text-red-700 font-semibold">Chờ xác nhận</td>
-          </tr>
-          
-          <tr class="w-full h-16 border-b border-gray-200">
-            <td class="py-3 flex items-center pl-20 mt-1">
-              <img src="/images/product-demo.png" class="max-h-16" alt="" />
-              <a href="" class="mx-2 underline">2022春夏新...</a>
-              <span>x1</span>
-            </td>
-            <td class="w-1/3 pl-20">MD001</td>
-            <td class="w-1/3 pl-20 text-red-700 font-semibold">Chờ xác nhận</td>
-          </tr>
-
-          <tr class="w-full h-16 border-b border-gray-200">
-            <td class="py-3 flex items-center pl-20 mt-1">
-              <img src="/images/product-demo.png" class="max-h-16" alt="" />
-              <a href="" class="mx-2 underline">2022春夏新...</a>
-              <span>x1</span>
-            </td>
-            <td class="w-1/3 pl-20">MD001</td>
-            <td class="w-1/3 pl-20 text-yellow-400 font-semibold">Đã nhận hàng</td>
-          </tr>
-          <tr class="w-full h-16 border-b border-gray-200">
-            <td class="py-3 flex items-center pl-20 mt-1">
-              <img src="/images/product-demo.png" class="max-h-16" alt="" />
-              <a href="" class="mx-2 underline">2022春夏新...</a>
-              <span>x1</span>
-            </td>
-            <td class="w-1/3 pl-20">MD001</td>
-            <td class="w-1/3 pl-20 text-gray-500 font-semibold">Đã hủy</td>
-          </tr>
-        </tbody>
-      </table>
+                <thead class="sticky">
+                    <tr class="bg-gray-100 h-12 table w-full box-border">
+                        <th class="w-1/4 text-left pl-20">Mã đơn</th>
+                        <th class="w-1/4 text-left pl-20">Lịch sử</th>
+                        <th class="w-1/4 text-left pl-20">Trạng thái</th>
+                        <th class="w-1/4 text-left pl-20">Khác</th>
+                    </tr>
+                </thead>
+                <tbody class="block max-h-[438px] overflow-y-auto">
+                    <tr
+                        class="h-16 border-b border-gray-300 table w-full box-border"
+                    >
+                        <td class="pl-20 w-1/4">MD001</td>
+                        <td class="w-1/4 pl-20">16:30 - 26/8/2022</td>
+                        <td class="w-1/4 pl-20">Chờ xác nhận</td>
+                        <td
+                            class="w-1/4 pl-20 text-blue-600 cursor-pointer underline"
+                        >
+                         <router-link to="/order-detail">chi tiết</router-link> 
+                        </td>
+                    </tr>
+                    <tr
+                        class="h-16 border-b border-gray-300 table w-full box-border"
+                    >
+                        <td class="pl-20 w-1/4">MD001</td>
+                        <td class="w-1/4 pl-20">16:30 - 26/8/2022</td>
+                        <td class="w-1/4 pl-20">Chờ xác nhận</td>
+                        <td
+                            class="w-1/4 pl-20 text-blue-600 cursor-pointer underline"
+                        >
+                         <router-link to="/order-detail">chi tiết</router-link> 
+                        </td>
+                    </tr>
+                    <tr
+                        class="h-16 border-b border-gray-300 table w-full box-border"
+                    >
+                        <td class="pl-20 w-1/4">MD001</td>
+                        <td class="w-1/4 pl-20">16:30 - 26/8/2022</td>
+                        <td class="w-1/4 pl-20">Chờ xác nhận</td>
+                        <td
+                            class="w-1/4 pl-20 text-blue-600 cursor-pointer underline"
+                        >
+                         <router-link to="/order-detail">chi tiết</router-link> 
+                        </td>
+                    </tr>
+                    <tr
+                        class="h-16 border-b border-gray-300 table w-full box-border"
+                    >
+                        <td class="pl-20 w-1/4">MD001</td>
+                        <td class="w-1/4 pl-20">16:30 - 26/8/2022</td>
+                        <td class="w-1/4 pl-20">Chờ xác nhận</td>
+                        <td
+                            class="w-1/4 pl-20 text-blue-600 cursor-pointer underline"
+                        >
+                         <router-link to="/order-detail">chi tiết</router-link> 
+                        </td>
+                    </tr> <tr
+                        class="h-16 border-b border-gray-300 table w-full box-border"
+                    >
+                        <td class="pl-20 w-1/4">MD001</td>
+                        <td class="w-1/4 pl-20">16:30 - 26/8/2022</td>
+                        <td class="w-1/4 pl-20">Chờ xác nhận</td>
+                        <td
+                            class="w-1/4 pl-20 text-blue-600 cursor-pointer underline"
+                        >
+                         <router-link to="/order-detail">chi tiết</router-link> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
       </div>
     </section>
   </section>
