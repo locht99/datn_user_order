@@ -85,7 +85,6 @@
                       <th class="text-xl text-left pl-8">Sản phẩm</th>
                       <th class="text-xl text-left pl-8">Số lượng</th>
                       <th class="text-xl text-left pl-8">Tiền hàng</th>
-                      <th class="text-xl text-left pl-8">Tổng tiền hàng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -140,6 +139,7 @@
             </div>
           </div>
         </section>
+
       </section>
 
 

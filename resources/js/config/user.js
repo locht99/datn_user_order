@@ -11,6 +11,10 @@ export function register(data) {
     return instance.post('register', data);
 }
 
+export function updateUser(data) {
+    return instance.put('update-user', data);
+}
+
 export function getUser() {
     const token = localStorage.getItem('token') || null;
     return instance.get('user', {

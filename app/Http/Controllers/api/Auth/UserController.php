@@ -73,6 +73,30 @@ class UserController extends Controller
     }
 
     public function getUserInfo(){
-        return response()->json(Auth::user());
+    
+        $address = Address::where('user_id',Auth::id())->first();
+        Auth::user()->address = $address->address;
+        Auth::user()->name = $address->name;
+        return response()->json( Auth::user());
+    }
+
+    public function UpdateUser(Request $request){
+        try {
+             User::where('id',Auth::id())->update([
+                'username' => $request->username,
+                'email' => $request->email, 
+                'phone' => $request->phone,
+             ]);
+          
+             Address::where('id',Auth::id())->update([
+                'address' => $request->address,
+             ]);
+            return response()->json("Chỉnh sửa thành công !");
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                "message" => $th->getMessage()
+            ]);
+        }
     }
 }

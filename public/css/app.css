@@ -1309,6 +1309,10 @@ input:checked + .toggle-bg {
   max-height: 4rem;
 }
 
+.max-h-\[500px\] {
+  max-height: 500px;
+}
+
 .w-full {
   width: 100%;
 }
@@ -1379,6 +1383,10 @@ input:checked + .toggle-bg {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-\[200px\] {
+  width: 200px;
 }
 
 .min-w-max {
@@ -1645,6 +1653,10 @@ input:checked + .toggle-bg {
   border-top-width: 1px;
 }
 
+.border-r {
+  border-right-width: 1px;
+}
+
 .border-solid {
   border-style: solid;
 }
@@ -1775,6 +1787,11 @@ input:checked + .toggle-bg {
 .bg-gray-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#F9C74F\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 199 79 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -1912,6 +1929,11 @@ input:checked + .toggle-bg {
   padding-right: 0.5rem;
 }
 
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1954,6 +1976,14 @@ input:checked + .toggle-bg {
 
 .pb-5 {
   padding-bottom: 1.25rem;
+}
+
+.pr-\[120px\] {
+  padding-right: 120px;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 
 .text-left {
@@ -2008,6 +2038,10 @@ input:checked + .toggle-bg {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[25px\] {
+  font-size: 25px;
 }
 
 .font-bold {
