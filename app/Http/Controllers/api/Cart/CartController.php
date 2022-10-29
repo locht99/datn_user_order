@@ -171,7 +171,7 @@ class CartController extends Controller
 
     public function cartCreate(Request $request)
     {
-        // try {
+        try {
             $deposite_money = $request->money_deposite;
             $data_order = $request->data;
             $input = [];
@@ -206,6 +206,7 @@ class CartController extends Controller
                 // lấy ra những sản phẩm được chọn
                 $keyInput = array_keys($input);
             }
+        ;
             // Lẫy dữ liệu cartProducts
             $cartProducts = DB::table('cart_products')
                 ->select(
@@ -349,11 +350,11 @@ class CartController extends Controller
                 'error' => false,
                 'message'   => "Đặt hàng Thành công"
             ], 200);
-        // } catch (\Throwable $th) {
-        //     return response()->json([
-        //         'error' => true,
-        //         'message'   => $th->getMessage()
-        //     ], 500);
-        // }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                'message'   => $th->getMessage()
+            ], 500);
+        }
     }
 }
