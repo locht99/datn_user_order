@@ -37,7 +37,7 @@
               </div>
               <div class="flex items-center">
                 <label for="kiemhang" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox"  v-model="checkGoods[cart.id]" class="
+                  <input type="checkbox" v-model="checkGoods[cart.id]" class="
                     mb-1
                     rounded-md
                     cursor-pointer
@@ -51,7 +51,7 @@
                 </label>
 
                 <label for="donggo" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox"  name="ff" class="
+                  <input type="checkbox" name="ff" class="
                     mb-1
                     rounded-md
                     cursor-pointer
@@ -75,7 +75,7 @@
             <div class="w-full flex">
               <div class="w-3/4 border-r-2">
                 <table class="w-full">
-                  <thead class="h-14 border-b-2">
+                  <thead class="h-20 border-b-2">
                     <tr>
                       <th class="text-left pl-8">
                         <input type="checkbox" v-model="checkBox[index]" v-on:click="checkAllByShop(index)"
@@ -100,7 +100,7 @@
                       </td>
                       <td class="pl-8">
                         <input type="number" v-on:change="cartQuantity(listCartProduct, index, index2)"
-                          v-model="listCartProduct.quantity"
+                          v-model="listCartProduct.quantity" min="0"
                           class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
                       </td>
                       <td class="pl-8">
@@ -117,9 +117,24 @@
                 </table>
               </div>
               <div class="text-xl px-5 w-1/4">
-                <div class="h-14 flex items-center">
-                  <span>Tổng tiền: </span>
-                  <span class="text-red-500 font-semibold ml-3">{{ formatPrice(cart.total_price) }}</span>
+                <div class="min-h-14 flex items-center">
+                  <div class="py-2">
+                    <div>
+                      <span>Tiền hàng: </span>
+                      <span class="text-red-500 font-semibold ml-3">{{ formatPrice(cart.total_price) }}</span>
+                    </div>
+                    <div>
+                      <span class="text-sm">-Phí mua hàng:</span>
+                      <span class="text-sm"></span>
+                    </div>
+                    
+                    <div>
+                      <span class="text-sm">-Phí cố định:{}</span>
+                    </div>
+                    <div>
+                      <span class="text-sm">-Phí kiểm hàng:</span>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <textarea name="" id="" class="
@@ -182,12 +197,16 @@ export default {
       objectGoods: {},
       checkGoods: [],
       woodWorking: [],
-      ownWood: []
+      listTotalCart: [],
+      ownWood: [],
+      purchaseFee: 0,
+      shippingFee: 0,
+      fixedFee: 0,
+      inspectionFee: 0
+
     };
   },
-  created() {
-    this.listCart = JSON.parse(window.localStorage.getItem("cart"));
-  },
+
   mounted() {
     this.getCartByUser();
   },
@@ -215,7 +234,7 @@ export default {
     checkByItem(id, index) {
       let count = 0;
       this.checkBoxItem[id] = !this.checkBoxItem[id];
-
+      console.log(this.checkBoxItem);
       this.listCart[index].cart_products.forEach((element, index2) => {
         Object.keys(this.checkBoxItem).forEach((ele, index3) => {
           if (ele == element.id) {
@@ -238,11 +257,12 @@ export default {
       let totalShop = 0;
       this.listCart[index].cart_products.forEach((element) => {
         totalPrice += +element.price;
-      })
+      });
       this.listCart[index].total_price = totalPrice;
       this.listCart.forEach((element) => {
         totalShop += + element.total_price;
       })
+      console.log(totalShop);
       this.totalPriceShop = totalShop;
     },
 
@@ -254,6 +274,7 @@ export default {
           quantityItem += +ele.quantity;
         })
       });
+      this.checkOutCart(this.listCart, this.quantity);
       this.totalQuantityShop = quantityItem;
     },
     getCartByUser() {
@@ -265,44 +286,66 @@ export default {
       getCart().then((res) => {
         this.listCart = res.data.data;
 
-        window.localStorage.setItem("cart", JSON.stringify(this.listCart));
-      }).then(() => {
-        this.listCart = JSON.parse(window.localStorage.getItem("cart"));
+        this.listCart.forEach((element) => {
+          totalShop += + element.total_price;
+        })
+        this.listCart.forEach((element) => {
+          this.keyObjectGoods = element.id;
+          this.objectGoods[this.keyObjectGoods] = false;
+          this.checkGoods = this.objectGoods;
+          element.cart_products.forEach((ele) => {
+            this.quantity[ele.id] = ele.quantity;
+            quantityItem += +ele.quantity;
+            this.keyObject = ele.id;
+            this.object[this.keyObject] = false;
+            this.checkBoxItem = this.object;
+          })
+        });
+        this.checkOutCart(this.listCart);
+
       }).catch((error) => {
         this.is_loading = false;
       })
         .finally(() => {
           this.is_loading = false;
         });
-      this.listCart.forEach((element) => {
-        totalShop += + element.total_price;
-      })
-      this.listCart.forEach((element) => {
-        this.keyObjectGoods = element.id;
-        this.objectGoods[this.keyObjectGoods] = false;
-        this.checkGoods = this.objectGoods;
-        element.cart_products.forEach((ele) => {
-          this.quantity[ele.id] = ele.quantity;
-          quantityItem += +ele.quantity;
-          this.keyObject = ele.id;
-          this.object[this.keyObject] = false;
-          this.checkBoxItem = this.object;
-        })
-      });
 
-      this.totalQuantityShop = quantityItem;
-      this.totalPriceShop = totalShop;
+
     },
-
-    cartQuantity(product, index, index2) {
-      this.listCart[index].cart_products[index2].quantity = product.quantity;
-      this.listCart[index].cart_products[index2].price = product.quantity * product.unit_price_vn;
-      this.listCart[index].cart_products[index2].price_cn = product.quantity * product.unit_price_cn;
-      this.getTotal(index);
+    cartQuantity(listCartProduct, index, index2) {
+      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2)
       this.getTotalQuantity(index, index2);
+      this.getTotal(index);
+      this.checkOutCart();
       window.localStorage.setItem("cart", JSON.stringify(this.listCart));
+
     },
 
+    checkOutCart(value = null, quantity = null) {
+      const data = {
+        ids: this.checkBoxItem,
+        data: this.listCart || value,
+        quantity: this.quantity || quantity
+      }
+      console.log(this.quantity);
+      this.is_loading = true
+      cartCheckout(data).then((response) => {
+        const { data } = response.data;
+        this.listTotalCart = response.data;
+        let dataCheckout = JSON.parse(data.request).data;
+        this.listCart = dataCheckout;
+        this.totalPriceShop = data.total_money;
+        this.totalQuantityShop = data.product_quantity.reduce((partialSum, a) => partialSum + a, 0);
+        window.localStorage.setItem("cart", JSON.stringify(dataCheckout));
+      }).catch((error) => {
+
+      }).finally(() => {
+        this.is_loading = false;
+      })
+    },
     createOrder() {
       // console.log(this.checkBoxItem);
       let count = 0;
@@ -315,19 +358,15 @@ export default {
         return this.$swal("Vui lòng chọn ít nhất 1 sản phẩm");
       }
       const data = {
-        'money_deposite': this.totalPriceShop,
+        'money_deposite': this.listTotalCart.money_deposite,
         'data': { ids: this.checkBoxItem, data: this.listCart, note: '', quantity: this.quantity },
       };
       createCart(data).then((response) => {
         // console.log(response);
         window.localStorage.removeItem("cart");
         this.$swal('Thanh toán đơn hàng thành công');
-        this.data = [];
-        this.totalPriceShop = 0
-        this.ids = [];
-        this.listCart = [];
-        this.quantity = [];
-
+        this.getCartByUser();
+        this.checkOutCart();
       }).catch((error) => {
         console.log(error);
         this.$swal(error.response.data.message);
