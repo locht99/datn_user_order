@@ -104,6 +104,7 @@ class ExtensionController extends Controller
         $cart_product = CartProductModel::where("user_id", $uid)
             ->where("cart_id", $cart->id)
             ->where("product_id", $data["item_id"])
+            ->where("propertiesId", $data["properties_id"])
             ->where("is_delete", false)
             ->first();
         $quantity = $data["amount"] ?? 0;
