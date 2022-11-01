@@ -102,20 +102,23 @@ class CartController extends Controller
     public function cartCheckout(Request $request)
     {
         // try {
-        $is_inventory = $request->inventory ? true : false;
+        $is_inventory = $request->inventory;
         $product_id = array_keys($request->ids);
         $data['product_quantity'] = $request->quantity;
         $data['note'] = $request->note;
         $data['total_money_product'] = 0;
         $data['total_money_product_byShop'] = [];
+
         $data['fee'] = [];
         $data['request'] = json_encode($request->input());
         $data['total_money'] = 0;
         $data['money_deposit'] = 0;
         $idShop = [];
         $purchase_fee = [];
-
-
+        $invetory_fee = [];
+        foreach ($request->data as $item) {
+            $idShop[] = $item['id'];
+        }
         $data['cart_products'] = DB::table('cart_products')
             ->select(
                 'cart_products.id',
@@ -133,63 +136,56 @@ class CartController extends Controller
 
         // dd($data['cart_products'][0]->unit_price_vn);
         // dd([$data['cart_products'][0]->id]);
-
-
-
-
         $data['cart_Shop'] = DB::table('carts')->whereIn('id', $idShop)->get();
         $totalByShopProduct = [];
-      
+        $total_quantity_byShop = [];
         foreach ($data['cart_Shop'] as $index => $item) {
-
-            $idShop[] = $item->id;
             $totalByShopProduct[$item->id] = 0;
+            $total_quantity_byShop[$item->id] = 0;
             foreach ($data['cart_products'] as $it) {
-                if ($item['id'] == $it->cart_id) {
+                if ($item->id == $it->cart_id) {
                     $totalByShopProduct[$item->id] += $it->unit_price_vn * $data['product_quantity'][$it->id];
-                    $data['total_money_product_byShop'][$item->id] = $totalByShopProduct[$item['id']];
+                    $total_quantity_byShop[$item->id] += $data['product_quantity'][$it->id];
                 }
             }
-            // foreach($data['cart_products'] as $item){
 
-            // }
-            // dd($data['cart_products'],$idShop);
-            array_push($data['fee'], (object) ([
-                'name' => 'Tổng tiền hàng',
-                'value' => $data['total_money_product_byShop']
-            ]));
-            if ($is_inventory) {
-                $total_quantity = array_sum(
-                    $data['product_quantity']
-                );
-                $invetory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity);
-                array_push($data['fee'], (object) ([
-                    'name' => 'Phí kiểm hàng',
-                    'value' => $invetory_fee * $total_quantity
-                ]));
-            }
             $purchase_fee[$item->id] = getFeePurchase(
                 config('const.config.PURCHASE_FEE'),
-                $data['total_money_product_byShop'][$item->id]
-            ) *  $data['total_money_product_byShop'][$item->id] / 100;
+                $totalByShopProduct[$item->id]
+            ) *  $totalByShopProduct[$item->id] / 100;
             $data['fee'][$item->id] = (array)[
+                [
+                    'name' => 'Tiền hàng',
+                    'value' =>   $totalByShopProduct[$item->id]
+                ],
                 [
                     'name' => 'Phí mua hàng',
                     'value' => $purchase_fee[$item->id]
                 ], [
                     'name' => 'Phí cố định',
                     'value' => 5000
-                ]
+                ],
             ];
+            if ($is_inventory[$item->id]) {
+                $invetoryfeeItem = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity_byShop[$item->id]);
+                $invetory_fee[$item->id] = $invetoryfeeItem *  $total_quantity_byShop[$item->id];
+                array_push($data['fee'][$item->id], (array) [
+                    'name' => 'Phí kiểm hàng',
+                    'value' => $invetory_fee[$item->id]
+                ]);
+            }
+            $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
+            $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id] + 5000 + $inventorytotal;
         }
         foreach ($data['fee'] as $value) {
             // dd($value);
             foreach ($value as $vl) {
                 if ($vl) {
-                    $data['total_money'] += $vl;
+                    $data['total_money'] += $vl['value'];
                 }
             }
         }
+
         $data['money_deposite'] = $data['total_money'] / 2;
 
         return response()->json([
@@ -232,7 +228,7 @@ class CartController extends Controller
                 'message'   => "Tài khoản không đủ vui lòng nạp thêm!"
             ], 500);
         }
-        if ($input === null) {
+        if (empty($input)) {
             return response()->json([
                 'error' => true,
                 'message'   => "Không có sản phẩm"
@@ -370,7 +366,6 @@ class CartController extends Controller
         ]);
 
         // sub point user and create transaction
-
         User::where('id', Auth::id())
             ->update([
                 'point' => $point_user - $deposite_money

@@ -37,7 +37,7 @@
               </div>
               <div class="flex items-center">
                 <label for="kiemhang" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox" v-model="checkGoods[cart.id]" class="
+                  <input type="checkbox" v-on:click="checkBoxInventory(cart.id)" v-model="checkGoods[cart.id]" class="
                     mb-1
                     rounded-md
                     cursor-pointer
@@ -119,20 +119,18 @@
               <div class="text-xl px-5 w-1/4">
                 <div class="min-h-14 flex items-center">
                   <div class="py-2">
-                    <div>
-                      <span>Tiền hàng: </span>
-                      <span class="text-red-500 font-semibold ml-3">{{ formatPrice(cart.total_price) }}</span>
+                    <div v-for="(item, index4) in feeCartByShop[cart.id]" class="nameShop" :key="index4">
+                      <span class="text-sm">{{
+                          item.name
+                      }}:
+                      </span>
+                      <span class="text-sm">{{
+                          formatPrice(item.value)
+                      }}đ</span>
                     </div>
                     <div>
-                      <span class="text-sm">-Phí mua hàng:</span>
-                      <span class="text-sm"></span>
-                    </div>
-                    
-                    <div>
-                      <span class="text-sm">-Phí cố định:{}</span>
-                    </div>
-                    <div>
-                      <span class="text-sm">-Phí kiểm hàng:</span>
+                      <span>Tổng tiền: </span>
+                      <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }}</span>
                     </div>
                   </div>
                 </div>
@@ -159,12 +157,17 @@
 
 
       <!-- Footer cart -->
-      <section class="sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
+      <section class="flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
+        <div class="mx-2">
+          <input type="checkbox" v-on:click="checkBoxAll()"
+            class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400">
+          <label for="" class="text-gray-700 mx-1"> Chọn tất cả|Xóa tất cả </label>
+        </div>
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
         <span class="text-red-600 text-xl font-semibold">¥0 ~ {{ formatPrice(totalPriceShop) }}</span>
-        <button @click="createOrder()" class="mx-10 py-2 px-12 border-none text-xl rounded-md text-white">
-          Thanh toán
+        <button @click="createOrder()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
+          Đặt hàng tất cả sản phẩm đã chọn
         </button>
       </section>
     </section>
@@ -198,7 +201,9 @@ export default {
       checkGoods: [],
       woodWorking: [],
       listTotalCart: [],
-      ownWood: [],
+      feeCartByShop: [],
+      deposite_money: 0,
+      totalMoneyByShop: [],
       purchaseFee: 0,
       shippingFee: 0,
       fixedFee: 0,
@@ -210,7 +215,6 @@ export default {
   mounted() {
     this.getCartByUser();
   },
-
   methods: {
     formatPrice(value) {
       return new Intl.NumberFormat("en-US", {
@@ -220,6 +224,19 @@ export default {
       }).format(value)
         .replace("VND", "")
         .trim();
+    },
+    checkBoxAll() {
+      this.listCart.forEach((element, index) => {
+        this.checkBox[index] = !this.checkBox[index];
+        element.cart_products.forEach((ele) => {
+          this.checkBoxItem[ele.id] = !this.checkBoxItem[ele.id];
+        })
+
+      })
+    },
+    checkBoxInventory(cartid) {
+      this.checkGoods[cartid] = !this.checkGoods[cartid];
+      this.checkOutCart();
     },
     checkAllByShop(index) {
       this.checkBox[index] = !this.checkBox[index];
@@ -262,7 +279,6 @@ export default {
       this.listCart.forEach((element) => {
         totalShop += + element.total_price;
       })
-      console.log(totalShop);
       this.totalPriceShop = totalShop;
     },
 
@@ -285,7 +301,6 @@ export default {
       this.is_loading = true;
       getCart().then((res) => {
         this.listCart = res.data.data;
-
         this.listCart.forEach((element) => {
           totalShop += + element.total_price;
         })
@@ -328,13 +343,16 @@ export default {
       const data = {
         ids: this.checkBoxItem,
         data: this.listCart || value,
-        quantity: this.quantity || quantity
+        quantity: this.quantity || quantity,
+        inventory: this.checkGoods
       }
-      console.log(this.quantity);
       this.is_loading = true
       cartCheckout(data).then((response) => {
         const { data } = response.data;
         this.listTotalCart = response.data;
+        this.feeCartByShop = response.data.data.fee;
+        this.deposite_money = response.data.data.money_deposite;
+        this.totalMoneyByShop = response.data.data.total_money_byShop;
         let dataCheckout = JSON.parse(data.request).data;
         this.listCart = dataCheckout;
         this.totalPriceShop = data.total_money;
@@ -354,11 +372,12 @@ export default {
           count++;
         }
       })
-      if (count == 0) {
-        return this.$swal("Vui lòng chọn ít nhất 1 sản phẩm");
+
+      if (count != this.listCart.length) {
+        return this.$swal("Vui lòng chọn tất cả sản phẩm");
       }
       const data = {
-        'money_deposite': this.listTotalCart.money_deposite,
+        'money_deposite': this.deposite_money,
         'data': { ids: this.checkBoxItem, data: this.listCart, note: '', quantity: this.quantity },
       };
       createCart(data).then((response) => {
