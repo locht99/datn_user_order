@@ -12,9 +12,12 @@
         class="border h-20 rounded-xl shadow-md shadow-gray-400 flex justify-between items-center px-5 select-none">
         <div class="buy-now-title flex items-center">
           <h1 class="font-bold text-2xl">Mua sắm ngay!</h1>
-          <img src="/images/1688-logo.png" alt="" class="mx-2" />
-          <img src="/images/tmall-logo.png" alt="" class="mx-2" />
-          <img src="/images/taobao-logo.png" alt="" class="mx-2" />
+          <a href="https://world.taobao.com/" target="_blank">
+            <img src="/images/taobao-logo.png" alt="" class="mx-2" />
+          </a>
+          <a href="https://www.tmall.com/" target="_blank">
+            <img src="/images/tmall-logo.png" alt="" class="mx-2" />
+          </a>
         </div>
         <div class="account-info flex items-center relative">
           <div class="mr-5">

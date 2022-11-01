@@ -22789,7 +22789,7 @@ var _hoisted_5 = {
 var _hoisted_6 = {
   "class": "border h-20 rounded-xl shadow-md shadow-gray-400 flex justify-between items-center px-5 select-none"
 };
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"buy-now-title flex items-center\" data-v-635b0fb9><h1 class=\"font-bold text-2xl\" data-v-635b0fb9>Mua sắm ngay!</h1><img src=\"/images/1688-logo.png\" alt=\"\" class=\"mx-2\" data-v-635b0fb9><img src=\"/images/tmall-logo.png\" alt=\"\" class=\"mx-2\" data-v-635b0fb9><img src=\"/images/taobao-logo.png\" alt=\"\" class=\"mx-2\" data-v-635b0fb9></div>", 1);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"buy-now-title flex items-center\" data-v-635b0fb9><h1 class=\"font-bold text-2xl\" data-v-635b0fb9>Mua sắm ngay!</h1><a href=\"https://world.taobao.com/\" target=\"_blank\" data-v-635b0fb9><img src=\"/images/taobao-logo.png\" alt=\"\" class=\"mx-2\" data-v-635b0fb9></a><a href=\"https://www.tmall.com/\" target=\"_blank\" data-v-635b0fb9><img src=\"/images/tmall-logo.png\" alt=\"\" class=\"mx-2\" data-v-635b0fb9></a></div>", 1);
 var _hoisted_8 = {
   "class": "account-info flex items-center relative"
 };
