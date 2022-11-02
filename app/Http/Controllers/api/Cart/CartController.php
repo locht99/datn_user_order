@@ -132,10 +132,6 @@ class CartController extends Controller
             ->whereIn("cart_products.id", $product_id)
             ->orderByDesc("created_at")
             ->get()->toArray();
-
-
-        // dd($data['cart_products'][0]->unit_price_vn);
-        // dd([$data['cart_products'][0]->id]);
         $data['cart_Shop'] = DB::table('carts')->whereIn('id', $idShop)->get();
         $totalByShopProduct = [];
         $total_quantity_byShop = [];
@@ -209,7 +205,7 @@ class CartController extends Controller
                 $input[$key] = $value;
             }
         }
-        $inventory = isset($data_order["inventory"]) ? true : false;
+        $inventory = $request->inventory;
         $wood_packing = true;
         $separately_wood_packing = false;
         if (isset($data_order->opt_wood_packing)) {
@@ -237,7 +233,6 @@ class CartController extends Controller
             // lấy ra những sản phẩm được chọn
             $keyInput = array_keys($input);
         }
-        // dd($keyInput);
         // Lẫy dữ liệu cartProducts
         $cartProducts = DB::table('cart_products')
             ->select(

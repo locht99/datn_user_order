@@ -51,7 +51,7 @@
                 </label>
 
                 <label for="donggo" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox" name="ff" class="
+                  <input type="checkbox" v-on:click="checkWoodWorking(cart.id)" v-model="woodWorking[cart.id]" class="
                     mb-1
                     rounded-md
                     cursor-pointer
@@ -65,7 +65,7 @@
                 </label>
 
                 <label for="donggorieng" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox" name="ff"
+                  <input type="checkbox" v-on:click="checkOwn(cart.id)" v-model="ownGood[cart.id]"
                     class="mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                   <i class="fa-solid fa-box mx-2 text-lg text-gray-700"></i>
                   <span class="text-lg font-semibold text-gray-600">Đóng gỗ riêng</span>
@@ -144,7 +144,8 @@
                     focus:ring-0
                   " placeholder="Chú thích cho đơn hàng..."></textarea>
 
-                  <button class="w-full mt-2 mb-4 rounded-md text-white py-1">
+                  <button v-on:click="createOrderByShop(cart.id, index)"
+                    class="w-full mt-2 mb-4 rounded-md text-white py-1">
                     Đặt hàng
                   </button>
                 </div>
@@ -200,14 +201,13 @@ export default {
       objectGoods: {},
       checkGoods: [],
       woodWorking: [],
+      ownGood: [],
       listTotalCart: [],
       feeCartByShop: [],
       deposite_money: 0,
       totalMoneyByShop: [],
-      purchaseFee: 0,
-      shippingFee: 0,
-      fixedFee: 0,
-      inspectionFee: 0
+      isOwnGood: [],
+      isGoodWorking: []
 
     };
   },
@@ -225,6 +225,26 @@ export default {
         .replace("VND", "")
         .trim();
     },
+    checkOwn(cartid) {
+      this.ownGood[cartid] = !this.ownGood[cartid];
+      this.woodWorking[cartid] = false;
+      this.feeCartByShop[cartid].push({ "name": "Đóng gỗ riêng", "value": 0 });
+      this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ');
+      if (this.ownGood[cartid] == false) {
+        this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ riêng');
+      }
+    },
+    checkWoodWorking(cartid) {
+      this.woodWorking[cartid] = !this.woodWorking[cartid];
+      this.ownGood[cartid] = false;
+      this.feeCartByShop[cartid].push({ "name": "Đóng gỗ", "value": 0 });
+      this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ riêng');
+      if (this.woodWorking[cartid] == false) {
+        this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ');
+
+      }
+
+    },
     checkBoxAll() {
       this.listCart.forEach((element, index) => {
         this.checkBox[index] = !this.checkBox[index];
@@ -240,6 +260,7 @@ export default {
     },
     checkAllByShop(index) {
       this.checkBox[index] = !this.checkBox[index];
+
       this.listCart[index].cart_products.forEach((element, index2) => {
         if (this.checkBox[index]) {
           this.checkBoxItem[element.id] = !this.checkBoxItem[element.id];
@@ -251,7 +272,6 @@ export default {
     checkByItem(id, index) {
       let count = 0;
       this.checkBoxItem[id] = !this.checkBoxItem[id];
-      console.log(this.checkBoxItem);
       this.listCart[index].cart_products.forEach((element, index2) => {
         Object.keys(this.checkBoxItem).forEach((ele, index3) => {
           if (ele == element.id) {
@@ -282,7 +302,7 @@ export default {
       this.totalPriceShop = totalShop;
     },
 
-    getTotalQuantity(index, index2) {
+    getTotalQuantity() {
       let quantityItem = 0;
       this.listCart.forEach((element) => {
         element.cart_products.forEach((ele) => {
@@ -307,7 +327,12 @@ export default {
         this.listCart.forEach((element) => {
           this.keyObjectGoods = element.id;
           this.objectGoods[this.keyObjectGoods] = false;
+
           this.checkGoods = this.objectGoods;
+          let cartid = element.id;
+          this.ownGood[cartid] = false;
+          this.woodWorking[cartid] = false;
+
           element.cart_products.forEach((ele) => {
             this.quantity[ele.id] = ele.quantity;
             quantityItem += +ele.quantity;
@@ -364,6 +389,26 @@ export default {
         this.is_loading = false;
       })
     },
+    createOrderByShop(cartid, index) {
+      this.listCart[index].cart_products.forEach((element)=>{
+          this.checkBoxItem[element.id] = true;
+      });
+      const data = {
+        'money_deposite': this.deposite_money,
+        'data': { ids: this.checkBoxItem, data: this.listCart[index].cart_products, note: '', quantity: this.quantity,option: {ownGood: this.ownGood,goodWorking: this.woodWorking,inventory:this.feeCartByShop} },
+      };
+      createCart(data).then((response) => {
+        // console.log(response);
+        window.localStorage.removeItem("cart");
+        this.$swal('Thanh toán đơn hàng thành công');
+        this.getCartByUser();
+        this.checkOutCart();
+        this.getTotalQuantity();
+      }).catch((error) => {
+        console.log(error);
+        this.$swal(error.response.data.message);
+      })
+    },
     createOrder() {
       // console.log(this.checkBoxItem);
       let count = 0;
@@ -386,6 +431,7 @@ export default {
         this.$swal('Thanh toán đơn hàng thành công');
         this.getCartByUser();
         this.checkOutCart();
+        this.getTotalQuantity();
       }).catch((error) => {
         console.log(error);
         this.$swal(error.response.data.message);
