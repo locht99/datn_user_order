@@ -26,10 +26,12 @@ class ApiUserRegisterRequest extends FormRequest
         return [
             "username" => "required|min:6|unique:users,username",
             "email" => "required|email|unique:users,email",
-            "address" => "required",
             "phone" => ["required", "regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/"],
-            "password" => "required_with:confirm_password|min:6",
-            "confirm_password" => "required|same:password"
+            "password" => "required|required_with:confirm_password|min:6",
+            "confirm_password" => "required|same:password",
+            "selectedProvince" => "required",
+            "selectedDistrict" => "required",
+            "selectedWard" => "required"
         ];
     }
 
@@ -42,7 +44,6 @@ class ApiUserRegisterRequest extends FormRequest
             "email.required" => "Email không được để trống",
             "email.email" => "Email không đúng định dạng",
             "email.unique" => "Email đã tồn tại",
-            "address.required" => "Địa chỉ không được để trống",
             "phone.required" => "Số điện thoại không được để trống",
             "phone.regex" => "Số điện thoại không đúng định dạng",
             "password.required" => "Mật khẩu không được để trống",
@@ -50,6 +51,9 @@ class ApiUserRegisterRequest extends FormRequest
             "confirm_password.required" => "Bạn phải điền xác nhận mật khẩu",
             "confirm_password.same" => "Nhập lại mật khẩu không khớp",
             "password.min" => "Mật khẩu phải lớn hơn 6 kí tự",
+            "selectedProvince.required" => "Tỉnh, thành phố không được để trống",
+            "selectedDistrict.required" => "Quận,huyện không được để trống",
+            "selectedWard.required" => "Phường, xã không được để trống"
         ];
     }
 }
