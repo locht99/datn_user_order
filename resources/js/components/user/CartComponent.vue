@@ -193,16 +193,16 @@
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
         <span class="text-red-600 text-xl font-semibold">¥0 ~ {{ formatPrice(totalPriceShop) }}</span>
-        <button @click="toggleModal()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
+        <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
       </section>
       <div v-if="showModal"
-        class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        class="overflow-x-hidden overflow-y-auto  fade  fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
         <div class="relative w-auto my-6 mx-auto max-w-6xl">
           <!--content-->
           <div
-            class="border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-[1200px]">
+            class="modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-[1200px]">
             <!--header-->
             <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
               <h3 class="text-3xl font-semibold">
@@ -210,7 +210,7 @@
               </h3>
               <button
                 class="p-1 ml-auto bg-white bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                v-on:click="toggleModal()">
+                v-on:click="toggleModalCart()">
                 <span
                   class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                   X
@@ -221,10 +221,19 @@
             <div class="relative p-3 flex-auto">
               <div class="flex items-center justify-between">
                 <div class="container p-10 mx-auto">
-                  <div class="flex flex-col w-full px-0 mx-auto md:flex-row">
+                  <div class="flex flex-col w-full px-0 mx-auto md:flex-row" v-if="is_loading == false">
                     <div class="flex flex-col md:w-full">
-                      <h2 class="mb-4 font-bold md:text-xl text-heading ">Địa chỉ giao hàng
-                      </h2>
+                      <div class="flex items-center justify-between">
+                        <div>
+                          <h2 class="mb-4 font-bold md:text-xl text-heading ">Địa chỉ giao hàng
+                          </h2>
+                        </div>
+                        <div>
+                          <span class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
+                            Chỉnh sửa
+                          </span>
+                        </div>
+                      </div>
                       <form class="justify-center w-full mx-auto" method="post" action>
                         <div class="">
                           <div class="space-x-0 lg:flex lg:space-x-4">
@@ -283,7 +292,7 @@
                                 Phí dịch vụ(tạm tính)
                               </div>
                               <div>
-                                <span class="ml-2">100.000đ</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.fee) }}</span>
                               </div>
                             </div>
                             <div
@@ -292,7 +301,7 @@
                                 Tạm tính(1 sản phẩm)
                               </div>
                               <div>
-                                <span class="ml-2">100.200đ</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.provisional) }}</span>
                               </div>
                             </div>
                             <div
@@ -301,7 +310,7 @@
                                 Đặt cọc 50%
                               </div>
                               <div>
-                                <span class="ml-2">100.200đ</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}</span>
                               </div>
                             </div>
                             <div
@@ -310,16 +319,16 @@
                                 Số dư tài khoản
                               </div>
                               <div>
-                                <span class="ml-2">100.200đ</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.point) }}</span>
                               </div>
                             </div>
-                            <div
+                            <div v-if="objPayment.point <= 0"
                               class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                               <div>
                                 Bạn còn thiếu
                               </div>
                               <div>
-                                <span class="ml-2">100.0000đ</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}</span>
                               </div>
                             </div>
                           </div>
@@ -386,7 +395,15 @@ export default {
       isOwnGood: [],
       isGoodWorking: [],
       isTrash: [],
-      syncItem: false
+      syncItem: false,
+      objPayment: {
+        fee: 0,
+        provisional: 0,
+        money_deposite: 0,
+        point: 0,
+        lackMoney: 0
+
+      }
 
     };
   },
@@ -405,8 +422,28 @@ export default {
       this.isTrash[id] = false;
 
     },
-    toggleModal() {
-      this.showModal = !this.showModal
+    toggleModalCart() {
+      let count = 0;
+      Object.keys(this.checkBoxItem).forEach((ele) => {
+        if (this.checkBoxItem[ele]) {
+          count++;
+        }
+      })
+
+      if (count == 0) {
+        return this.$swal("Vui lòng chọn tất cả sản phẩm");
+      } else {
+        this.showModal = !this.showModal;
+      }
+      if (this.showModal) {
+        this.checkOutCart();
+        console.log(this.ids);
+        let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
+        this.objPayment.provisional = this.listTotalCart.data.total_money - this.listTotalCart.data.totalFee;
+        this.objPayment.fee = this.listTotalCart.data.totalFee;
+        this.objPayment.money_deposite = this.listTotalCart.data.money_deposite;
+        this.objPayment.point = moneyProfile.point - this.objPayment.money_deposite;
+      }
     },
     syncCart() {
       this.syncItem = !this.syncItem;
@@ -639,16 +676,7 @@ export default {
     },
     createOrder() {
       // console.log(this.checkBoxItem);
-      let count = 0;
-      Object.keys(this.checkBoxItem).forEach((ele) => {
-        if (this.checkBoxItem[ele]) {
-          count++;
-        }
-      })
 
-      if (count == 0) {
-        return this.$swal("Vui lòng chọn tất cả sản phẩm");
-      }
       const data = {
         'money_deposite': this.deposite_money,
         'data': { ids: this.checkBoxItem, data: this.listCart, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
@@ -702,6 +730,23 @@ table tbody td {
   -webkit-animation: spin 1s linear infinite;
   /* Safari */
   animation: spin 1s linear infinite;
+}
+
+.modal-cart {
+  transition: ease-in-out;
+  animation-name: modalCart;
+  animation-duration: 0.5s;
+}
+
+@keyframes modalCart {
+  0% {
+    transform: translateY(-160px);
+
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @-webkit-keyframes spin {

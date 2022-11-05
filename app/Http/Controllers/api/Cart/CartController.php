@@ -104,7 +104,7 @@ class CartController extends Controller
             //xóa cart nếu trong cart k còn cartProduct
             if ($countCartProducts == 0) {
                 DB::table('carts')
-                    ->where('carts.id',$data->cart_id)
+                    ->where('carts.id', $data->cart_id)
                     ->update(['carts.is_delete' => true]);
             }
             return response()->json(['success' => 'Đã xóa sản phẩm khỏi giỏ hàng']);
@@ -124,6 +124,7 @@ class CartController extends Controller
         $data['total_money_product_byShop'] = [];
 
         $data['fee'] = [];
+        $data['totalFee'] = 0;
         $data['request'] = json_encode($request->input());
         $data['total_money'] = 0;
         $data['money_deposit'] = 0;
@@ -185,6 +186,7 @@ class CartController extends Controller
                 ]);
             }
             $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
+            $data['totalFee'] += +$purchase_fee[$item->id] + 5000 + $inventorytotal;
             $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id] + 5000 + $inventorytotal;
         }
         foreach ($data['fee'] as $value) {

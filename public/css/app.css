@@ -1554,6 +1554,63 @@ input:checked + .toggle-bg {
   animation: spin 1s linear infinite;
 }
 
+.animate-\[wiggle_1s_ease-in-out_infinite\] {
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+.animate-\[wiggle_2s_ease-in-out_infinite\] {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-\[bounce_2s_ease-in-out_infinite\] {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-\[spin_2s_ease-in-out_infinite\] {
+  animation: spin 2s ease-in-out infinite;
+}
+
+.animate-\[2s_ease-in-out_infinite\] {
+  animation: 2s ease-in-out infinite;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -2270,6 +2327,10 @@ input:checked + .toggle-bg {
   line-height: 2.25rem;
 }
 
+.text-\[18px\] {
+  font-size: 18px;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -2416,6 +2477,10 @@ input:checked + .toggle-bg {
 
 .underline {
   text-decoration-line: underline;
+}
+
+.decoration-1 {
+  text-decoration-thickness: 1px;
 }
 
 .antialiased {
@@ -2631,6 +2696,18 @@ input:checked + .toggle-bg {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+
+.hover\:line-through:hover {
+  text-decoration-line: line-through;
+}
+
+.hover\:decoration-1:hover {
+  text-decoration-thickness: 1px;
 }
 
 .hover\:shadow-lg:hover {
