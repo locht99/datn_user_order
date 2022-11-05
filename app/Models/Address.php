@@ -14,6 +14,10 @@ class Address extends Model
         'address',
         'user_id',
         'name',
-        'phone'
+        'phone',
+        'province',
+        'district',
+        'ward',
+        'note'
     ];
 }
