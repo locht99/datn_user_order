@@ -174,8 +174,12 @@ export default {
     mounted() {
         // Pusher.logToConsole = true;
         
-        window.Echo.channel('eventTransaction').listen('TransactionSent', (e) => {
-            
+        window.Echo.channel('eventTransaction').listen('TransactionSent', (res) => {
+             if(res.transaction.success == false){
+                this.$swal('Nạp tiền thất bại', '', 'OK');
+             }else{
+                this.$swal('Nạp tiền thành công','','OK');
+             }
         })
     },
 }
