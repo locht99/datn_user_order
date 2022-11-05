@@ -1262,6 +1262,10 @@ input:checked + .toggle-bg {
   height: 1.75rem;
 }
 
+.h-0 {
+  height: 0px;
+}
+
 .h-5 {
   height: 1.25rem;
 }
@@ -1320,11 +1324,9 @@ input:checked + .toggle-bg {
 
 .max-h-\[500px\] {
   max-height: 500px;
-}
 
 .max-h-16 {
   max-height: 4rem;
-}
 
 .w-full {
   width: 100%;
@@ -2173,12 +2175,10 @@ input:checked + .toggle-bg {
 .text-\[\#6B7280\] {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
-}
 
 .text-yellow-400 {
   --tw-text-opacity: 1;
   color: rgb(227 160 8 / var(--tw-text-opacity));
-}
 
 .underline {
   text-decoration-line: underline;

@@ -25,4 +25,11 @@ class TransactionModel extends Model
     public $timestamps = true;
 
     const UPDATED_AT = null;
+<<<<<<< HEAD
+=======
+   
+    public function user(){
+        return $this->hasOne(User::class,'id','user_id');
+    }
+>>>>>>> 4f76fb121aa052d409522d9a3e483e1bbcb413d0
 }

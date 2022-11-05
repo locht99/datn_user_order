@@ -77,10 +77,7 @@
                                     (isLoadingWard = true), getWards($event)
                                 "
                             >
-                                <option
-                                    v-if="isLoadingDistrict"
-                                    value=""
-                                >
+                                <option v-if="isLoadingDistrict" value="">
                                     Đang tải...
                                 </option>
                                 <option v-else value="">Chọn quận huyện</option>
@@ -136,9 +133,7 @@
                             <select
                                 name="selectedProvince"
                                 class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none"
-                                @change="
-                                    getDistricts($event)
-                                "
+                                @change="getDistricts($event)"
                                 v-model="fillProvince"
                             >
                                 <option v-if="isLoadingProvince" value="">
@@ -286,7 +281,7 @@ export default {
             statusRegister: 0,
             statusMessage: "",
             lazyLoad: false,
-            checkSubmit: false
+            checkSubmit: false,
         };
     },
     mounted() {
@@ -304,8 +299,6 @@ export default {
             )[0]?.DistrictName;
             this.dataRegister.selectedWard = this.fillWard;
             this.lazyLoad = true;
-            this.checkSubmit = true
-
             register(this.dataRegister)
                 .then((res) => {
                     this.statusRegister = true;
@@ -313,92 +306,91 @@ export default {
                     setTimeout(() => {
                         this.lazyLoad = false;
                         this.$router.replace("/login");
-                    }, 1500);
+                    }, 2000);
                 })
                 .catch((error) => {
-                    this.checkSubmit = false
                     this.statusRegister = false;
                     this.errors = error.response.data.errors;
                     this.lazyLoad = false;
                 });
         },
+    },
 
-        getProvinces() {
-            this.isLoadingProvince = true;
-            axios
-                .get(
-                    "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
-                    {
-                        headers: {
-                            token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
-                        },
-                    }
-                )
-                .then((res) => {
-                    this.provinces = res.data.data;
-                    this.isLoadingProvince = false;
-                });
-        },
+    getProvinces() {
+        this.isLoadingProvince = true;
+        axios
+            .get(
+                "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                {
+                    headers: {
+                        token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
+                    },
+                }
+            )
+            .then((res) => {
+                this.provinces = res.data.data;
+                this.isLoadingProvince = false;
+            });
+    },
 
-        getDistricts(province) {
-            this.isLoadingDistrict = true;
-            this.changeProvince = true;
-            this.fillDistrict = "";
-            this.fillWard = "";
-            this.errors = [];
-            const provinceId = province.target.value;
-            if (provinceId == "") {
-                this.districts = [];
-                this.isLoadingDistrict = false
-                return;
-            }
-            axios
-                .get(
-                    "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
-                    {
-                        headers: {
-                            token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
-                        },
-                        params: {
-                            province_id: provinceId,
-                        },
-                    }
-                )
-                .then((res) => {
-                    this.districts = res.data.data;
-                    this.isLoadingDistrict = false;
-                    this.wards = [];
-                });
-        },
-
-        getWards(district) {
-            this.isLoadingWard = true;
-            this.changeProvince = false;
-            this.fillWard = "";
-            this.errors = [];
-            const districtId = district.target.value;
-            if (districtId == "") {
+    getDistricts(province) {
+        this.isLoadingDistrict = true;
+        this.changeProvince = true;
+        this.fillDistrict = "";
+        this.fillWard = "";
+        this.errors = [];
+        const provinceId = province.target.value;
+        if (provinceId == "") {
+            this.districts = [];
+            this.isLoadingDistrict = false;
+            return;
+        }
+        axios
+            .get(
+                "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                {
+                    headers: {
+                        token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
+                    },
+                    params: {
+                        province_id: provinceId,
+                    },
+                }
+            )
+            .then((res) => {
+                this.districts = res.data.data;
+                this.isLoadingDistrict = false;
                 this.wards = [];
-                this.isLoadingWard = false
-                return;
-            }
-            axios
-                .get(
-                    "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
-                    {
-                        headers: {
-                            token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
-                        },
-                        params: {
-                            district_id: district.target.value,
-                        },
-                    }
-                )
-                .then((res) => {
-                    this.wards = res.data.data;
-                    this.isLoadingWard = false;
-                });
-        },
+            });
+    },
+
+    getWards(district) {
+        this.isLoadingWard = true;
+        this.changeProvince = false;
+        this.fillWard = "";
+        this.errors = [];
+        const districtId = district.target.value;
+        if (districtId == "") {
+            this.wards = [];
+            this.isLoadingWard = false;
+            return;
+        }
+        axios
+            .get(
+                "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
+                {
+                    headers: {
+                        token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
+                    },
+                    params: {
+                        district_id: district.target.value,
+                    },
+                }
+            )
+            .then((res) => {
+                this.wards = res.data.data;
+                this.isLoadingWard = false;
+            });
     },
 };
 </script>

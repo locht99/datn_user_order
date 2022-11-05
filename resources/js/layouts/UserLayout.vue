@@ -1,20 +1,23 @@
 <template>
-  <div class="flex m-auto w-[98%] overflow-hidden h-screen py-4">
-    <aside class="w-72 rounded-xl h-full relative z-10 bg-[#ff3f3a]">
+  <div class="flex m-auto w-[98%] h-screen py-4">
+    <aside class="w-72 rounded-xl  h-screen relative z-10 bg-[#ff3f3a]">
       <div class="logo w-3/4 m-auto p-6 border-b border-solid">
         <img class="border-none m-auto" src="/images/logo.png" alt="" />
       </div>
       <menu-user-component />
-      <div class="bg-layout-bar w-full h-96 absolute bottom-0 -z-10 rounded-xl bg-top bg-cover"></div>
+      <div class="bg-layout-bar w-full h-screen absolute bottom-0 -z-10 rounded-xl bg-top bg-cover"></div>
     </aside>
     <section class="w-full ml-4">
       <header
         class="border h-20 rounded-xl shadow-md shadow-gray-400 flex justify-between items-center px-5 select-none">
         <div class="buy-now-title flex items-center">
           <h1 class="font-bold text-2xl">Mua sắm ngay!</h1>
-          <img src="/images/1688-logo.png" alt="" class="mx-2" />
-          <img src="/images/tmall-logo.png" alt="" class="mx-2" />
-          <img src="/images/taobao-logo.png" alt="" class="mx-2" />
+          <a href="https://world.taobao.com/" target="_blank">
+            <img src="/images/taobao-logo.png" alt="" class="mx-2" />
+          </a>
+          <a href="https://www.tmall.com/" target="_blank">
+            <img src="/images/tmall-logo.png" alt="" class="mx-2" />
+          </a>
         </div>
         <div class="account-info flex items-center relative">
           <div class="mr-5">
@@ -74,6 +77,7 @@ export default {
     getUserInfo() {
       getUser().then((res) => {
         this.userInfo = res.data;
+        window.localStorage.setItem("user",JSON.stringify(this.userInfo));
       });
     },
     formatPrice(value) {

@@ -49,7 +49,6 @@
 import { getTransaction } from "../../config/transaction";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-
 export default {
   components: {
     loading,
