@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\api\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Http\GenerateCodeOrder\GenerateCode;
+use App\Models\CartModel;
 use App\Models\CartProductModel;
+use App\Models\OrderDetail;
 use App\Models\OrderModel;
 use App\Models\OrderProductModel;
 use App\Models\PacketModel;
 use App\Models\TransactionModel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -90,9 +94,19 @@ class CartController extends Controller
     public function removeProduct($id)
     {
         try {
-            CartProductModel::findOrFail($id);
-            CartProductModel::where('id', $id)
-                ->update(['is_delete' => 1]);
+            $data =  CartProductModel::findOrFail($id);
+            CartProductModel::where('id', $id)->update(['is_delete' => 1]);
+            $countCartProducts = DB::table('cart_products')
+                ->select('cart_products.id', 'cart_products.cart_id')
+                ->where('cart_products.cart_id', $data->cart_id)
+                ->where('cart_products.is_delete', false)
+                ->count();
+            //xóa cart nếu trong cart k còn cartProduct
+            if ($countCartProducts == 0) {
+                DB::table('carts')
+                    ->where('carts.id',$data->cart_id)
+                    ->update(['carts.is_delete' => true]);
+            }
             return response()->json(['success' => 'Đã xóa sản phẩm khỏi giỏ hàng']);
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Có lỗi xảy ra vui lòng liên hệ quản trị viên']);
@@ -200,22 +214,55 @@ class CartController extends Controller
         $deposite_money = $request->money_deposite;
         $data_order = $request->data;
         $input = [];
+        $idShop  = [];
+        foreach ($request['data']['data'] as $item) {
+            $idShop[] = $item['id'];
+        }
         foreach ($data_order["ids"] as $key => $value) {
             if ($value) {
                 $input[$key] = $value;
             }
         }
-        $inventory = $request->inventory;
-        $wood_packing = true;
-        $separately_wood_packing = false;
-        if (isset($data_order->opt_wood_packing)) {
-            $wood_packing = false;
-            $separately_wood_packing = true;
+        $inventory = $data_order['option']['inventory'];
+        $wood_packing = $data_order['option']['goodWorking'];
+        $separately_wood_packing = $data_order['option']['ownGood'];
+        $checkedwoods = [];
+        $checkedwoodPacking = [];
+        $note = [];
+        $inventory = [];
+        foreach ($wood_packing as $key => $item) {
+            if ($item) {
+                $checkedwoods[$key] = $item;
+            }
         }
-        $note = $data_order["note"] ? $data_order["note"] : '';
+        foreach ($separately_wood_packing as $key => $item) {
+            if ($item) {
+                $checkedwoodPacking[$key] = $item;
+            }
+        }
+        foreach ($data_order['note'] as $key => $item) {
+            if ($item) {
+                $note[$key] = $item;
+            }
+        }
+        foreach ($data_order["option"]["inventory"] as $key => $item) {
+            $inventory[$key] = $item;
+        }
+        // if (isset($data_order->opt_wood_packing)) {
+        //     $wood_packing = false;
+        //     $separately_wood_packing = true;
+        // }
+        // $note = $data_order["note"] ? $data_order["note"] : '';
+
         $quantityArray = [];
+        // dd($data_order["quantity"]);
+
         foreach ($data_order["quantity"] as $key => $value) {
-            $quantityArray[$key] = $value;
+            foreach (array_keys($input) as $it) {
+                if ($value && $it == $key) {
+                    $quantityArray[$key] = $value;
+                }
+            }
         }
         $point_user = Auth()->user()->point;
         if ($deposite_money > $point_user) {
@@ -265,29 +312,48 @@ class CartController extends Controller
             ->get()->toArray();
         //tao order
         $total_quantity = array_sum($quantityArray);
-        // if ($wood_packing) {
-        //     $wood_packing_fee = getFeeConfigNumber(config('const.config.wood_fee'));
-        // }
-        // if ($separately_wood_packing) {
-        //     $separately_wood_packing_fee = getFeeConfigNumber(config('const.config.own_wood_fee'));
-        // }
-        if ($inventory) {
+        $wood_packing_fee = 0;
+        $separately_wood_packing_fee = 0;
+        foreach ($checkedwoods as $item) {
+            if ($item) {
+                $wood_packing_fee += getFeeConfigNumber(config('const.config.wood_fee'));
+            }
+        }
+        foreach ($separately_wood_packing as $item) {
+            if ($item) {
+                $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.own_wood_fee'));
+            }
+        }
+        $Shop = CartModel::whereIn("id", $idShop)->get();
+        if (isset($inventory)) {
             $inventory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity) * $total_quantity;
         }
+        $dataShopInsert = [];
+        $generateCode = new GenerateCode();
+        $orderCode = $generateCode->generateCodeOrder();
+
+
         $order = OrderModel::create([
             'user_id' => Auth::id(),
             'partner_id' => 1,
             'order_status_id' => config('const.order_status.deposited'),
-            'shop_id' => $cartProducts[0]->shop_id,
-            'shop_name' => $cartProducts[0]->shop_name,
-            'shop_url' => $cartProducts[0]->shop_url,
             'wood_packing_fee' => isset($wood_packing_fee) && $wood_packing_fee ? $wood_packing_fee : 0,
             'separately_wood_packing_fee' => isset($separately_wood_packing_fee) && $separately_wood_packing_fee
                 ? $separately_wood_packing_fee : 0,
             'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
-            'note' => $note,
+            'order_code' => $orderCode
         ]);
+        foreach ($Shop as $key => $item) {
+            $dataShopInsert[] = [
+                'shop_id' => $item->shop_id,
+                'shop_name' => $item->shop_name,
+                'shop_url' => $item->shop_url,
+                'order_id' => $order->id,
+                'note' => isset($note[$item->id]) ? $note[$item->id] : ""
+            ];
+        }
+        OrderDetail::insert($dataShopInsert);
         $items_price_vn = 0;
         foreach ($cartProducts as $key => $value) {
             //tao orderProducts
@@ -330,11 +396,11 @@ class CartController extends Controller
         foreach ($carId as $car) {
             $cartId[] = $car->cart_id;
         }
-
-        // xóa sản phẩm đã chọn
+        // xóa cartId phẩm đã chọn
         DB::table('cart_products')
             ->whereIn("cart_products.id", $keyInput)
             ->update(['cart_products.is_delete' => true]);
+
 
         // tính số lượng sản phẩm trong cart
         $countCartProducts = DB::table('cart_products')
@@ -352,14 +418,15 @@ class CartController extends Controller
         PacketModel::create([
             'user_id' => Auth::id(),
             'partner_id' => 1,
-            'order_id' => $order->id,
+            'order_id' =>  $order->id,
             'status' => 0,
             'price_unit' => config('const.price.price_unit'),
-            'opt_order_checking' => $inventory,
-            'opt_wood_packing' => $wood_packing,
-            'opt_separate_wood_packing' => $separately_wood_packing,
+            'opt_order_checking' => isset($inventory) ? true : false,
+            'opt_wood_packing' => isset($checkedwoods) ? true : false,
+            'opt_separate_wood_packing' => isset($checkedwoodPacking) ? true : false,
         ]);
-
+        // checkedwoodPacking
+        // checkedwoods
         // sub point user and create transaction
         User::where('id', Auth::id())
             ->update([
@@ -368,9 +435,9 @@ class CartController extends Controller
         TransactionModel::create([
             'partner_id' => 1,
             'user_id' => Auth::id(),
-            'order_id' => $order->id,
+            'order_id' =>  $order->id,
             'type_id' => config('const.type_transaction.deposited'),
-            'content' => 'Đặt cọc cho đơn hàng ' . formatId($order->id, 4),
+            'content' => 'Đặt cọc cho đơn hàng ' . $orderCode,
             'point' => -$deposite_money,
         ]);
 
