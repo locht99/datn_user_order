@@ -80,9 +80,9 @@ class UserController extends Controller
     public function getUserInfo(){
     
         $address = Address::where('user_id',Auth::id())->first();
-        Auth::user()->address = $address->address;
+        Auth::user()->address = $address->province;
         Auth::user()->name = $address->name;
-        return response()->json( Auth::user());
+        return response()->json(Auth::user());
     }
 
     public function UpdateUser(Request $request){
