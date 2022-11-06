@@ -213,10 +213,7 @@
               <button
                 class="p-1 ml-auto bg-white bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 v-on:click="toggleModalCart()">
-                <span
-                  class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                  X
-                </span>
+                <i class="fas fa-times text-black"></i>
               </button>
             </div>
             <!--body-->
@@ -231,7 +228,7 @@
                           </h2>
                         </div>
                         <div>
-                          <span
+                          <span v-on:click="openModalAddRess()"
                             class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
                             Chỉnh sửa
                           </span>
@@ -366,6 +363,8 @@
         </div>
       </div>
       <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" :showModalAction="showModalAddress">
+      </AddRessComponent>
     </section>
   </Transition>
 
@@ -373,11 +372,13 @@
 
 <script>
 import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct } from "../../config/cart";
+import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   components: {
     loading,
+    AddRessComponent
 
   },
   data() {
@@ -418,7 +419,8 @@ export default {
       },
       cartid: 0,
       index: 0,
-      checkBoxAllIn: false
+      checkBoxAllIn: false,
+      showModalAddress: false
 
     };
   },
@@ -430,6 +432,15 @@ export default {
     // checkByNote(){
     //   console.log(this.noteByShop);
     // },
+    openModalAddRess() {
+      this.showModalAddress = !this.showModalAddress;
+      this.showModal =!this.showModal;
+    },
+    updateModalAddRess(event) {
+      this.showModalAddress = !event;
+      this.showModal =!this.showModal;
+
+    },
     mouseover(id) {
       this.isTrash[id] = true;
     },
@@ -439,7 +450,10 @@ export default {
     },
     toggleModalCart(cartid = null, index = null) {
       let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
-      console.log(this.checkBoxItem);
+      if (this.showModal == false) {
+        this.objPayment.quantity = 0;
+
+      }
       if (cartid != null) {
         this.checkOutCart();
         this.cartid = cartid;
@@ -449,6 +463,7 @@ export default {
           this.listCart[index].cart_products.forEach((element) => {
             if (this.listCart[index].id == cartid) {
               this.checkBoxItem[element.id] = true;
+              this.objPayment.quantity += element.quantity;
             } else {
               this.checkBoxItem[element.id] = false;
             }
@@ -594,12 +609,12 @@ export default {
       } else {
         this.checkBox[index] = false;
       }
-      
+
       this.checkBoxByAll();
 
       // })
     },
-    checkBoxByAll(){
+    checkBoxByAll() {
       let CountCheckall = 0;
       Object.keys(this.checkBoxItem).forEach((ele) => {
         if (this.checkBoxItem[ele]) {
