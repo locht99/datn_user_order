@@ -20716,10 +20716,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     checkBoxAll: function checkBoxAll() {
       var _this3 = this;
+      this.checkBoxAllIn = !this.checkBoxAllIn;
       this.listCart.forEach(function (element, index) {
         _this3.checkBox[index] = !_this3.checkBox[index];
         element.cart_products.forEach(function (ele) {
           _this3.checkBoxItem[ele.id] = !_this3.checkBoxItem[ele.id];
+          if (element.cart_products.length == _this3.checkBoxItem.length) {
+            _this3.checkBoxAllIn = true;
+          }
         });
       });
     },
@@ -20732,13 +20736,12 @@ __webpack_require__.r(__webpack_exports__);
       this.checkBox[index] = !this.checkBox[index];
       this.listCart[index].cart_products.forEach(function (element, index2) {
         if (_this4.checkBox[index]) {
-          _this4.checkBoxAllIn = true;
           _this4.checkBoxItem[element.id] = !_this4.checkBoxItem[element.id];
         } else {
           _this4.checkBoxItem[element.id] = false;
-          _this4.checkBoxAllIn = false;
         }
       });
+      this.checkBoxByAll();
     },
     checkByItem: function checkByItem(id, index) {
       var _this5 = this;
@@ -20755,13 +20758,26 @@ __webpack_require__.r(__webpack_exports__);
       });
       if (count == this.listCart[index].cart_products.length) {
         this.checkBox[index] = true;
+      } else {
+        this.checkBox[index] = false;
+      }
+      this.checkBoxByAll();
+
+      // })
+    },
+    checkBoxByAll: function checkBoxByAll() {
+      var _this6 = this;
+      var CountCheckall = 0;
+      Object.keys(this.checkBoxItem).forEach(function (ele) {
+        if (_this6.checkBoxItem[ele]) {
+          CountCheckall++;
+        }
+      });
+      if (this.listTotalCart.data.cart_products.length == CountCheckall) {
         this.checkBoxAllIn = true;
       } else {
         this.checkBoxAllIn = false;
-        this.checkBox[index] = false;
       }
-
-      // })
     },
     getTotal: function getTotal(index) {
       var totalPrice = 0;
@@ -20776,11 +20792,11 @@ __webpack_require__.r(__webpack_exports__);
       this.totalPriceShop = totalShop;
     },
     getTotalQuantity: function getTotalQuantity() {
-      var _this6 = this;
+      var _this7 = this;
       var quantityItem = 0;
       this.listCart.forEach(function (element) {
         element.cart_products.forEach(function (ele) {
-          _this6.quantity[ele.id] = ele.quantity;
+          _this7.quantity[ele.id] = ele.quantity;
           quantityItem += +ele.quantity;
         });
       });
@@ -20788,36 +20804,36 @@ __webpack_require__.r(__webpack_exports__);
       this.totalQuantityShop = quantityItem;
     },
     getCartByUser: function getCartByUser() {
-      var _this7 = this;
+      var _this8 = this;
       var totalShop = 0;
       var quantityShop = 0;
       var quantityItem = 0;
       this.is_loading = true;
       (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.getCart)().then(function (res) {
-        _this7.listCart = res.data.data;
-        _this7.listCart.forEach(function (element) {
+        _this8.listCart = res.data.data;
+        _this8.listCart.forEach(function (element) {
           totalShop += +element.total_price;
         });
-        _this7.listCart.forEach(function (element) {
-          _this7.keyObjectGoods = element.id;
-          _this7.objectGoods[_this7.keyObjectGoods] = false;
-          _this7.checkGoods = _this7.objectGoods;
+        _this8.listCart.forEach(function (element) {
+          _this8.keyObjectGoods = element.id;
+          _this8.objectGoods[_this8.keyObjectGoods] = false;
+          _this8.checkGoods = _this8.objectGoods;
           var cartid = element.id;
-          _this7.ownGood[cartid] = false;
-          _this7.woodWorking[cartid] = false;
+          _this8.ownGood[cartid] = false;
+          _this8.woodWorking[cartid] = false;
           element.cart_products.forEach(function (ele) {
-            _this7.quantity[ele.id] = ele.quantity;
+            _this8.quantity[ele.id] = ele.quantity;
             quantityItem += +ele.quantity;
-            _this7.keyObject = ele.id;
-            _this7.object[_this7.keyObject] = false;
-            _this7.checkBoxItem = _this7.object;
+            _this8.keyObject = ele.id;
+            _this8.object[_this8.keyObject] = false;
+            _this8.checkBoxItem = _this8.object;
           });
         });
-        _this7.checkOutCart(_this7.listCart);
+        _this8.checkOutCart(_this8.listCart);
       })["catch"](function (error) {
-        _this7.is_loading = false;
+        _this8.is_loading = false;
       })["finally"](function () {
-        _this7.is_loading = false;
+        _this8.is_loading = false;
       });
     },
     cartQuantity: function cartQuantity(listCartProduct, index, index2) {
@@ -20830,7 +20846,7 @@ __webpack_require__.r(__webpack_exports__);
       this.checkOutCart();
     },
     checkOutCart: function checkOutCart() {
-      var _this8 = this;
+      var _this9 = this;
       var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var quantity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var data = {
@@ -20842,20 +20858,20 @@ __webpack_require__.r(__webpack_exports__);
       this.is_loading = true;
       (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.cartCheckout)(data).then(function (response) {
         var data = response.data.data;
-        _this8.listTotalCart = response.data;
-        _this8.feeCartByShop = response.data.data.fee;
-        _this8.deposite_money = response.data.data.money_deposite;
-        _this8.totalMoneyByShop = response.data.data.total_money_byShop;
+        _this9.listTotalCart = response.data;
+        _this9.feeCartByShop = response.data.data.fee;
+        _this9.deposite_money = response.data.data.money_deposite;
+        _this9.totalMoneyByShop = response.data.data.total_money_byShop;
         var dataCheckout = JSON.parse(data.request).data;
-        _this8.listCart = dataCheckout;
-        _this8.totalPriceShop = data.total_money;
-        _this8.totalQuantityShop = data.product_quantity.reduce(function (partialSum, a) {
+        _this9.listCart = dataCheckout;
+        _this9.totalPriceShop = data.total_money;
+        _this9.totalQuantityShop = data.product_quantity.reduce(function (partialSum, a) {
           return partialSum + a;
         }, 0);
-        _this8.syncItem = false;
+        _this9.syncItem = false;
       })["catch"](function (error) {})["finally"](function () {
-        _this8.is_loading = false;
-        _this8.syncItem = false;
+        _this9.is_loading = false;
+        _this9.syncItem = false;
       });
     },
     // createOrderByShop(cartid,index) {
@@ -20876,7 +20892,7 @@ __webpack_require__.r(__webpack_exports__);
     //   })
     // },
     createOrder: function createOrder() {
-      var _this9 = this;
+      var _this10 = this;
       var cartid = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var deposite_money = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -20884,10 +20900,10 @@ __webpack_require__.r(__webpack_exports__);
       var listCart = this.listCart;
       if (cartid != null) {
         this.listCart[index].cart_products.forEach(function (element) {
-          if (_this9.listCart[index].id == cartid) {
-            _this9.checkBoxItem[element.id] = true;
+          if (_this10.listCart[index].id == cartid) {
+            _this10.checkBoxItem[element.id] = true;
           } else {
-            _this9.checkBoxItem[element.id] = false;
+            _this10.checkBoxItem[element.id] = false;
           }
         });
         listCart = [this.listCart[index]];
@@ -20908,13 +20924,13 @@ __webpack_require__.r(__webpack_exports__);
       };
       (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.createCart)(data).then(function (response) {
         // console.log(response);
-        _this9.$swal('Thanh toán đơn hàng thành công');
-        _this9.getCartByUser();
-        _this9.checkOutCart();
-        _this9.getTotalQuantity();
-        _this9.showModal = false;
+        _this10.$swal('Thanh toán đơn hàng thành công');
+        _this10.getCartByUser();
+        _this10.checkOutCart();
+        _this10.getTotalQuantity();
+        _this10.showModal = false;
       })["catch"](function (error) {
-        _this9.$swal(error.response.data.message);
+        _this10.$swal(error.response.data.message);
       });
     }
   }
@@ -22564,7 +22580,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.createOrder(null, null, $data.objPayment.money_deposite);
         }),
         "class": "w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900"
-      }, "Thanh Toán")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, [_hoisted_92, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [_hoisted_96, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_97, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.fee)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_98, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Tạm tính(" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.objPayment.quantity) + " sản phẩm) ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_99, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.provisional)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [_hoisted_101, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.money_deposite)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_103, [_hoisted_104, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_105, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.point)), 1 /* TEXT */)])]), $data.objPayment.point <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_106, [_hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.lackMoney)), 1 /* TEXT */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("footer"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b\">\r\n\r\n              <button\r\n                class=\"text-white bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150\"\r\n                type=\"button\" v-on:click=\"toggleModal()\">\r\n                Thanh toán\r\n              </button>\r\n            </div> ")])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_109)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
+      }, "Thanh Toán")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, [_hoisted_92, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [_hoisted_96, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_97, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.fee)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_98, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Tạm tính(" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.objPayment.quantity) + " sản phẩm) ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_99, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.provisional)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [_hoisted_101, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.money_deposite)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_103, [_hoisted_104, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_105, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.point)) + "đ", 1 /* TEXT */)])]), $data.objPayment.point <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_106, [_hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.lackMoney)) + "đ", 1 /* TEXT */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("footer"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b\">\r\n\r\n              <button\r\n                class=\"text-white bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150\"\r\n                type=\"button\" v-on:click=\"toggleModal()\">\r\n                Thanh toán\r\n              </button>\r\n            </div> ")])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_109)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
     }),
     _: 1 /* STABLE */
   });

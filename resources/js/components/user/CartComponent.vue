@@ -277,12 +277,12 @@
 
                           <div class="mt-4">
                             <div v-if="cartid != 0">
-                              <button v-on:click="createOrder(cartid, index,objPayment.money_deposite)"
+                              <button v-on:click="createOrder(cartid, index, objPayment.money_deposite)"
                                 class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
                                 Toán</button>
                             </div>
                             <div v-if="cartid == 0">
-                              <button v-on:click="createOrder(null,null,objPayment.money_deposite)"
+                              <button v-on:click="createOrder(null, null, objPayment.money_deposite)"
                                 class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
                                 Toán</button>
                             </div>
@@ -304,7 +304,7 @@
                                 Phí dịch vụ(tạm tính)
                               </div>
                               <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.fee) }}</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.fee) }}đ</span>
                               </div>
                             </div>
                             <div
@@ -313,7 +313,7 @@
                                 Tạm tính({{ objPayment.quantity }} sản phẩm)
                               </div>
                               <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.provisional) }}</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.provisional) }}đ</span>
                               </div>
                             </div>
                             <div
@@ -322,7 +322,7 @@
                                 Đặt cọc 50%
                               </div>
                               <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}đ</span>
                               </div>
                             </div>
                             <div
@@ -331,7 +331,7 @@
                                 Số dư tài khoản
                               </div>
                               <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.point) }}</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.point) }}đ</span>
                               </div>
                             </div>
                             <div v-if="objPayment.point <= 0"
@@ -340,7 +340,7 @@
                                 Bạn còn thiếu
                               </div>
                               <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}</span>
+                                <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}đ</span>
                               </div>
                             </div>
                           </div>
@@ -378,7 +378,7 @@ import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   components: {
     loading,
-    
+
   },
   data() {
     return {
@@ -546,10 +546,15 @@ export default {
     },
 
     checkBoxAll() {
+      this.checkBoxAllIn = !this.checkBoxAllIn;
       this.listCart.forEach((element, index) => {
         this.checkBox[index] = !this.checkBox[index];
+
         element.cart_products.forEach((ele) => {
           this.checkBoxItem[ele.id] = !this.checkBoxItem[ele.id];
+          if (element.cart_products.length == this.checkBoxItem.length) {
+            this.checkBoxAllIn = true;
+          }
         })
 
       })
@@ -563,23 +568,22 @@ export default {
 
       this.listCart[index].cart_products.forEach((element, index2) => {
         if (this.checkBox[index]) {
-          this.checkBoxAllIn = true;
           this.checkBoxItem[element.id] = !this.checkBoxItem[element.id];
         } else {
           this.checkBoxItem[element.id] = false;
-          this.checkBoxAllIn = false;
 
         }
       });
+      this.checkBoxByAll();
     },
     checkByItem(id, index) {
       let count = 0;
       this.checkBoxItem[id] = !this.checkBoxItem[id];
       this.listCart[index].cart_products.forEach((element, index2) => {
+
         Object.keys(this.checkBoxItem).forEach((ele, index3) => {
           if (ele == element.id) {
             if (this.checkBoxItem[element.id]) {
-
               count++
             }
           }
@@ -587,13 +591,26 @@ export default {
       });
       if (count == this.listCart[index].cart_products.length) {
         this.checkBox[index] = true;
+      } else {
+        this.checkBox[index] = false;
+      }
+      
+      this.checkBoxByAll();
+
+      // })
+    },
+    checkBoxByAll(){
+      let CountCheckall = 0;
+      Object.keys(this.checkBoxItem).forEach((ele) => {
+        if (this.checkBoxItem[ele]) {
+          CountCheckall++;
+        }
+      })
+      if (this.listTotalCart.data.cart_products.length == CountCheckall) {
         this.checkBoxAllIn = true;
       } else {
         this.checkBoxAllIn = false;
-        this.checkBox[index] = false;
       }
-
-      // })
     },
     getTotal(index) {
       let totalPrice = 0;
@@ -715,7 +732,7 @@ export default {
     //     this.$swal(error.response.data.message);
     //   })
     // },
-    createOrder(cartid = null, index = null,deposite_money=null) {
+    createOrder(cartid = null, index = null, deposite_money = null) {
       // console.log(this.checkBoxItem);
       let listCart = this.listCart;
       if (cartid != null) {

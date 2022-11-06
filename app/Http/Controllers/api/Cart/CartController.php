@@ -212,10 +212,7 @@ class CartController extends Controller
                 [
                     'name' => 'Phí mua hàng',
                     'value' => $purchase_fee[$item->id]
-                ], [
-                    'name' => 'Phí cố định',
-                    'value' => 5000
-                ],
+                ]
             ];
             if ($is_inventory[$item->id]) {
                 $invetoryfeeItem = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity_byShop[$item->id]);
@@ -226,8 +223,8 @@ class CartController extends Controller
                 ]);
             }
             $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
-            $data['totalFee'] += +$purchase_fee[$item->id] + 5000 + $inventorytotal;
-            $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id] + 5000 + $inventorytotal;
+            $data['totalFee'] += +$purchase_fee[$item->id]  + $inventorytotal;
+            $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id]  + $inventorytotal;
         }
         foreach ($data['fee'] as $index => $value) {
             $data['money_deposite_byShop'][$index] = 0;
