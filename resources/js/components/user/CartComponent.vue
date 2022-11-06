@@ -169,8 +169,7 @@
                     border-1 border-gray-400
                     focus:ring-0
                   " placeholder="Chú thích cho đơn hàng..."></textarea>
-
-                  <button v-on:click="createOrderByShop(cart.id, index)"
+                  <button v-on:click="toggleModalCart(cart.id, index)"
                     class="w-full mt-2 mb-4 rounded-md text-white py-1">
                     Đặt hàng
                   </button>
@@ -184,11 +183,14 @@
 
 
       <!-- Footer cart -->
-      <section class="flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
+      <section v-if="listCart.length != 0" class="flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
         <div class="mx-2">
-          <input type="checkbox" v-on:click="checkBoxAll()"
+          <input type="checkbox" id="checkboxAll" v-model="checkBoxAllIn" v-on:click="checkBoxAll()"
             class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400">
-          <label for="" class="text-gray-700 mx-1"> Chọn tất cả|Xóa tất cả </label>
+          <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"> Chọn
+            tất cả </label>
+          <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
+            tất cả</label>
         </div>
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
@@ -229,12 +231,13 @@
                           </h2>
                         </div>
                         <div>
-                          <span class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
+                          <span
+                            class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
                             Chỉnh sửa
                           </span>
                         </div>
                       </div>
-                      <form class="justify-center w-full mx-auto" method="post" action>
+                      <div class="justify-center w-full mx-auto">
                         <div class="">
                           <div class="space-x-0 lg:flex lg:space-x-4">
                             <div class="w-full lg:w-1/2">
@@ -273,11 +276,20 @@
                           </div>
 
                           <div class="mt-4">
-                            <button class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
-                              Toán</button>
+                            <div v-if="cartid != 0">
+                              <button v-on:click="createOrder(cartid, index,objPayment.money_deposite)"
+                                class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
+                                Toán</button>
+                            </div>
+                            <div v-if="cartid == 0">
+                              <button v-on:click="createOrder(null,null,objPayment.money_deposite)"
+                                class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
+                                Toán</button>
+                            </div>
+
                           </div>
                         </div>
-                      </form>
+                      </div>
                     </div>
                     <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
                       <div class="pt-12 md:pt-0 2xl:ps-4">
@@ -298,7 +310,7 @@
                             <div
                               class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                               <div>
-                                Tạm tính(1 sản phẩm)
+                                Tạm tính({{ objPayment.quantity }} sản phẩm)
                               </div>
                               <div>
                                 <span class="ml-2">{{ formatPrice(objPayment.provisional) }}</span>
@@ -360,13 +372,13 @@
 </template>
 
 <script>
-import { getCart, createCart, cartCheckout, deleteCart } from "../../config/cart";
+import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct } from "../../config/cart";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-
 export default {
   components: {
     loading,
+    
   },
   data() {
     return {
@@ -401,9 +413,12 @@ export default {
         provisional: 0,
         money_deposite: 0,
         point: 0,
+        quantity: 0,
         lackMoney: 0
-
-      }
+      },
+      cartid: 0,
+      index: 0,
+      checkBoxAllIn: false
 
     };
   },
@@ -422,27 +437,54 @@ export default {
       this.isTrash[id] = false;
 
     },
-    toggleModalCart() {
+    toggleModalCart(cartid = null, index = null) {
+      let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
+      console.log(this.checkBoxItem);
+      if (cartid != null) {
+        this.checkOutCart();
+        this.cartid = cartid;
+        this.index = index;
+        if (cartid != null) {
+          this.checkBox[index] = true;
+          this.listCart[index].cart_products.forEach((element) => {
+            if (this.listCart[index].id == cartid) {
+              this.checkBoxItem[element.id] = true;
+            } else {
+              this.checkBoxItem[element.id] = false;
+            }
+          });
+        }
+        let cart_shop = this.listTotalCart.data.fee[cartid];
+        let feePay = cart_shop[1].value;
+        let moneyPay = cart_shop[0].value;
+        this.objPayment.provisional = moneyPay;
+        this.objPayment.fee = feePay;
+        this.objPayment.money_deposite = this.listTotalCart.data.money_deposite_byShop[cartid];
+        this.objPayment.point = moneyProfile.point;
+
+      }
       let count = 0;
       Object.keys(this.checkBoxItem).forEach((ele) => {
         if (this.checkBoxItem[ele]) {
           count++;
         }
-      })
-
+      });
       if (count == 0) {
-        return this.$swal("Vui lòng chọn tất cả sản phẩm");
+        return this.$swal("Vui lòng chọn ít nhất 1 sản phẩm");
       } else {
         this.showModal = !this.showModal;
       }
-      if (this.showModal) {
-        this.checkOutCart();
-        console.log(this.ids);
-        let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
-        this.objPayment.provisional = this.listTotalCart.data.total_money - this.listTotalCart.data.totalFee;
-        this.objPayment.fee = this.listTotalCart.data.totalFee;
-        this.objPayment.money_deposite = this.listTotalCart.data.money_deposite;
-        this.objPayment.point = moneyProfile.point - this.objPayment.money_deposite;
+      if (this.showModal && cartid == null) {
+        this.is_loading = true;
+        cartCheckoutByProduct({ ids: this.checkBoxItem, quantity: this.quantity, inventory: this.checkGoods }).then((response) => {
+          this.objPayment.provisional = response.data.totalMoney;
+          this.objPayment.fee = response.data.feePurchase;
+          this.objPayment.money_deposite = response.data.money_deposite;
+          this.objPayment.point = moneyProfile.point;
+          this.objPayment.quantity = response.data.quantity;
+        }).finally(() => {
+          this.is_loading = false;
+        });
       }
     },
     syncCart() {
@@ -521,9 +563,12 @@ export default {
 
       this.listCart[index].cart_products.forEach((element, index2) => {
         if (this.checkBox[index]) {
+          this.checkBoxAllIn = true;
           this.checkBoxItem[element.id] = !this.checkBoxItem[element.id];
         } else {
           this.checkBoxItem[element.id] = false;
+          this.checkBoxAllIn = false;
+
         }
       });
     },
@@ -542,7 +587,9 @@ export default {
       });
       if (count == this.listCart[index].cart_products.length) {
         this.checkBox[index] = true;
+        this.checkBoxAllIn = true;
       } else {
+        this.checkBoxAllIn = false;
         this.checkBox[index] = false;
       }
 
@@ -650,36 +697,40 @@ export default {
 
       })
     },
-    createOrderByShop(cartid, index) {
-      this.listCart[index].cart_products.forEach((element) => {
-        if (this.listCart[index].id == cartid) {
-          this.checkBoxItem[element.id] = true;
-        } else {
-          this.checkBoxItem[element.id] = false;
-        }
-      });
-      const data = {
-        'money_deposite': this.deposite_money,
-        'data': { ids: this.checkBoxItem, data: [this.listCart[index]], note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
-      };
-      createCart(data).then((response) => {
-        // console.log(response);
-        window.localStorage.removeItem("cart");
-        this.$swal('Thanh toán đơn hàng thành công');
-        this.getCartByUser();
-        this.checkOutCart();
-        this.getTotalQuantity();
-      }).catch((error) => {
-        console.log(error);
-        this.$swal(error.response.data.message);
-      })
-    },
-    createOrder() {
-      // console.log(this.checkBoxItem);
+    // createOrderByShop(cartid,index) {
 
+    //   const data = {
+    //     'money_deposite': this.deposite_money,
+    //     'data': { ids: this.checkBoxItem, data: [this.listCart[index]], note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
+    //   };
+    //   createCart(data).then((response) => {
+    //     // console.log(response);
+    //     window.localStorage.removeItem("cart");
+    //     this.$swal('Thanh toán đơn hàng thành công');
+    //     this.getCartByUser();
+    //     this.checkOutCart();
+    //     this.getTotalQuantity();
+    //   }).catch((error) => {
+    //     console.log(error);
+    //     this.$swal(error.response.data.message);
+    //   })
+    // },
+    createOrder(cartid = null, index = null,deposite_money=null) {
+      // console.log(this.checkBoxItem);
+      let listCart = this.listCart;
+      if (cartid != null) {
+        this.listCart[index].cart_products.forEach((element) => {
+          if (this.listCart[index].id == cartid) {
+            this.checkBoxItem[element.id] = true;
+          } else {
+            this.checkBoxItem[element.id] = false;
+          }
+        });
+        listCart = [this.listCart[index]];
+      }
       const data = {
-        'money_deposite': this.deposite_money,
-        'data': { ids: this.checkBoxItem, data: this.listCart, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
+        'money_deposite': deposite_money,
+        'data': { ids: this.checkBoxItem, data: listCart, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
       };
       createCart(data).then((response) => {
         // console.log(response);
@@ -687,6 +738,7 @@ export default {
         this.getCartByUser();
         this.checkOutCart();
         this.getTotalQuantity();
+        this.showModal = false;
       }).catch((error) => {
         this.$swal(error.response.data.message);
       })
