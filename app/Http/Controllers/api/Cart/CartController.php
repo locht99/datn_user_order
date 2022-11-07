@@ -251,12 +251,12 @@ class CartController extends Controller
 
     public function cartCreate(Request $request)
     {
-        dd($request->id_address);
         $deposite_money = $request->money_deposite;
         $data_order = $request->data;
         $input = [];
         $idShop  = [];
-        $id_Address = $request->id_address;
+        $id_Address = $request->data['id_address'];
+        
         foreach ($request['data']['data'] as $item) {
             $idShop[] = $item['id'];
         }
@@ -383,8 +383,7 @@ class CartController extends Controller
                 ? $separately_wood_packing_fee : 0,
             'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
-            'order_code' => $orderCode,
-            'address_id'=>$id_Address
+
         ]);
         foreach ($Shop as $key => $item) {
             $dataShopInsert[] = [
@@ -424,8 +423,11 @@ class CartController extends Controller
             config('const.config.PURCHASE_FEE'),
             $items_price_vn
         ) * $items_price_vn / 100;
+
         $order->items_price_vnd = $items_price_vn;
         $order->purchase_fee = $purchase_fee;
+        $order->order_code = $orderCode;
+        $order->address_id = $id_Address;
         $order->save();
 
         // lấy cartId trùng với những sản phẩm được chọn trong cart

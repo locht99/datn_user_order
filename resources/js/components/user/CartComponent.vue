@@ -363,7 +363,8 @@
         </div>
       </div>
       <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
-      <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)" :showModalAction="showModalAddress">
+      <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
+        :showModalAction="showModalAddress">
       </AddRessComponent>
     </section>
   </Transition>
@@ -442,8 +443,8 @@ export default {
       this.showModal = !this.showModal;
 
     },
-    updateIdAddress(event){
-     this.id_address = event;
+    updateIdAddress(event) {
+      this.id_address = event;
 
     },
     mouseover(id) {
@@ -767,7 +768,7 @@ export default {
       }
       const data = {
         'money_deposite': deposite_money,
-        'data': { ids: this.checkBoxItem, data: listCart, id_address:this.id_address, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
+        'data': { ids: this.checkBoxItem, data: listCart, id_address: JSON.parse(window.localStorage.getItem("is_default_Address")).id, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
       };
       createCart(data).then((response) => {
         // console.log(response);

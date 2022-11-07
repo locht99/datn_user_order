@@ -20566,6 +20566,10 @@ __webpack_require__.r(__webpack_exports__);
       var User = JSON.parse(window.localStorage.getItem("user"));
       (0,_config_user__WEBPACK_IMPORTED_MODULE_2__.getAddress)(User.id).then(function (response) {
         _this.dataAddress = response.data;
+        var idDefault = _this.dataAddress.find(function (item) {
+          return item.is_default == 1;
+        });
+        window.localStorage.setItem("is_default_Address", JSON.stringify(idDefault));
       })["catch"](function (error) {});
     },
     checkedAddress: function checkedAddress(id) {
@@ -20989,7 +20993,7 @@ __webpack_require__.r(__webpack_exports__);
         'data': {
           ids: this.checkBoxItem,
           data: listCart,
-          id_address: this.id_address,
+          id_address: JSON.parse(window.localStorage.getItem("is_default_Address")).id,
           note: this.noteByShop,
           quantity: this.quantity,
           option: {
@@ -22154,7 +22158,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_16 = {
   "class": "px-5 py-5 border-b border-gray-200 bg-white text-sm"
 };
-var _hoisted_17 = ["onClick"];
+var _hoisted_17 = ["checked", "onClick"];
 var _hoisted_18 = {
   "class": "px-5 py-5 border-b border-gray-200 bg-white text-sm"
 };
@@ -22235,6 +22239,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "radio",
       name: "radio",
+      checked: item.is_default == 1 ? true : false,
       onClick: function onClick($event) {
         return $options.checkedAddress(item.id);
       }

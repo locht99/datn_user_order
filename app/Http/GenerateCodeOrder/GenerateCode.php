@@ -14,7 +14,7 @@ class GenerateCode{
     }
     public function generateCodeOrder(){
         $id = OrderModel::where('user_id',Auth::user()->id)->get('id');
-        $newId = $id[count($id)-1]->id+1;
+        $newId = count($id) !=null ? $id[count($id)-1]->id+1 : 1;
         $code ='MD' . Auth::id().$newId.date("Ymd");
         return $code;
     }

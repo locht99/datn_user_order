@@ -69,7 +69,9 @@
                                                 <tbody>
                                                     <tr v-for="item in dataAddress">
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <input type="radio" name="radio" v-on:click="checkedAddress(item.id)" >
+                                                            <input type="radio" name="radio"
+                                                                :checked="item.is_default == 1 ? true : false"
+                                                                v-on:click="checkedAddress(item.id)">
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <div class="flex items-center">
@@ -80,23 +82,23 @@
                                                                 </div>
                                                                 <div class="ml-3">
                                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                                        {{item.name}}
+                                                                        {{ item.name }}
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                                {{item.phone}}</p>
+                                                                {{ item.phone }}</p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                                {{item.ward + item.district +item.province}}
+                                                                {{ item.ward + item.district + item.province }}
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-900 whitespace-no-wrap w-[380px]">
-                                                              {{item.note}}
+                                                                {{ item.note }}
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -118,7 +120,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                 </tbody>
                                             </table>
 
@@ -173,13 +175,15 @@ export default {
         getAddressUser() {
             let User = JSON.parse(window.localStorage.getItem("user"));
             getAddress(User.id).then((response) => {
-                    this.dataAddress = response.data;
+                this.dataAddress = response.data;
+                let idDefault = this.dataAddress.find((item) => item.is_default == 1);
+                window.localStorage.setItem("is_default_Address",JSON.stringify(idDefault));
             }).catch((error) => {
 
             })
         },
-        checkedAddress(id){
-          this.$emit('idAddRess',id);
+        checkedAddress(id) {
+            this.$emit('idAddRess', id);
         }
 
     }
