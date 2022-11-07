@@ -61,4 +61,7 @@ class OrderModel extends Model
                 + $model->items_price_vnd??0;
         });
     }
+    function product(){
+        return $this->hasMany(OrderProductModel::class, 'order_id', 'id');
+    }
 }
