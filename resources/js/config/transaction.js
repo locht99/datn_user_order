@@ -2,20 +2,20 @@ import instance from "./config";
 
 export function getTransaction(pageNumber) {
 
-    return instance.get("/transaction/get-transaction?page="+pageNumber);
+    return instance.get("/transaction/get-transaction?page=" + pageNumber);
 }
-export function createTransaction(data){
-   return instance.post("/transaction/create",data);
+export function createTransaction(data) {
+    return instance.post("/transaction/create", data);
 }
-export function getTypeTransaction(){
+export function getTypeTransaction() {
     return instance.get("/transaction/type-transaction");
 }
-export function getPayment() { 
+export function getPayment() {
     return instance.get("/transaction/type-payment");
- }
-export function getCodeTransaction() { 
+}
+export function getCodeTransaction() {
     return instance.get("/transaction/generateCode");
- }
- export function checkOrCreateTransaction(){
+}
+export function checkOrCreateTransaction() {
     return instance.get("/transaction/checkOrCreateTransaction");
- }
+}
