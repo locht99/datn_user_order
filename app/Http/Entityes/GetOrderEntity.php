@@ -91,8 +91,8 @@ class GetOrderEntity extends Controller
     public function filterDataOder($source, $order_status_id, $search){
         $filterDataOderProduct = OrderModel::join('order_statuses', 'orders.order_status_id', 'order_statuses.id')
             ->select('orders.id', 'orders.order_status_id', 'orders.shop_name', 'orders.source', 'orders.order_code', 'order_statuses.status_name')
-            ->where('orders.user_id', auth()->user()->id)
             ->withCount('product')
+            ->where('orders.user_id', auth()->user()->id)
             ->when($search, function ($query, $search) {
 
                 $query->where('orders.order_code', 'like', '%'.$search.'%');
