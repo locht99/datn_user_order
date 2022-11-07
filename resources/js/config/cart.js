@@ -9,6 +9,9 @@ export function cartCheckout(data) {
 export function createCart(data) {
     return instance.post("/cart/create",data);
 }
+export function cartCheckoutByProduct(data){
+    return instance.post("/cart-checkoutByProduct",data);
+}
 export function deleteCart(id) {
     return instance.delete(`/cart-product/${id}`);
 }

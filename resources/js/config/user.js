@@ -14,7 +14,9 @@ export function register(data) {
 export function updateUser(data) {
     return instance.put('update-user', data);
 }
-
+export function getAddress(id){
+    return instance.get(`get-address/${id}`);
+}
 export function getUser() {
     const token = localStorage.getItem('token') || null;
     return instance.get('user', {

@@ -104,7 +104,7 @@ class CartController extends Controller
             //xóa cart nếu trong cart k còn cartProduct
             if ($countCartProducts == 0) {
                 DB::table('carts')
-                    ->where('carts.id',$data->cart_id)
+                    ->where('carts.id', $data->cart_id)
                     ->update(['carts.is_delete' => true]);
             }
             return response()->json(['success' => 'Đã xóa sản phẩm khỏi giỏ hàng']);
@@ -112,7 +112,46 @@ class CartController extends Controller
             return response()->json(['error' => 'Có lỗi xảy ra vui lòng liên hệ quản trị viên']);
         }
     }
+    public function cartCheckByProduct(Request $request)
+    {
+        $product_id = [];
+        $quantityArr = [];
+        $inventoryArr = [];
+        $quantity = $request->quantity;
+        $inventory = $request->inventory;
+        $data['feeCheckOrder'] = 0;
+        foreach ($request->ids as $index => $item) {
 
+            if ($item) {
+                $product_id[$index] = $index;
+                $quantityArr[$index] = $quantity[$index];
+            }
+        }
+
+        $data['cart_products'] = DB::table('cart_products')->select('*')->whereIn("cart_products.id", $product_id)->orderByDesc("created_at")
+            ->get()->toArray();
+        $data['totalMoney'] = 0;
+        $data['quantity'] = 0;
+        foreach ($data['cart_products'] as $item) {
+
+            $data['totalMoney'] += $item->unit_price_vn * $quantityArr[$item->id];
+            $data['quantity'] += $quantityArr[$item->id];
+            if ($inventory[$item->cart_id]) {
+                $data['feeCheckOrder'] += getFeeConfig(config('const.config.CHECKING_FEE'), $quantityArr[$item->id]);
+            }
+        }
+        $data['feePurchase'] = getFeePurchase(
+            config('const.config.PURCHASE_FEE'),
+            $data['totalMoney']
+        ) *  $data['totalMoney'] / 100;
+        $data['money_deposite'] = ($data['totalMoney'] + $data['feeCheckOrder'] + $data['feePurchase']) / 2;
+
+        // array_push($data['fee'][$item->id], (array) [
+        //     'name' => 'Phí kiểm hàng',
+        //     'value' => $invetory_fee[$item->id]
+        // ]);
+        return response()->json($data);
+    }
     public function cartCheckout(Request $request)
     {
         // try {
@@ -124,9 +163,11 @@ class CartController extends Controller
         $data['total_money_product_byShop'] = [];
 
         $data['fee'] = [];
+        $data['totalFee'] = 0;
         $data['request'] = json_encode($request->input());
         $data['total_money'] = 0;
         $data['money_deposit'] = 0;
+        $data['money_deposite_byShop'] = [];
         $idShop = [];
         $purchase_fee = [];
         $invetory_fee = [];
@@ -171,10 +212,7 @@ class CartController extends Controller
                 [
                     'name' => 'Phí mua hàng',
                     'value' => $purchase_fee[$item->id]
-                ], [
-                    'name' => 'Phí cố định',
-                    'value' => 5000
-                ],
+                ]
             ];
             if ($is_inventory[$item->id]) {
                 $invetoryfeeItem = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity_byShop[$item->id]);
@@ -185,17 +223,19 @@ class CartController extends Controller
                 ]);
             }
             $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
-            $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id] + 5000 + $inventorytotal;
+            $data['totalFee'] += +$purchase_fee[$item->id]  + $inventorytotal;
+            $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id]  + $inventorytotal;
         }
-        foreach ($data['fee'] as $value) {
-            // dd($value);
+        foreach ($data['fee'] as $index => $value) {
+            $data['money_deposite_byShop'][$index] = 0;
+
             foreach ($value as $vl) {
                 if ($vl) {
                     $data['total_money'] += $vl['value'];
+                    $data['money_deposite_byShop'][$index] += $vl['value'] / 2;
                 }
             }
         }
-
         $data['money_deposite'] = $data['total_money'] / 2;
 
         return response()->json([
@@ -215,6 +255,8 @@ class CartController extends Controller
         $data_order = $request->data;
         $input = [];
         $idShop  = [];
+        $id_Address = $request->data['id_address'];
+        
         foreach ($request['data']['data'] as $item) {
             $idShop[] = $item['id'];
         }
@@ -332,7 +374,6 @@ class CartController extends Controller
         $generateCode = new GenerateCode();
         $orderCode = $generateCode->generateCodeOrder();
 
-
         $order = OrderModel::create([
             'user_id' => Auth::id(),
             'partner_id' => 1,
@@ -342,7 +383,7 @@ class CartController extends Controller
                 ? $separately_wood_packing_fee : 0,
             'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
-            'order_code' => $orderCode
+
         ]);
         foreach ($Shop as $key => $item) {
             $dataShopInsert[] = [
@@ -382,8 +423,11 @@ class CartController extends Controller
             config('const.config.PURCHASE_FEE'),
             $items_price_vn
         ) * $items_price_vn / 100;
+
         $order->items_price_vnd = $items_price_vn;
         $order->purchase_fee = $purchase_fee;
+        $order->order_code = $orderCode;
+        $order->address_id = $id_Address;
         $order->save();
 
         // lấy cartId trùng với những sản phẩm được chọn trong cart
@@ -452,5 +496,11 @@ class CartController extends Controller
         //         'message'   => $th->getMessage()
         //     ], 500);
         // }
+    }
+    public function getAddressUser($id)
+    {
+        $address = DB::table('user_addresses')->where('user_id', $id)->get();
+
+        return response()->json($address);
     }
 }
