@@ -3,6 +3,7 @@
 namespace App\Http\Entityes;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderModel;
 use Illuminate\Support\Facades\DB;
 
 class GetOrderEntity extends Controller
@@ -88,42 +89,37 @@ class GetOrderEntity extends Controller
     }
 
     public function filterDataOder($source, $order_status_id, $search){
-
-        $filterDataOderProduct = DB::table('orders')
-            ->where('user_id', auth()->user()->id)
+        $filterDataOderProduct = OrderModel::join('order_statuses', 'orders.order_status_id', 'order_statuses.id')
+            ->select('orders.id', 'orders.order_status_id', 'orders.shop_name', 'orders.source', 'orders.order_code', 'order_statuses.status_name')
+            ->withCount('product')
+            ->where('orders.user_id', auth()->user()->id)
             ->when($search, function ($query, $search) {
 
-                $query->where('source', 'like', '%'.$search.'%');
+                $query->where('orders.order_code', 'like', '%'.$search.'%');
 
             }, function ($query) use ($source, $order_status_id) {
 
                 $query->when($source, function ($query, $source) {
 
-                    $query->whereIn('source', $source);
+                    $query->whereIn('orders.source', $source);
     
                 }, function ($query) {
     
                     $sources = DB::table('orders')->select('source')->distinct();
-                    $query->whereIn('source',$sources);
+                    $query->whereIn('orders.source',$sources);
     
                 })->when($order_status_id, function ($query, $order_status_id) {
     
-                    $query->where('order_status_id', $order_status_id); 
+                    $query->whereIn('orders.order_status_id', $order_status_id); 
     
                 }, function ($query) {
     
                     $order_statuses = DB::table('order_statuses')->pluck('id');
-                    $query->whereIn('order_status_id',$order_statuses);
+                    $query->whereIn('orders.order_status_id',$order_statuses);
     
                 });
 
-            })->get()->map(function ($oderStatus) {
-                $oderStatus->status_name = DB::table('order_statuses')
-                    ->where('id', $oderStatus->order_status_id)
-                    ->pluck('status_name')
-                    ->join('orders', 'order_statuses.id', 'orders.order_statuses_id');
-                return $oderStatus;
-            });
+            })->paginate(7);
 
         return $filterDataOderProduct;
 
