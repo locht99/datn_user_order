@@ -363,7 +363,7 @@
         </div>
       </div>
       <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
-      <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" :showModalAction="showModalAddress">
+      <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)" :showModalAction="showModalAddress">
       </AddRessComponent>
     </section>
   </Transition>
@@ -420,7 +420,8 @@ export default {
       cartid: 0,
       index: 0,
       checkBoxAllIn: false,
-      showModalAddress: false
+      showModalAddress: false,
+      id_address: 0
 
     };
   },
@@ -434,11 +435,15 @@ export default {
     // },
     openModalAddRess() {
       this.showModalAddress = !this.showModalAddress;
-      this.showModal =!this.showModal;
+      this.showModal = !this.showModal;
     },
     updateModalAddRess(event) {
       this.showModalAddress = !event;
-      this.showModal =!this.showModal;
+      this.showModal = !this.showModal;
+
+    },
+    updateIdAddress(event){
+     this.id_address = event;
 
     },
     mouseover(id) {
@@ -762,7 +767,7 @@ export default {
       }
       const data = {
         'money_deposite': deposite_money,
-        'data': { ids: this.checkBoxItem, data: listCart, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
+        'data': { ids: this.checkBoxItem, data: listCart, id_address:this.id_address, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
       };
       createCart(data).then((response) => {
         // console.log(response);

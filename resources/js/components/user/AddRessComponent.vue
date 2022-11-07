@@ -38,8 +38,8 @@
                                                     <tr>
                                                         <th
                                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                            
-                                                        </th>  
+
+                                                        </th>
                                                         <th
                                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                             Họ tên
@@ -54,7 +54,7 @@
                                                         </th>
                                                         <th
                                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                           Địa chỉ
+                                                            Địa chỉ
                                                         </th>
                                                         <th
                                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -67,9 +67,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr v-for="item in dataAddress">
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <input type="radio">
+                                                            <input type="radio" name="radio" v-on:click="checkedAddress(item.id)" >
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <div class="flex items-center">
@@ -80,26 +80,23 @@
                                                                 </div>
                                                                 <div class="ml-3">
                                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                                        Vera Carpenter
+                                                                        {{item.name}}
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                                0338898903</p>
+                                                                {{item.phone}}</p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                                Nghách 63/33/71 Nhà số 17 Lê Đức Thọ, Nam Từ Liêm , Hà
-                                                                Nội
+                                                                {{item.ward + item.district +item.province}}
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-900 whitespace-no-wrap w-[380px]">
-                                                                Nghách 63/33/71 Nhà số 17 Lê Đức Thọ, Nam Từ Liêm , Hà
-                                                                Nội,
-                                                                Phường Mỹ Đình 2, Quận Nam Từ Liêm, Thành phố Hà Nội
+                                                              {{item.note}}
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -111,63 +108,20 @@
                                                             </span>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                           <div class="flex items-center">
-                                                             <div class="m-2">
-                                                                <a href="">Sửa</a>
-                                                             </div>
-                                                             <div class="m-2">
-                                                                <a href="">Xóa</a>
-                                                             </div>
-                                                           </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <input type="radio">
-                                                        </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <div class="flex items-center">
-                                                                <div class="flex-shrink-0 w-10 h-10">
-                                                                    <img class="w-full h-full rounded-full"
-                                                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                                                        alt="" />
+                                                                <div class="m-2">
+                                                                    <a href="">Sửa</a>
                                                                 </div>
-                                                                <div class="ml-3">
-                                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                                        Vera Carpenter
-                                                                    </p>
+                                                                <div class="m-2">
+                                                                    <a href="">Xóa</a>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                                0338898903</p>
-                                                        </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                                Nghách 63/33/71 Nhà số 17 Lê Đức Thọ, Nam Từ Liêm , Hà
-                                                                Nội
-                                                            </p>
-                                                        </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-900 whitespace-no-wrap w-[380px]">
-                                                                Nghách 63/33/71 Nhà số 17 Lê Đức Thọ, Nam Từ Liêm , Hà
-                                                                Nội,
-                                                                Phường Mỹ Đình 2, Quận Nam Từ Liêm, Thành phố Hà Nội
-                                                            </p>
-                                                        </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <span
-                                                                class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                                                <span aria-hidden
-                                                                    class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                                                <span class="relative">Mặc định</span>
-                                                            </span>
-                                                        </td>
                                                     </tr>
+                                                  
                                                 </tbody>
                                             </table>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -177,12 +131,12 @@
                     <!-- footer-->
                     <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
 
-              <button
-                class="text-red-600 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button" >
-                Lưu thay đổi
-              </button>
-            </div>
+                        <button
+                            class="text-red-600 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button">
+                            Lưu thay đổi
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,19 +146,40 @@
 <script>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { getAddress } from '../../config/user';
 export default {
     components: {
         Loading
     },
+    data() {
+        return {
+            dataAddress: []
+        }
+    },
     emits: {
         showModalAddress: Boolean,
+        idAddRess: Number
         // foobar: Function
     }, props: {
         showModalAction: Boolean,
     },
+    created() {
+        this.getAddressUser();
+    },
     methods: {
         toggleModalAddRess() {
             this.$emit('showModalAddress', this.showModalAction);
+        },
+        getAddressUser() {
+            let User = JSON.parse(window.localStorage.getItem("user"));
+            getAddress(User.id).then((response) => {
+                    this.dataAddress = response.data;
+            }).catch((error) => {
+
+            })
+        },
+        checkedAddress(id){
+          this.$emit('idAddRess',id);
         }
 
     }

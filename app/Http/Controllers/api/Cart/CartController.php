@@ -251,10 +251,12 @@ class CartController extends Controller
 
     public function cartCreate(Request $request)
     {
+        dd($request->id_address);
         $deposite_money = $request->money_deposite;
         $data_order = $request->data;
         $input = [];
         $idShop  = [];
+        $id_Address = $request->id_address;
         foreach ($request['data']['data'] as $item) {
             $idShop[] = $item['id'];
         }
@@ -381,7 +383,8 @@ class CartController extends Controller
                 ? $separately_wood_packing_fee : 0,
             'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
-            'order_code' => $orderCode
+            'order_code' => $orderCode,
+            'address_id'=>$id_Address
         ]);
         foreach ($Shop as $key => $item) {
             $dataShopInsert[] = [
@@ -491,5 +494,11 @@ class CartController extends Controller
         //         'message'   => $th->getMessage()
         //     ], 500);
         // }
+    }
+    public function getAddressUser($id)
+    {
+        $address = DB::table('user_addresses')->where('user_id', $id)->get();
+
+        return response()->json($address);
     }
 }
