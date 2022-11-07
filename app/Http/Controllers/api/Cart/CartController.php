@@ -391,7 +391,8 @@ class CartController extends Controller
                 'shop_name' => $item->shop_name,
                 'shop_url' => $item->shop_url,
                 'order_id' => $order->id,
-                'note' => isset($note[$item->id]) ? $note[$item->id] : ""
+                'note' => isset($note[$item->id]) ? $note[$item->id] : "",
+                'source'=>$item->source
             ];
         }
         OrderDetail::insert($dataShopInsert);
