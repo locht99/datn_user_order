@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiUserRegisterRequest;
 use App\Models\Address;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller
@@ -60,19 +62,46 @@ class UserController extends Controller
                 'uid' => 0
             ]); 
           
-            $address = Address::create([
+            Address::query()->create([
                 'user_id' => $newUser->id,
-                'address' => $request->address,
                 'name' => $newUser->username,
+                'province' => $request->selectedProvince,
+                'district' => $request->selectedDistrict,
+                'ward' => $request->selectedWard,
+                'note' => $request->addressNote,
                 'phone' => $newUser->phone,
             ]);
             return response()->json("Đăng kí tài khoản thành công");
-        } catch (\Throwable $th) {
-            return response()->json('Có lỗi xảy ra, vui lòng thử lại sau.', 500);
+        } catch (Exception $th) {
+            return response()->json('Có lỗi xảy ra, vui lòng thử lại sau', 500);
         }
     }
 
     public function getUserInfo(){
+    
+        $address = Address::where('user_id',Auth::id())->first();
+        Auth::user()->address = $address->province;
+        Auth::user()->name = $address->name;
         return response()->json(Auth::user());
+    }
+
+    public function UpdateUser(Request $request){
+        try {
+             User::where('id',Auth::id())->update([
+                'username' => $request->username,
+                'email' => $request->email, 
+                'phone' => $request->phone,
+             ]);
+          
+             Address::where('id',Auth::id())->update([
+                'address' => $request->address,
+             ]);
+            return response()->json("Chỉnh sửa thành công !");
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                "message" => $th->getMessage()
+            ]);
+        }
     }
 }

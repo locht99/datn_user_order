@@ -42,7 +42,6 @@
       :offset="5"
       @pagination-change-page="getTransactionByUser"
     ></Pagination>
-
   </section>
 </template>
 
