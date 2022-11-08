@@ -129,8 +129,8 @@
                             <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.price_cn }}</p>
                             <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
-                          <div class="pr-1">
-                            <label for="" v-on:click="deleteProductCart(listCartProduct.id)" class="cursor-pointer"
+                          <div class="pr-1 relative">
+                            <label for="" v-on:click="deleteProductCart(listCartProduct.id)" class="cursor-pointer absolute left-[-11px]"
                               :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
                               <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
                             </label>

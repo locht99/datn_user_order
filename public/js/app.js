@@ -22207,6 +22207,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1,
     icon: [$props.fontAwesome, $props.icon]
   }, null, 8 /* PROPS */, ["icon"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title) + " ", 1 /* TEXT */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+    style: {
+      "fill": "aliceblue"
+    },
     xmlns: "http://www.w3.org/2000/svg",
     width: "20",
     height: "20",
@@ -22595,7 +22598,7 @@ var _hoisted_49 = {
   "class": "text-red-500 font-semibold text-xl"
 };
 var _hoisted_50 = {
-  "class": "pr-1"
+  "class": "pr-1 relative"
 };
 var _hoisted_51 = ["onClick"];
 var _hoisted_52 = /*#__PURE__*/_withScopeId(function () {
@@ -22920,7 +22923,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             onClick: function onClick($event) {
               return $options.deleteProductCart(listCartProduct.id);
             },
-            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["cursor-pointer", $data.isTrash[listCartProduct.id] ? 'block' : 'hidden'])
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["cursor-pointer absolute left-[-11px]", $data.isTrash[listCartProduct.id] ? 'block' : 'hidden'])
           }, _hoisted_53, 10 /* CLASS, PROPS */, _hoisted_51)])])])], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_35);
         }), 128 /* KEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.feeCartByShop[cart.id], function (item, index4) {
           return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
