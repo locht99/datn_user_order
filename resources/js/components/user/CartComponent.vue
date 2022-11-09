@@ -114,9 +114,20 @@
                         <a class="mt-8 underline block">{{ listCartProduct.product_name }}</a>
                       </td>
                       <td class="pl-8">
-                        <input type="number" v-on:change="cartQuantity(listCartProduct, index, index2)"
-                          v-model="listCartProduct.quantity" min="0"
-                          class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
+                        <div class="inline-flex rounded-md shadow-sm">
+                          <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
+                            class="py-2 px-4 text-sm font-medium text-white bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            -
+                          </button>
+                          <input type="text" v-on:change="cartQuantity(listCartProduct, index, index2)"
+                            v-model="listCartProduct.quantity"
+                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          <button v-on:click="increasingProduct(listCartProduct, index, index2)"
+                            class="py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            +
+                          </button>
+                        </div>
+
                       </td>
                       <td class="pl-8">
                         <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
@@ -130,7 +141,8 @@
                             <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
                           <div class="pr-1 relative">
-                            <label for="" v-on:click="deleteProductCart(listCartProduct.id)" class="cursor-pointer absolute left-[-11px]"
+                            <label for="" v-on:click="deleteProductCart(listCartProduct.id, index, index2)"
+                              class="cursor-pointer absolute left-[-11px]"
                               :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
                               <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
                             </label>
@@ -241,14 +253,14 @@
                               <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
                                 tên</label>
                               <p class="w-full px-4 py-3 text-sm border lg:text-sm">
-                               {{info_Address.name}}
+                                {{ info_Address.name }}
                               </p>
                             </div>
                             <div class="w-full lg:w-1/2 ">
                               <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
                                 thoại</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                {{info_Address.phone}}
+                                {{ info_Address.phone }}
                               </p>
                             </div>
                           </div>
@@ -258,7 +270,7 @@
                               <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
                                 chỉ</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                {{info_Address.note}}
+                                {{ info_Address.note }}
                               </p>
                             </div>
                           </div>
@@ -267,7 +279,7 @@
                               <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
                                 chỉ</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                {{info_Address.ward}}, {{info_Address.district}}, {{info_Address.province}}
+                                {{ info_Address.ward }}, {{ info_Address.district }}, {{ info_Address.province }}
                               </p>
                             </div>
                           </div>
@@ -514,7 +526,7 @@ export default {
     syncCart() {
       this.syncItem = !this.syncItem;
       this.getCartByUser();
-      this.checkOutCart();
+      // this.checkOutCart();
     },
     formatPrice(value) {
       return new Intl.NumberFormat("en-US", {
@@ -525,7 +537,7 @@ export default {
         .replace("VND", "")
         .trim();
     },
-    deleteProductCart(id) {
+    deleteProductCart(id, index, index2) {
       this.$swal.fire({
         title: 'Bạn có chắc chắn muốn xóa sản phẩm khỏi giỏ hàng',
         icon: 'warning',
@@ -535,15 +547,18 @@ export default {
         confirmButtonText: 'Xóa'
       }).then((result) => {
         if (result.isConfirmed) {
+          this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
           deleteCart(id).then((response) => {
             this.getCartByUser();
             this.getTotalQuantity();
+          }).then(() => {
+            this.$swal.fire(
+              'Deleted!',
+              'Xóa sản phẩm khỏi giỏ hàng thành công',
+              'success'
+            )
           })
-          this.$swal.fire(
-            'Deleted!',
-            'Xóa sản phẩm khỏi giỏ hàng thành công',
-            'success'
-          )
+
         }
       })
 
@@ -688,7 +703,6 @@ export default {
             this.checkBoxItem = this.object;
           })
         });
-        this.checkOutCart(this.listCart);
 
       }).catch((error) => {
         this.is_loading = false;
@@ -706,8 +720,28 @@ export default {
       this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2)
       this.getTotalQuantity();
       this.getTotal(index);
-      this.checkOutCart();
 
+    },
+    increasingProduct(listCartProduct, index, index2) {
+      listCartProduct.quantity++;
+      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
+      this.getTotalQuantity();
+      this.getTotal(index);
+      // this.checkOutCart();
+
+    },
+    decreasingProduct(listCartProduct, index, index2) {
+      listCartProduct.quantity--;
+      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
+      this.getTotalQuantity();
+      this.getTotal(index);
+      // this.checkOutCart();
     },
 
     checkOutCart(value = null, quantity = null) {
@@ -717,7 +751,6 @@ export default {
         quantity: this.quantity || quantity,
         inventory: this.checkGoods
       }
-      this.is_loading = true
       cartCheckout(data).then((response) => {
         const { data } = response.data;
         this.listTotalCart = response.data;
@@ -733,29 +766,11 @@ export default {
       }).catch((error) => {
 
       }).finally(() => {
-        this.is_loading = false;
         this.syncItem = false;
 
       })
     },
-    // createOrderByShop(cartid,index) {
 
-    //   const data = {
-    //     'money_deposite': this.deposite_money,
-    //     'data': { ids: this.checkBoxItem, data: [this.listCart[index]], note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
-    //   };
-    //   createCart(data).then((response) => {
-    //     // console.log(response);
-    //     window.localStorage.removeItem("cart");
-    //     this.$swal('Thanh toán đơn hàng thành công');
-    //     this.getCartByUser();
-    //     this.checkOutCart();
-    //     this.getTotalQuantity();
-    //   }).catch((error) => {
-    //     console.log(error);
-    //     this.$swal(error.response.data.message);
-    //   })
-    // },
     createOrder(cartid = null, index = null, deposite_money = null) {
       // console.log(this.checkBoxItem);
       let listCart = this.listCart;
@@ -776,9 +791,8 @@ export default {
       createCart(data).then((response) => {
         // console.log(response);
         this.$swal('Thanh toán đơn hàng thành công');
-        this.getCartByUser();
-        this.checkOutCart();
-        this.getTotalQuantity();
+        this.listCart = [];
+        this.checkBoxItem = [];
         this.showModal = false;
       }).catch((error) => {
         this.$swal(error.response.data.message);
