@@ -15,6 +15,12 @@
         <div
             class="w-[600px] h-fit pb-8 bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg"
         >
+            <div
+                v-if="statusRegister"
+                class="bg-green-500 text-white font-bold py-2 p-4 absolute top-0 left-0 w-full rounded-tl-lg rounded-tr-lg"
+            >
+                {{ statusMessage }}
+            </div>
             <form action="" @submit.prevent="registerNewAddress()">
                 <div class="mx-[55px] font-bold">
                     <div class="text-[30px] my-11">
@@ -45,12 +51,13 @@
                                     </option>
                                 </select>
                                 <span
-                                class="text-red-700 text-[15px] pl-2 font-semibold h-10"
-                                >{{
-                                    errors.selectedProvince
-                                        ? errors.selectedProvince[0]
-                                        : ""
-                                }}</span>
+                                    class="text-red-700 text-[15px] pl-2 font-semibold h-10"
+                                    >{{
+                                        errors.selectedProvince
+                                            ? errors.selectedProvince[0]
+                                            : ""
+                                    }}</span
+                                >
                             </div>
                             <div class="my-4">
                                 <select
@@ -80,9 +87,10 @@
                                     class="text-red-700 text-[15px] pl-2 font-semibold h-10"
                                     >{{
                                         errors.selectedDistrict
-                                        ? errors.selectedDistrict[0]
-                                        : ""
-                                    }}</span>
+                                            ? errors.selectedDistrict[0]
+                                            : ""
+                                    }}</span
+                                >
                             </div>
                             <div class="my-4">
                                 <select
@@ -106,12 +114,13 @@
                                     </option>
                                 </select>
                                 <span
-                                class="text-red-700 text-[15px] pl-2 font-semibold h-10"
-                                >{{
-                                    errors.selectedWard
-                                        ? errors.selectedWard[0]
-                                        : ""
-                                }}</span>
+                                    class="text-red-700 text-[15px] pl-2 font-semibold h-10"
+                                    >{{
+                                        errors.selectedWard
+                                            ? errors.selectedWard[0]
+                                            : ""
+                                    }}</span
+                                >
                             </div>
                             <textarea
                                 v-model="dataNewAddress.addressNote"
@@ -121,9 +130,18 @@
                             ></textarea>
                         </div>
                         <div class="mb-5 flex items-center">
-                            <input class="rounded bg-[#EDEDED]" type="checkbox" v-model="dataNewAddress.is_default" name="is_default" id="is_default" />
+                            <input
+                                class="rounded bg-[#EDEDED]"
+                                type="checkbox"
+                                v-model="dataNewAddress.is_default"
+                                name="is_default"
+                                id="is_default"
+                            />
                             <label for="is_default">
-                                <span class="cursor-pointer ml-2 font-semibold text-black">Đặt làm mặc định</span>
+                                <span
+                                    class="cursor-pointer ml-2 font-semibold text-black"
+                                    >Đặt làm mặc định</span
+                                >
                             </label>
                         </div>
                         <div class="text-center m-5 flex justify-center">
@@ -178,7 +196,7 @@ export default {
                 selectedDistrict: "",
                 selectedWard: "",
                 addressNote: "",
-                is_default: false
+                is_default: false,
             },
             fillProvince: "",
             fillDistrict: "",
@@ -222,10 +240,12 @@ export default {
                 .then((res) => {
                     this.statusRegister = true;
                     this.statusMessage = res.data;
-                    setTimeout(() => {
-                        this.$router.replace("/login");
-                    }, 1500);
                     this.lazyLoad = false;
+                    this.fillProvince = "",
+                    this.fillDistrict = "",
+                    this.fillWard = "",
+                    this.dataNewAddress.addressNote = "",
+                    this.dataNewAddress.is_default = false
                 })
                 .catch((error) => {
                     this.statusRegister = false;
