@@ -25,3 +25,8 @@ export function getUser() {
         }
     })
 }
+
+export function newAddress(data){
+    console.log(data)
+    return instance.post('/user/new-address', data);
+}

@@ -18,6 +18,7 @@ class Address extends Model
         'province',
         'district',
         'ward',
-        'note'
+        'note',
+        'is_default'
     ];
 }
