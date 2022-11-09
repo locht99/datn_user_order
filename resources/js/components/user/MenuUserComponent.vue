@@ -42,7 +42,9 @@
 import Dropdown from '../dropdown/DropdownComponent.vue';
 export default ({
   data(){
-     
+     return {
+      
+     }
   },
   components: {
     Dropdown

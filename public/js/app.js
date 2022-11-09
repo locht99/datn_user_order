@@ -20659,7 +20659,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dropdown_DropdownComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dropdown/DropdownComponent.vue */ "./resources/js/components/dropdown/DropdownComponent.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {},
+  data: function data() {
+    return {};
+  },
   components: {
     Dropdown: _dropdown_DropdownComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -20673,6 +20675,152 @@ __webpack_require__.r(__webpack_exports__);
         e.style.backgroundColor = "#E93B3B";
       });
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _config_user__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config/user */ "./resources/js/config/user.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      dataNewAddress: {
+        selectedProvince: "",
+        selectedDistrict: "",
+        selectedWard: "",
+        addressNote: "",
+        is_default: false
+      },
+      fillProvince: "",
+      fillDistrict: "",
+      fillWard: "",
+      changeDistrict: false,
+      changeProvince: false,
+      errors: [],
+      provinces: [],
+      districts: [],
+      wards: [],
+      isLoadingProvince: false,
+      isLoadingDistrict: false,
+      isLoadingWard: false,
+      isLoading: false,
+      statusRegister: 0,
+      statusMessage: "",
+      lazyLoad: false,
+      checkSubmit: false
+    };
+  },
+  components: {
+    Loading: (vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default())
+  },
+  mounted: function mounted() {
+    this.getProvinces();
+  },
+  methods: {
+    registerNewAddress: function registerNewAddress() {
+      var _this$provinces$filte,
+        _this = this,
+        _this$districts$filte;
+      this.dataNewAddress.selectedProvince = (_this$provinces$filte = this.provinces.filter(function (value) {
+        return value.ProvinceID == _this.fillProvince;
+      })[0]) === null || _this$provinces$filte === void 0 ? void 0 : _this$provinces$filte.ProvinceName;
+      this.dataNewAddress.selectedDistrict = (_this$districts$filte = this.districts.filter(function (value) {
+        return value.DistrictID == _this.fillDistrict;
+      })[0]) === null || _this$districts$filte === void 0 ? void 0 : _this$districts$filte.DistrictName;
+      this.dataNewAddress.selectedWard = this.fillWard;
+      this.lazyLoad = true;
+      (0,_config_user__WEBPACK_IMPORTED_MODULE_0__.newAddress)(this.dataNewAddress).then(function (res) {
+        _this.statusRegister = true;
+        _this.statusMessage = res.data;
+        setTimeout(function () {
+          _this.$router.replace("/login");
+        }, 1500);
+        _this.lazyLoad = false;
+      })["catch"](function (error) {
+        _this.statusRegister = false;
+        _this.errors = error.response.data.errors;
+        _this.lazyLoad = false;
+      });
+    },
+    getProvinces: function getProvinces() {
+      var _this2 = this;
+      this.isLoadingProvince = true;
+      axios.get("https://online-gateway.ghn.vn/shiip/public-api/master-data/province", {
+        headers: {
+          token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7"
+        }
+      }).then(function (res) {
+        _this2.provinces = res.data.data;
+        _this2.isLoadingProvince = false;
+      });
+    },
+    getDistricts: function getDistricts(province) {
+      var _this3 = this;
+      this.isLoadingDistrict = true;
+      this.changeProvince = true;
+      this.fillDistrict = "";
+      this.fillWard = "";
+      this.errors = [];
+      var provinceId = province.target.value;
+      if (provinceId == "") {
+        this.districts = [];
+        this.isLoadingDistrict = false;
+        return;
+      }
+      axios.get("https://online-gateway.ghn.vn/shiip/public-api/master-data/district", {
+        headers: {
+          token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7"
+        },
+        params: {
+          province_id: provinceId
+        }
+      }).then(function (res) {
+        _this3.districts = res.data.data;
+        _this3.isLoadingDistrict = false;
+        _this3.wards = [];
+      });
+    },
+    getWards: function getWards(district) {
+      var _this4 = this;
+      this.isLoadingWard = true;
+      this.changeProvince = false;
+      this.fillWard = "";
+      this.errors = [];
+      var districtId = district.target.value;
+      if (districtId == "") {
+        this.wards = [];
+        this.isLoadingWard = false;
+        return;
+      }
+      axios.get("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward", {
+        headers: {
+          token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7"
+        },
+        params: {
+          district_id: district.target.value
+        }
+      }).then(function (res) {
+        _this4.wards = res.data.data;
+        _this4.isLoadingWard = false;
+      });
+    }
   }
 });
 
@@ -22141,6 +22289,219 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _withScopeId = function _withScopeId(n) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-a1c264e0"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
+};
+var _hoisted_1 = {
+  "class": "relative"
+};
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: "/images/background-user.png",
+    alt: "background",
+    "class": "w-full h-screen"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_3 = {
+  "class": "w-[600px] h-fit pb-8 bg-white absolute top-0 right-0 left-0 bottom-0 z-[100] m-auto rounded-lg"
+};
+var _hoisted_4 = {
+  "class": "mx-[55px] font-bold"
+};
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-[30px] my-11"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-center"
+  }, "Thêm địa chỉ")], -1 /* HOISTED */);
+});
+var _hoisted_6 = {
+  "class": "text-[#6B6B6B]"
+};
+var _hoisted_7 = {
+  "class": "mb-5"
+};
+var _hoisted_8 = {
+  "class": "my-4"
+};
+var _hoisted_9 = {
+  key: 0,
+  value: ""
+};
+var _hoisted_10 = {
+  key: 1,
+  value: ""
+};
+var _hoisted_11 = ["value"];
+var _hoisted_12 = {
+  "class": "text-red-700 text-[15px] pl-2 font-semibold h-10"
+};
+var _hoisted_13 = {
+  "class": "my-4"
+};
+var _hoisted_14 = {
+  key: 0,
+  value: ""
+};
+var _hoisted_15 = {
+  key: 1,
+  value: ""
+};
+var _hoisted_16 = ["value"];
+var _hoisted_17 = {
+  "class": "text-red-700 text-[15px] pl-2 font-semibold h-10"
+};
+var _hoisted_18 = {
+  "class": "my-4"
+};
+var _hoisted_19 = {
+  key: 0,
+  value: ""
+};
+var _hoisted_20 = {
+  key: 1,
+  value: ""
+};
+var _hoisted_21 = ["value"];
+var _hoisted_22 = {
+  "class": "text-red-700 text-[15px] pl-2 font-semibold h-10"
+};
+var _hoisted_23 = {
+  "class": "mb-5 flex items-center"
+};
+var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "is_default"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "cursor-pointer ml-2 font-semibold text-black"
+  }, "Đặt làm mặc định")], -1 /* HOISTED */);
+});
+var _hoisted_25 = {
+  "class": "text-center m-5 flex justify-center"
+};
+var _hoisted_26 = ["disabled"];
+var _hoisted_27 = {
+  key: 0,
+  "class": "animate-spin h-7 w-7 text-white",
+  xmlns: "http://www.w3.org/2000/svg",
+  fill: "none",
+  viewBox: "0 0 24 24"
+};
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
+    "class": "opacity-25",
+    cx: "12",
+    cy: "12",
+    r: "10",
+    stroke: "currentColor",
+    "stroke-width": "4"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+    "class": "opacity-75",
+    fill: "currentColor",
+    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_30 = [_hoisted_28, _hoisted_29];
+var _hoisted_31 = {
+  key: 1,
+  src: "/images/menu-icon/right-arrow-30.png",
+  alt: "icon"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_loading, {
+    active: $data.isLoading,
+    "onUpdate:active": _cache[0] || (_cache[0] = function ($event) {
+      return $data.isLoading = $event;
+    })
+  }, null, 8 /* PROPS */, ["active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-solid fa-arrow-left-long absolute top-4 left-8 text-white text-2xl cursor-pointer",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.$router.go(-1);
+    })
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    action: "",
+    onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+      return $options.registerNewAddress();
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    name: "selectedProvince",
+    "class": "block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none",
+    onChange: _cache[2] || (_cache[2] = function ($event) {
+      return $options.getDistricts($event);
+    }),
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.fillProvince = $event;
+    })
+  }, [$data.isLoadingProvince ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_9, " Đang tải... ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_10, " Chọn tỉnh / thành phố ")), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.provinces, function (province, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: index,
+      value: province.ProvinceID
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(province.ProvinceName), 9 /* TEXT, PROPS */, _hoisted_11);
+  }), 128 /* KEYED_FRAGMENT */))], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.fillProvince]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.selectedProvince ? $data.errors.selectedProvince[0] : ""), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.fillDistrict = $event;
+    }),
+    name: "selectedDistrict",
+    "class": "block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none",
+    onChange: _cache[5] || (_cache[5] = function ($event) {
+      return $data.isLoadingWard = true, $options.getWards($event);
+    })
+  }, [$data.isLoadingDistrict ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_14, " Đang tải... ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_15, " Chọn quận huyện ")), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.districts, function (district, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: index,
+      value: district.DistrictID
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(district.DistrictName), 9 /* TEXT, PROPS */, _hoisted_16);
+  }), 128 /* KEYED_FRAGMENT */))], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.fillDistrict]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.selectedDistrict ? $data.errors.selectedDistrict[0] : ""), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    name: "selectedWard",
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+      return $data.fillWard = $event;
+    }),
+    "class": "block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none"
+  }, [$data.isLoadingWard ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_19, " Đang tải... ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_20, " Chọn phường xã ")), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.wards, function (ward, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: index,
+      value: ward.WardName
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(ward.WardName), 9 /* TEXT, PROPS */, _hoisted_21);
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.fillWard]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.selectedWard ? $data.errors.selectedWard[0] : ""), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+      return $data.dataNewAddress.addressNote = $event;
+    }),
+    rows: "4",
+    placeholder: "Địa chỉ cụ thể ( Số nhà, tên đường... )",
+    "class": "block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none resize-none"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.dataNewAddress.addressNote]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "rounded bg-[#EDEDED]",
+    type: "checkbox",
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+      return $data.dataNewAddress.is_default = $event;
+    }),
+    name: "is_default",
+    id: "is_default"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.dataNewAddress.is_default]]), _hoisted_24]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    disabled: $data.checkSubmit,
+    "class": "rounded-2xl text-white px-7 border-solid border-[#B6B4B4] bg-[#FF3F3A] p-6 flex items-center justify-center"
+  }, [$data.lazyLoad ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_27, _hoisted_30)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.lazyLoad ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_31)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8 /* PROPS */, _hoisted_26)])])])], 32 /* HYDRATE_EVENTS */)])])], 64 /* STABLE_FRAGMENT */);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/OrderComponent.vue?vue&type=template&id=235a34b8&scoped=true":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/OrderComponent.vue?vue&type=template&id=235a34b8&scoped=true ***!
@@ -22698,7 +23059,7 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 var _hoisted_13 = {
   "class": "border-b py-3"
 };
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Đổi mật khẩu");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Cập nhật địa chỉ");
 var _hoisted_15 = {
   "class": "border-b py-3"
 };
@@ -22727,7 +23088,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [$data.boxUserInfo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-        to: "/profile",
+        to: "/user/profile",
         "class": "text-base font-semibold"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -22735,7 +23096,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         _: 1 /* STABLE */
       })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-        to: "",
+        to: "user/new-address",
         "class": "text-base font-semibold"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -23017,6 +23378,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getUser": () => (/* binding */ getUser),
 /* harmony export */   "login": () => (/* binding */ login),
+/* harmony export */   "newAddress": () => (/* binding */ newAddress),
 /* harmony export */   "register": () => (/* binding */ register),
 /* harmony export */   "signinWithGoogle": () => (/* binding */ signinWithGoogle),
 /* harmony export */   "updateUser": () => (/* binding */ updateUser)
@@ -23042,6 +23404,10 @@ function getUser() {
       Authorization: "Bearer ".concat(token)
     }
   });
+}
+function newAddress(data) {
+  console.log(data);
+  return _config__WEBPACK_IMPORTED_MODULE_0__["default"].post('/user/new-address', data);
 }
 
 /***/ }),
@@ -23069,6 +23435,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/auth/LoginComponent */ "./resources/js/components/auth/LoginComponent.vue");
 /* harmony import */ var _components_auth_RegisterComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/auth/RegisterComponent */ "./resources/js/components/auth/RegisterComponent.vue");
 /* harmony import */ var _components_user_Transaction_CreateTransactionComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/user/Transaction/CreateTransactionComponent.vue */ "./resources/js/components/user/Transaction/CreateTransactionComponent.vue");
+/* harmony import */ var _components_user_NewAddressComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/user/NewAddressComponent */ "./resources/js/components/user/NewAddressComponent.vue");
+
 
 
 
@@ -23110,8 +23478,17 @@ var routes = [{
     component: _components_user_ContactComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
   }]
 }, {
-  path: "/profile",
+  path: "/user/profile",
+  meta: {
+    requiresAuth: true
+  },
   component: _components_ProfileComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
+}, {
+  path: "/user/new-address",
+  meta: {
+    requiresAuth: true
+  },
+  component: _components_user_NewAddressComponent__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   path: "/login",
   component: _components_auth_LoginComponent__WEBPACK_IMPORTED_MODULE_9__["default"],
@@ -25231,6 +25608,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.homepage-content[data-v-05716405] {\r\n    grid-template-columns: 2fr 1fr;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\nbutton[data-v-a1c264e0] {\r\n    background-color: #ff3f3a;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53654,6 +54055,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_laravel_mix_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_style_index_0_id_a1c264e0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_laravel_mix_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_style_index_0_id_a1c264e0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_laravel_mix_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_style_index_0_id_a1c264e0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/OrderComponent.vue?vue&type=style&index=0&id=235a34b8&scoped=true&lang=css":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/OrderComponent.vue?vue&type=style&index=0&id=235a34b8&scoped=true&lang=css ***!
@@ -58183,6 +58614,37 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/user/NewAddressComponent.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/user/NewAddressComponent.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _NewAddressComponent_vue_vue_type_template_id_a1c264e0_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true */ "./resources/js/components/user/NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true");
+/* harmony import */ var _NewAddressComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewAddressComponent.vue?vue&type=script&lang=js */ "./resources/js/components/user/NewAddressComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _NewAddressComponent_vue_vue_type_style_index_0_id_a1c264e0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css */ "./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css");
+/* harmony import */ var C_wamp64_www_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+
+
+const __exports__ = /*#__PURE__*/(0,C_wamp64_www_datn_user_order_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_NewAddressComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NewAddressComponent_vue_vue_type_template_id_a1c264e0_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-a1c264e0"],['__file',"resources/js/components/user/NewAddressComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/user/OrderComponent.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/user/OrderComponent.vue ***!
@@ -58502,6 +58964,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/NewAddressComponent.vue?vue&type=script&lang=js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/user/NewAddressComponent.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NewAddressComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/user/OrderComponent.vue?vue&type=script&lang=js":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/user/OrderComponent.vue?vue&type=script&lang=js ***!
@@ -58726,6 +59204,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/user/NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_template_id_a1c264e0_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_template_id_a1c264e0_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=template&id=a1c264e0&scoped=true");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/user/OrderComponent.vue?vue&type=template&id=235a34b8&scoped=true":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/user/OrderComponent.vue?vue&type=template&id=235a34b8&scoped=true ***!
@@ -58870,6 +59364,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_laravel_mix_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HomeComponent_vue_vue_type_style_index_0_id_05716405_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HomeComponent.vue?vue&type=style&index=0&id=05716405&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/HomeComponent.vue?vue&type=style&index=0&id=05716405&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_laravel_mix_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NewAddressComponent_vue_vue_type_style_index_0_id_a1c264e0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/laravel-mix/node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/user/NewAddressComponent.vue?vue&type=style&index=0&id=a1c264e0&scoped=true&lang=css");
 
 
 /***/ }),

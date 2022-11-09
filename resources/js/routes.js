@@ -10,6 +10,7 @@ import ProfileComponent from "./components/ProfileComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import CreateTransaction from './components/user/Transaction/CreateTransactionComponent.vue';
+import NewAddressComponent from "./components/user/NewAddressComponent"
 const routes = [
     {
         path: "/",
@@ -47,8 +48,14 @@ const routes = [
         ],
     },
     {
-        path: "/profile",
+        path: "/user/profile",
+        meta: { requiresAuth: true },
         component: ProfileComponent,
+    },
+    {
+        path: "/user/new-address",
+        meta: { requiresAuth: true },
+        component: NewAddressComponent,
     },
     {
         path: "/login",
