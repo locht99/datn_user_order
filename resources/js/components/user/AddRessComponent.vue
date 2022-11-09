@@ -15,8 +15,7 @@
                                 </h3>
                             </div>
                             <div class="ml-3">
-                                <p
-                                    class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1 ">
+                                <p class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1 ">
                                     Thêm địa chỉ mới</p>
                             </div>
                         </div>

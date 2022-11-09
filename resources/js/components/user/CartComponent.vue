@@ -241,14 +241,14 @@
                               <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
                                 tên</label>
                               <p class="w-full px-4 py-3 text-sm border lg:text-sm">
-                                Bùi Tiến Huy
+                               {{info_Address.name}}
                               </p>
                             </div>
                             <div class="w-full lg:w-1/2 ">
                               <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
                                 thoại</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                0338898903
+                                {{info_Address.phone}}
                               </p>
                             </div>
                           </div>
@@ -258,7 +258,7 @@
                               <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
                                 chỉ</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                Nghách 63/33/71 nhà số 17 Lê Đức Thọ, Nam Từ Liêm, Hà Nội
+                                {{info_Address.note}}
                               </p>
                             </div>
                           </div>
@@ -267,7 +267,7 @@
                               <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
                                 chỉ</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                Phường Mỹ Đình 2, Quận Nam Từ Liêm, Thành phố Hà Nội
+                                {{info_Address.ward}}, {{info_Address.district}}, {{info_Address.province}}
                               </p>
                             </div>
                           </div>
@@ -422,7 +422,8 @@ export default {
       index: 0,
       checkBoxAllIn: false,
       showModalAddress: false,
-      id_address: 0
+      id_address: 0,
+      info_Address: {}
 
     };
   },
@@ -455,6 +456,8 @@ export default {
 
     },
     toggleModalCart(cartid = null, index = null) {
+      let infoAddress = JSON.parse(window.localStorage.getItem("is_default_Address"));
+      this.info_Address = infoAddress;
       let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
       if (this.showModal == false) {
         this.objPayment.quantity = 0;
