@@ -20619,6 +20619,7 @@ __webpack_require__.r(__webpack_exports__);
       checkBoxItem: [],
       keyObject: '',
       showModal: false,
+      isLoadingTotal: false,
       object: {},
       keyObjectGoods: '',
       objectGoods: {},
@@ -20896,6 +20897,7 @@ __webpack_require__.r(__webpack_exports__);
       var quantityShop = 0;
       var quantityItem = 0;
       this.is_loading = true;
+      this.isLoadingTotal = true;
       (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.getCart)().then(function (res) {
         _this8.listCart = res.data.data;
         _this8.listCart.forEach(function (element) {
@@ -20916,6 +20918,8 @@ __webpack_require__.r(__webpack_exports__);
             _this8.checkBoxItem = _this8.object;
           });
         });
+      }).then(function () {
+        _this8.checkOutCart(_this8.listCart);
       })["catch"](function (error) {
         _this8.is_loading = false;
       })["finally"](function () {
@@ -20923,12 +20927,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     cartQuantity: function cartQuantity(listCartProduct, index, index2) {
-      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-      var totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-      this.getTotalQuantity();
-      this.getTotal(index);
+      if (listCartProduct.quantity <= 0) {
+        this.$swal("Số lượng không được nhỏ hơn 1");
+        listCartProduct.quantity = 1;
+      } else {
+        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+        var totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
+        this.getTotalQuantity();
+        this.getTotal(index);
+      }
     },
     increasingProduct: function increasingProduct(listCartProduct, index, index2) {
       listCartProduct.quantity++;
@@ -20942,12 +20951,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     decreasingProduct: function decreasingProduct(listCartProduct, index, index2) {
       listCartProduct.quantity--;
-      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-      var totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-      this.getTotalQuantity();
-      this.getTotal(index);
+      if (listCartProduct.quantity <= 0) {
+        this.$swal("Số lượng không được nhỏ hơn 1");
+        listCartProduct.quantity = 1;
+      } else {
+        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+        var totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
+        this.getTotalQuantity();
+        this.getTotal(index);
+      }
+
       // this.checkOutCart();
     },
     checkOutCart: function checkOutCart() {
@@ -20975,6 +20990,7 @@ __webpack_require__.r(__webpack_exports__);
         _this9.syncItem = false;
       })["catch"](function (error) {})["finally"](function () {
         _this9.syncItem = false;
+        _this9.isLoadingTotal = false;
       });
     },
     createOrder: function createOrder() {
@@ -22621,6 +22637,7 @@ var _hoisted_57 = {
   "class": "text-xl px-5 w-1/4"
 };
 var _hoisted_58 = {
+  key: 0,
   "class": "min-h-14 flex items-center"
 };
 var _hoisted_59 = {
@@ -22638,125 +22655,123 @@ var _hoisted_62 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_63 = {
   "class": "text-red-500 font-semibold"
 };
-var _hoisted_64 = ["onUpdate:modelValue"];
-var _hoisted_65 = ["onClick"];
-var _hoisted_66 = {
+var _hoisted_64 = {
+  key: 1,
+  "class": "min-h-14 flex items-center"
+};
+var _hoisted_65 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "py-2"
+  }, " Loading.... ", -1 /* HOISTED */);
+});
+var _hoisted_66 = [_hoisted_65];
+var _hoisted_67 = {
+  "class": "pt-2"
+};
+var _hoisted_68 = ["onUpdate:modelValue"];
+var _hoisted_69 = ["onClick"];
+var _hoisted_70 = {
   key: 0,
   "class": "flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2"
 };
-var _hoisted_67 = {
+var _hoisted_71 = {
   "class": "mx-2"
 };
-var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_72 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "checkboxAll",
     "class": "text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"
   }, " Chọn tất cả ", -1 /* HOISTED */);
 });
-var _hoisted_69 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_73 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "checkboxAll",
     "class": "text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"
   }, "| Xóa tất cả", -1 /* HOISTED */);
 });
-var _hoisted_70 = {
+var _hoisted_74 = {
   "class": "font-semibold text-xl text-gray-700"
 };
-var _hoisted_71 = {
+var _hoisted_75 = {
   "class": "text-red-600 text-xl font-semibold"
 };
-var _hoisted_72 = {
+var _hoisted_76 = {
   key: 1,
   "class": "overflow-x-hidden overflow-y-auto fade fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
 };
-var _hoisted_73 = {
+var _hoisted_77 = {
   "class": "relative w-auto my-6 mx-auto max-w-6xl"
 };
-var _hoisted_74 = {
+var _hoisted_78 = {
   "class": "modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-[1200px]"
 };
-var _hoisted_75 = {
+var _hoisted_79 = {
   "class": "flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t"
 };
-var _hoisted_76 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_80 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
     "class": "text-3xl font-semibold"
   }, " Địa chỉ và đặt cọc ", -1 /* HOISTED */);
 });
-var _hoisted_77 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_81 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fas fa-times text-black"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_78 = [_hoisted_77];
-var _hoisted_79 = {
-  "class": "relative p-3 flex-auto"
-};
-var _hoisted_80 = {
-  "class": "flex items-center justify-between"
-};
-var _hoisted_81 = {
-  "class": "container p-10 mx-auto"
-};
-var _hoisted_82 = {
-  key: 0,
-  "class": "flex flex-col w-full px-0 mx-auto md:flex-row"
-};
+var _hoisted_82 = [_hoisted_81];
 var _hoisted_83 = {
-  "class": "flex flex-col md:w-full"
+  "class": "relative p-3 flex-auto"
 };
 var _hoisted_84 = {
   "class": "flex items-center justify-between"
 };
-var _hoisted_85 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_85 = {
+  "class": "container p-10 mx-auto"
+};
+var _hoisted_86 = {
+  key: 0,
+  "class": "flex flex-col w-full px-0 mx-auto md:flex-row"
+};
+var _hoisted_87 = {
+  "class": "flex flex-col md:w-full"
+};
+var _hoisted_88 = {
+  "class": "flex items-center justify-between"
+};
+var _hoisted_89 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
     "class": "mb-4 font-bold md:text-xl text-heading"
   }, "Địa chỉ giao hàng ")], -1 /* HOISTED */);
 });
-var _hoisted_86 = {
+var _hoisted_90 = {
   "class": "justify-center w-full mx-auto"
 };
-var _hoisted_87 = {
+var _hoisted_91 = {
   "class": ""
 };
-var _hoisted_88 = {
+var _hoisted_92 = {
   "class": "space-x-0 lg:flex lg:space-x-4"
 };
-var _hoisted_89 = {
+var _hoisted_93 = {
   "class": "w-full lg:w-1/2"
 };
-var _hoisted_90 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_94 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "firstName",
     "class": "block mb-3 text-sm font-semibold text-gray-500"
   }, "Họ tên", -1 /* HOISTED */);
 });
-var _hoisted_91 = {
+var _hoisted_95 = {
   "class": "w-full px-4 py-3 text-sm border lg:text-sm"
 };
-var _hoisted_92 = {
+var _hoisted_96 = {
   "class": "w-full lg:w-1/2"
 };
-var _hoisted_93 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_97 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "firstName",
     "class": "block mb-3 text-sm font-semibold text-gray-500"
   }, "Điện thoại", -1 /* HOISTED */);
-});
-var _hoisted_94 = {
-  "class": "w-full px-4 py-3 text-sm border lg:text-sm"
-};
-var _hoisted_95 = {
-  "class": "mt-4"
-};
-var _hoisted_96 = {
-  "class": "w-full"
-};
-var _hoisted_97 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "Address",
-    "class": "block mb-3 text-sm font-semibold text-gray-500"
-  }, "Tên địa chỉ", -1 /* HOISTED */);
 });
 var _hoisted_98 = {
   "class": "w-full px-4 py-3 text-sm border lg:text-sm"
@@ -22771,7 +22786,7 @@ var _hoisted_101 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "Address",
     "class": "block mb-3 text-sm font-semibold text-gray-500"
-  }, "Địa chỉ", -1 /* HOISTED */);
+  }, "Tên địa chỉ", -1 /* HOISTED */);
 });
 var _hoisted_102 = {
   "class": "w-full px-4 py-3 text-sm border lg:text-sm"
@@ -22780,78 +22795,94 @@ var _hoisted_103 = {
   "class": "mt-4"
 };
 var _hoisted_104 = {
-  key: 0
+  "class": "w-full"
 };
-var _hoisted_105 = {
-  key: 1
-};
+var _hoisted_105 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "Address",
+    "class": "block mb-3 text-sm font-semibold text-gray-500"
+  }, "Địa chỉ", -1 /* HOISTED */);
+});
 var _hoisted_106 = {
-  "class": "flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5"
+  "class": "w-full px-4 py-3 text-sm border lg:text-sm"
 };
 var _hoisted_107 = {
+  "class": "mt-4"
+};
+var _hoisted_108 = {
+  key: 0
+};
+var _hoisted_109 = {
+  key: 1
+};
+var _hoisted_110 = {
+  "class": "flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5"
+};
+var _hoisted_111 = {
   "class": "pt-12 md:pt-0 2xl:ps-4"
 };
-var _hoisted_108 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_112 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
     "class": "text-xl font-bold"
   }, "Chi tiết thanh toán ", -1 /* HOISTED */);
 });
-var _hoisted_109 = {
+var _hoisted_113 = {
   "class": "mt-4"
 };
-var _hoisted_110 = {
+var _hoisted_114 = {
   "class": "flex flex-col space-y-4"
 };
-var _hoisted_111 = {
+var _hoisted_115 = {
   "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
 };
-var _hoisted_112 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_116 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Phí dịch vụ(tạm tính) ", -1 /* HOISTED */);
 });
-var _hoisted_113 = {
+var _hoisted_117 = {
   "class": "ml-2"
 };
-var _hoisted_114 = {
-  "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
-};
-var _hoisted_115 = {
-  "class": "ml-2"
-};
-var _hoisted_116 = {
-  "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
-};
-var _hoisted_117 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Đặt cọc 50% ", -1 /* HOISTED */);
-});
 var _hoisted_118 = {
-  "class": "ml-2"
+  "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
 };
 var _hoisted_119 = {
-  "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
-};
-var _hoisted_120 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Số dư tài khoản ", -1 /* HOISTED */);
-});
-var _hoisted_121 = {
   "class": "ml-2"
 };
+var _hoisted_120 = {
+  "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
+};
+var _hoisted_121 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Đặt cọc 50% ", -1 /* HOISTED */);
+});
 var _hoisted_122 = {
+  "class": "ml-2"
+};
+var _hoisted_123 = {
+  "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
+};
+var _hoisted_124 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Số dư tài khoản ", -1 /* HOISTED */);
+});
+var _hoisted_125 = {
+  "class": "ml-2"
+};
+var _hoisted_126 = {
   key: 0,
   "class": "flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0"
 };
-var _hoisted_123 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_127 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Bạn còn thiếu ", -1 /* HOISTED */);
 });
-var _hoisted_124 = {
+var _hoisted_128 = {
   "class": "ml-2"
 };
-var _hoisted_125 = {
+var _hoisted_129 = {
   key: 2,
   "class": "opacity-25 fixed inset-0 z-40 bg-black"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
   var _component_AddRessComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AddRessComponent");
+  var _component_vue_topprogress = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("vue-topprogress");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
     name: "fade-in"
   }, {
@@ -22958,12 +22989,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             },
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["cursor-pointer absolute left-[-11px]", $data.isTrash[listCartProduct.id] ? 'block' : 'hidden'])
           }, _hoisted_56, 10 /* CLASS, PROPS */, _hoisted_54)])])])], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_35);
-        }), 128 /* KEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.feeCartByShop[cart.id], function (item, index4) {
+        }), 128 /* KEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [$data.isLoadingTotal == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.feeCartByShop[cart.id], function (item, index4) {
           return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
             "class": "nameShop",
             key: index4
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name) + ": ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(item.value)) + "đ", 1 /* TEXT */)]);
-        }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.totalMoneyByShop[cart.id])), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.totalMoneyByShop[cart.id])), 1 /* TEXT */)])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_64, _hoisted_66)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return $data.noteByShop[cart.id] = $event;
           },
@@ -22971,13 +23002,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           id: "",
           "class": "h-28 w-full rounded-xl resize-none border-1 border-gray-400 focus:ring-0",
           placeholder: "Chú thích cho đơn hàng..."
-        }, null, 8 /* PROPS */, _hoisted_64), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.noteByShop[cart.id]]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        }, null, 8 /* PROPS */, _hoisted_68), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.noteByShop[cart.id]]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           onClick: function onClick($event) {
             return $options.toggleModalCart(cart.id, index);
           },
           "class": "w-full mt-2 mb-4 rounded-md text-white py-1"
-        }, " Đặt hàng ", 8 /* PROPS */, _hoisted_65)])])])])]);
-      }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Footer cart "), $data.listCart.length != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, " Đặt hàng ", 8 /* PROPS */, _hoisted_69)])])])])]);
+      }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Footer cart "), $data.listCart.length != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "checkboxAll",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
@@ -22987,32 +23018,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.checkBoxAll();
         }),
         "class": "rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400"
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.checkBoxAllIn]]), _hoisted_68, _hoisted_69]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_70, "Tổng thanh toán ( " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.totalQuantityShop) + " sản phẩm ): ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_71, "¥0 ~ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.totalPriceShop)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.checkBoxAllIn]]), _hoisted_72, _hoisted_73]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_74, "Tổng thanh toán ( " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.totalQuantityShop) + " sản phẩm ): ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.totalPriceShop)) + "đ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.toggleModalCart();
         }),
         "class": "mx-10 py-2 px-12 border-none text-sm rounded-md text-white"
-      }, " Đặt hàng tất cả sản phẩm đã chọn ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("header"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [_hoisted_76, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, " Đặt hàng tất cả sản phẩm đã chọn ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("header"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [_hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         "class": "p-1 ml-auto bg-white bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none",
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.toggleModalCart();
         })
-      }, _hoisted_78)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("body"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [$data.is_loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [_hoisted_85, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, _hoisted_82)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("body"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [$data.is_loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_86, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [_hoisted_89, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         onClick: _cache[6] || (_cache[6] = function ($event) {
           return $options.openModalAddRess();
         }),
         "class": "text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1"
-      }, " Chỉnh sửa ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [_hoisted_90, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_91, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [_hoisted_93, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_94, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.phone), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [_hoisted_97, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_98, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.note), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_99, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [_hoisted_101, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.ward) + ", " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.district) + ", " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.province), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_103, [$data.cartid != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, " Chỉnh sửa ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [_hoisted_94, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [_hoisted_97, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_98, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.phone), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_99, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [_hoisted_101, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.note), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_103, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_104, [_hoisted_105, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_106, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.ward) + ", " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.district) + ", " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.info_Address.province), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_107, [$data.cartid != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_108, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[7] || (_cache[7] = function ($event) {
           return $options.createOrder($data.cartid, $data.index, $data.objPayment.money_deposite);
         }),
         "class": "w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900"
-      }, "Thanh Toán")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.cartid == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_105, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, "Thanh Toán")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.cartid == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[8] || (_cache[8] = function ($event) {
           return $options.createOrder(null, null, $data.objPayment.money_deposite);
         }),
         "class": "w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900"
-      }, "Thanh Toán")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_106, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_107, [_hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [_hoisted_112, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_113, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.fee)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Tạm tính(" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.objPayment.quantity) + " sản phẩm) ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_115, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.provisional)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, [_hoisted_117, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_118, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.money_deposite)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_119, [_hoisted_120, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_121, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.point)) + "đ", 1 /* TEXT */)])]), $data.objPayment.point <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_122, [_hoisted_123, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_124, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.lackMoney)) + "đ", 1 /* TEXT */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("footer"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b\">\r\n\r\n              <button\r\n                class=\"text-white bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150\"\r\n                type=\"button\" v-on:click=\"toggleModal()\">\r\n                Thanh toán\r\n              </button>\r\n            </div> ")])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_125)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_AddRessComponent, {
+      }, "Thanh Toán")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [_hoisted_112, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_115, [_hoisted_116, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_117, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.fee)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_118, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Tạm tính(" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.objPayment.quantity) + " sản phẩm) ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_119, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.provisional)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_120, [_hoisted_121, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_122, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.money_deposite)) + "đ", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_123, [_hoisted_124, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_125, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.point)) + "đ", 1 /* TEXT */)])]), $data.objPayment.point <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_126, [_hoisted_127, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_128, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice($data.objPayment.lackMoney)) + "đ", 1 /* TEXT */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("footer"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b\">\r\n\r\n              <button\r\n                class=\"text-white bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150\"\r\n                type=\"button\" v-on:click=\"toggleModal()\">\r\n                Thanh toán\r\n              </button>\r\n            </div> ")])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.showModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_129)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_AddRessComponent, {
         onShowModalAddress: _cache[9] || (_cache[9] = function ($event) {
           return $options.updateModalAddRess($event);
         }),
@@ -23020,8 +23051,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.updateIdAddress($event);
         }),
         showModalAction: $data.showModalAddress
-      }, null, 8 /* PROPS */, ["showModalAction"])])];
+      }, null, 8 /* PROPS */, ["showModalAction"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_topprogress, {
+        ref: "topProgress"
+      }, null, 512 /* NEED_PATCH */)])];
     }),
+
     _: 1 /* STABLE */
   });
 }

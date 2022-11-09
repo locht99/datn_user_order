@@ -154,7 +154,7 @@
                 </table>
               </div>
               <div class="text-xl px-5 w-1/4">
-                <div class="min-h-14 flex items-center">
+                <div class="min-h-14 flex items-center" v-if="isLoadingTotal == false">
                   <div class="py-2">
                     <div v-for="(item, index4) in feeCartByShop[cart.id]" class="nameShop" :key="index4">
                       <span class="text-sm">{{
@@ -170,9 +170,13 @@
                       <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }}</span>
                     </div>
                   </div>
-
                 </div>
-                <div>
+                <div v-else="" class="min-h-14 flex items-center">
+                  <div class="py-2">
+                    Loading....
+                  </div> 
+                </div>
+                <div class="pt-2">
                   <textarea v-model="noteByShop[cart.id]" name="" id="" class="
                     h-28
                     w-full
@@ -206,7 +210,7 @@
         </div>
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
-        <span class="text-red-600 text-xl font-semibold">¥0 ~ {{ formatPrice(totalPriceShop) }}</span>
+        <span class="text-red-600 text-xl font-semibold"> {{ formatPrice(totalPriceShop) }}đ</span>
         <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
@@ -378,7 +382,10 @@
       <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
         :showModalAction="showModalAddress">
       </AddRessComponent>
+    <vue-topprogress ref="topProgress"></vue-topprogress>
+
     </section>
+
   </Transition>
 
 </template>
@@ -388,10 +395,11 @@ import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct } 
 import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   components: {
     loading,
-    AddRessComponent
+    AddRessComponent,
 
   },
   data() {
@@ -408,6 +416,7 @@ export default {
       checkBoxItem: [],
       keyObject: '',
       showModal: false,
+      isLoadingTotal: false,
       object: {},
       keyObjectGoods: '',
       objectGoods: {},
@@ -679,8 +688,9 @@ export default {
       let totalShop = 0;
       let quantityShop = 0;
       let quantityItem = 0;
-
       this.is_loading = true;
+      this.isLoadingTotal = true;
+
       getCart().then((res) => {
         this.listCart = res.data.data;
         this.listCart.forEach((element) => {
@@ -702,25 +712,31 @@ export default {
             this.object[this.keyObject] = false;
             this.checkBoxItem = this.object;
           })
-        });
+        })
+      }).then(()=>{
+        this.checkOutCart(this.listCart);
 
-      }).catch((error) => {
-        this.is_loading = false;
       })
-        .finally(() => {
-          this.is_loading = false;
-        });
+      .catch((error) => {
+        this.is_loading = false;
+      }).finally(() => {
+        this.is_loading = false;
+      });
 
 
     },
     cartQuantity(listCartProduct, index, index2) {
-      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2)
-      this.getTotalQuantity();
-      this.getTotal(index);
-
+      if (listCartProduct.quantity <= 0) {
+        this.$swal("Số lượng không được nhỏ hơn 1");
+        listCartProduct.quantity = 1;
+      } else {
+        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+        let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2)
+        this.getTotalQuantity();
+        this.getTotal(index);
+      }
     },
     increasingProduct(listCartProduct, index, index2) {
       listCartProduct.quantity++;
@@ -735,12 +751,19 @@ export default {
     },
     decreasingProduct(listCartProduct, index, index2) {
       listCartProduct.quantity--;
-      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-      this.getTotalQuantity();
-      this.getTotal(index);
+      if (listCartProduct.quantity <= 0) {
+        this.$swal("Số lượng không được nhỏ hơn 1");
+        listCartProduct.quantity = 1;
+      } else {
+        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+        let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
+        this.getTotalQuantity();
+        this.getTotal(index);
+      }
+
+
       // this.checkOutCart();
     },
 
@@ -767,7 +790,7 @@ export default {
 
       }).finally(() => {
         this.syncItem = false;
-
+        this.isLoadingTotal = false;
       })
     },
 
