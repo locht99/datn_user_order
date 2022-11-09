@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiUserRegisterRequest;
+use App\Http\Requests\UserAddressRequest;
 use App\Models\Address;
 use App\Models\User;
 use Exception;
@@ -69,6 +70,7 @@ class UserController extends Controller
                 'district' => $request->selectedDistrict,
                 'ward' => $request->selectedWard,
                 'note' => $request->addressNote,
+                'is_default' => 1,
                 'phone' => $newUser->phone,
             ]);
             return response()->json("Đăng kí tài khoản thành công");
@@ -103,5 +105,35 @@ class UserController extends Controller
                 "message" => $th->getMessage()
             ]);
         }
+    }
+
+    public function newAddress(UserAddressRequest $request){
+        try{
+            $isDefault = null;
+            $user = User::query()->find(Auth::id());
+            if($request->is_default){
+                $isDefault = 1;
+                $resetCurrentDefault = Address::where('user_id', Auth::id())->where('is_default', 1)->update([
+                    "is_default" => null
+                ]);
+            }
+            Address::create([
+                "user_id" => $user->id,
+                "name"    => $user->username,
+                "province" => $request->selectedProvince,
+                "district" => $request->selectedDistrict,
+                "ward"    => $request->selectedWard,
+                "note"      => $request->addressNote,
+                "phone"     => $user->phone,
+                "is_default" => $isDefault,
+            ]);
+            return response()->json("Thêm mới địa chỉ thành công!");
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                "message" => $th->getMessage()
+            ]);
+        }
+
     }
 }

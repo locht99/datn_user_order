@@ -15,7 +15,8 @@
                                 </h3>
                             </div>
                             <div class="ml-3">
-                                <p class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1 ">
+                                <p
+                                    class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1 ">
                                     Thêm địa chỉ mới</p>
                             </div>
                         </div>
@@ -69,8 +70,8 @@
                                                     <tr v-for="item in dataAddress">
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <input type="radio" name="radio"
-                                                                :checked="item.is_default == 1 ? true : false"
-                                                                v-on:click="checkedAddress(item.id)">
+                                                                :checked="is_default.is_default == 1 ? true : false"
+                                                                v-on:click="checkedAddress(item)">
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <div class="flex items-center">
@@ -101,7 +102,7 @@
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <span
+                                                            <span v-if="item.is_default == 1"
                                                                 class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                                                 <span aria-hidden
                                                                     class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
@@ -132,7 +133,7 @@
                     <!-- footer-->
                     <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
 
-                        <button
+                        <button v-on:click="toggleModalAddRess()"
                             class="text-red-600 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button">
                             Lưu thay đổi
@@ -154,7 +155,8 @@ export default {
     },
     data() {
         return {
-            dataAddress: []
+            dataAddress: [],
+            is_default: {}
         }
     },
     emits: {
@@ -176,13 +178,22 @@ export default {
             getAddress(User.id).then((response) => {
                 this.dataAddress = response.data;
                 let idDefault = this.dataAddress.find((item) => item.is_default == 1);
-                window.localStorage.setItem("is_default_Address",JSON.stringify(idDefault));
+                this.is_default = idDefault;
+                window.localStorage.setItem("is_default_Address", JSON.stringify(idDefault));
             }).catch((error) => {
 
             })
         },
-        checkedAddress(id) {
-            this.$emit('idAddRess', id);
+        checkedAddress(item) {
+            let is_default_Address = JSON.parse(window.localStorage.getItem("is_default_Address"));
+            const newAddress = {...item};
+            newAddress.is_default =1;
+            this.is_default = newAddress;
+            window.localStorage.setItem("is_default_Address", JSON.stringify(newAddress));
+
+            // let existIsDefaultAddress = is_default_Address.find((item)=>item.id == id);
+            // console.log(existIsDefaultAddress);
+            this.$emit('idAddRess', item);
         }
 
     }

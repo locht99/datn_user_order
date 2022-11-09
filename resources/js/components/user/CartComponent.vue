@@ -443,7 +443,7 @@ export default {
       index: 0,
       checkBoxAllIn: false,
       showModalAddress: false,
-      id_address: 0,
+      id_address: {},
       info_Address: {}
 
     };
@@ -467,6 +467,7 @@ export default {
     },
     updateIdAddress(event) {
       this.id_address = event;
+      this.info_Address = event;
 
     },
     mouseover(id) {
@@ -479,6 +480,7 @@ export default {
     toggleModalCart(cartid = null, index = null) {
       let infoAddress = JSON.parse(window.localStorage.getItem("is_default_Address"));
       this.info_Address = infoAddress;
+      console.log(this.info_Address);
       let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
       if (this.showModal == false) {
         this.objPayment.quantity = 0;

@@ -31,10 +31,10 @@
               class="absolute top-14 right-0 w-60 rounded-lg shadow-md shadow-gray-400 bg-[#ff3f3a] text-white px-5 z-50">
               <ul>
                 <li class="border-b py-3">
-                  <router-link to="/profile" class="text-base font-semibold">Thông tin cá nhân</router-link>
+                  <router-link to="/user/profile" class="text-base font-semibold">Thông tin cá nhân</router-link>
                 </li>
                 <li class="border-b py-3">
-                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
+                  <router-link to="user/new-address" class="text-base font-semibold">Cập nhật địa chỉ</router-link>
                 </li>
                 <li class="border-b py-3">
                   <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>

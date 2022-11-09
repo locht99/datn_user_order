@@ -38,6 +38,7 @@ Route::middleware('auth:api,web')->group(function ()
 
     Route::get('/user', [UserController::class, 'getUserInfo']);
     Route::put('/update-user', [UserController::class, 'UpdateUser']);
+    Route::post('/user/new-address', [UserController::class, 'newAddress']);
     //Đơn hàng
     Route::prefix('order')->group(function () {
 
