@@ -15,3 +15,6 @@ export function cartCheckoutByProduct(data){
 export function deleteCart(id) {
     return instance.delete(`/cart-product/${id}`);
 }
+export function deleteAllCart(data){
+    return instance.post('/cart-deleteAll',data); 
+}

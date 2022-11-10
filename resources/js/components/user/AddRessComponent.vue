@@ -11,13 +11,13 @@
                         <div class="flex items-center justify-center">
                             <div>
                                 <h3 class="text-3xl font-semibold">
-                                    Danh sách địa chỉ
+                                    {{ showModalAddNewAddress == true ? "Thêm địa chỉ mới" : "Danh sách địa chỉ" }}
                                 </h3>
                             </div>
                             <div class="ml-3">
-                                <p
+                                <p v-on:click="toggleModelAddNewAddress()"
                                     class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1 ">
-                                    Thêm địa chỉ mới</p>
+                                    {{ showModalAddNewAddress == true ? "Danh sách địa chỉ" : "Thêm địa chỉ mới" }}</p>
                             </div>
                         </div>
                         <button
@@ -30,9 +30,11 @@
                     <div class="relative p-3 flex-auto">
                         <div class="flex items-center justify-between">
                             <div class="container p-10 mx-auto">
-                                <div class="flex flex-col w-full px-0 mx-auto md:flex-row">
+                                <div class="flex flex-col   px-0 mx-auto md:flex-row"
+                                    :class="showModalAddNewAddress ? '' : 'w-full'">
                                     <div class="w-full">
-                                        <div class="inline-block w-[1100px] shadow rounded-lg overflow-hidden">
+                                        <div v-if="showModalAddNewAddress == false"
+                                            class="inline-block w-[1100px] shadow rounded-lg overflow-hidden">
                                             <table class="w-full leading-normal">
                                                 <thead>
                                                     <tr>
@@ -60,18 +62,17 @@
                                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 
                                                         </th>
-                                                        <th
+                                                        <!-- <th
                                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 
-                                                        </th>
+                                                        </th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in dataAddress">
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <input type="radio" name="radio"
-                                                                :checked="is_default.is_default == 1 ? true : false"
-                                                                v-on:click="checkedAddress(item)">
+                                                            <input type="radio" name="radio" 
+                                                            v-on:click="checkedAddress(item)" >
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <div class="flex items-center">
@@ -109,21 +110,128 @@
                                                                 <span class="relative">Mặc định</span>
                                                             </span>
                                                         </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <!-- <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <div class="flex items-center">
                                                                 <div class="m-2">
-                                                                    <a href="">Sửa</a>
+                                                                    <a href=""><i class="fa fa-edit text-[18px]"></i></a>
                                                                 </div>
                                                                 <div class="m-2">
-                                                                    <a href="">Xóa</a>
+                                                                    <a href=""><i class="fa fa-trash text-[18px]"></i></a>
                                                                 </div>
                                                             </div>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
 
                                                 </tbody>
                                             </table>
 
+                                        </div>
+                                        <div v-else>
+                                            <div>
+                                                <div v-if="statusRegister"
+                                                    class="bg-green-500 text-white font-bold py-2 p-4 absolute top-0 left-0 w-full rounded-tl-lg rounded-tr-lg">
+                                                    {{ statusMessage }}
+                                                </div>
+                                                <form action="">
+                                                    <div class="mx-[55px] font-bold">
+                                                        <div class="text-[30px] my-11">
+                                                            <p class="text-center">Thêm địa chỉ</p>
+                                                        </div>
+                                                        <div class="text-[#6B6B6B]">
+                                                            <div class="mb-5">
+                                                                <div class="my-4">
+                                                                    <select name="selectedProvince"
+                                                                        class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none"
+                                                                        @change="getDistricts($event)"
+                                                                        v-model="fillProvince">
+                                                                        <option v-if="isLoadingProvince" value="">
+                                                                            Đang tải...
+                                                                        </option>
+                                                                        <option v-else value="">
+                                                                            Chọn tỉnh / thành phố
+                                                                        </option>
+
+                                                                        <option v-for="(province, index) in provinces"
+                                                                            :key="index" :value="province.ProvinceID">
+                                                                            {{ province.ProvinceName }}
+                                                                        </option>
+                                                                    </select>
+                                                                    <span
+                                                                        class="text-red-700 text-[15px] pl-2 font-semibold h-10">{{
+                                                                                errors.selectedProvince
+                                                                                    ? errors.selectedProvince[0]
+                                                                                    : ""
+                                                                        }}</span>
+                                                                </div>
+                                                                <div class="my-4">
+                                                                    <select v-model="fillDistrict"
+                                                                        name="selectedDistrict"
+                                                                        class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none"
+                                                                        @change="
+                                                                            (isLoadingWard = true), getWards($event)
+                                                                        ">
+                                                                        <option v-if="isLoadingDistrict" value="">
+                                                                            Đang tải...
+                                                                        </option>
+                                                                        <option v-else value="">
+                                                                            Chọn quận huyện
+                                                                        </option>
+
+                                                                        <option v-for="(district, index) in districts"
+                                                                            :key="index" :value="district.DistrictID">
+                                                                            {{ district.DistrictName }}
+                                                                        </option>
+                                                                    </select>
+                                                                    <span
+                                                                        class="text-red-700 text-[15px] pl-2 font-semibold h-10">{{
+                                                                                errors.selectedDistrict
+                                                                                    ? errors.selectedDistrict[0]
+                                                                                    : ""
+                                                                        }}</span>
+                                                                </div>
+                                                                <div class="my-4">
+                                                                    <select name="selectedWard" v-model="fillWard"
+                                                                        class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none">
+                                                                        <option v-if="isLoadingWard" value="">
+                                                                            Đang tải...
+                                                                        </option>
+                                                                        <option v-else value="">
+                                                                            Chọn phường xã
+                                                                        </option>
+
+                                                                        <option v-for="(ward, index) in wards"
+                                                                            :key="index" :value="ward.WardName">
+                                                                            {{ ward.WardName }}
+                                                                        </option>
+                                                                    </select>
+                                                                    <span
+                                                                        class="text-red-700 text-[15px] pl-2 font-semibold h-10">{{
+                                                                                errors.selectedWard
+                                                                                    ? errors.selectedWard[0]
+                                                                                    : ""
+                                                                        }}</span>
+                                                                </div>
+                                                                <textarea v-model="dataNewAddress.addressNote" rows="4"
+                                                                    placeholder="Địa chỉ cụ thể ( Số nhà, tên đường... )"
+                                                                    class="block w-full bg-gray-100 rounded-md border-none p-2 duration-300 shadow focus:outline-none resize-none"></textarea>
+                                                            </div>
+                                                            <div class="mb-5 flex items-center">
+                                                                <input class="rounded bg-[#EDEDED]" type="checkbox"
+                                                                    v-model="dataNewAddress.is_default"
+                                                                    name="is_default" id="is_default" />
+                                                                <label for="is_default">
+                                                                    <span
+                                                                        class="cursor-pointer ml-2 font-semibold text-black">Đặt
+                                                                        làm mặc định</span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="text-center m-5 flex justify-center">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -132,12 +240,21 @@
                     </div>
                     <!-- footer-->
                     <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                        <div v-if="showModalAddNewAddress == false">
+                            <button v-on:click="toggleModalAddRess()"
+                                class="text-red-600 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button">
+                                Lưu thay đổi
+                            </button>
 
-                        <button v-on:click="toggleModalAddRess()"
-                            class="text-red-600 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button">
-                            Lưu thay đổi
-                        </button>
+                        </div>
+                        <div v-else>
+                            <button v-on:click="registerNewAddress()()"
+                                class="text-red-600 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button">
+                                Lưu thay đổi
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,6 +263,8 @@
     </div>
 </template>
 <script>
+import { newAddress } from "../../config/user";
+
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import { getAddress } from '../../config/user';
@@ -156,7 +275,35 @@ export default {
     data() {
         return {
             dataAddress: [],
-            is_default: {}
+            is_default: {},
+            showModalAddNewAddress: false,
+            dataNewAddress: {
+                selectedProvince: "",
+                selectedDistrict: "",
+                selectedWard: "",
+                addressNote: "",
+                is_default: false,
+            },
+            fillProvince: "",
+            fillDistrict: "",
+            fillWard: "",
+            changeDistrict: false,
+            changeProvince: false,
+            errors: [],
+            provinces: [],
+            districts: [],
+            wards: [],
+
+            isLoadingProvince: false,
+            isLoadingDistrict: false,
+            isLoadingWard: false,
+            isLoading: false,
+
+            statusRegister: 0,
+            statusMessage: "",
+            lazyLoad: false,
+            checkSubmit: false,
+
         }
     },
     emits: {
@@ -165,6 +312,9 @@ export default {
         // foobar: Function
     }, props: {
         showModalAction: Boolean,
+    },
+    mounted() {
+        this.getProvinces();
     },
     created() {
         this.getAddressUser();
@@ -186,17 +336,127 @@ export default {
         },
         checkedAddress(item) {
             let is_default_Address = JSON.parse(window.localStorage.getItem("is_default_Address"));
-            const newAddress = {...item};
-            newAddress.is_default =1;
+            const newAddress = { ...item };
+            newAddress.is_default = 1;
             this.is_default = newAddress;
             window.localStorage.setItem("is_default_Address", JSON.stringify(newAddress));
 
             // let existIsDefaultAddress = is_default_Address.find((item)=>item.id == id);
             // console.log(existIsDefaultAddress);
             this.$emit('idAddRess', item);
-        }
+        },
+        toggleModelAddNewAddress() {
+            this.showModalAddNewAddress = !this.showModalAddNewAddress;
+            console.log(this.showModalAddNewAddress);
+        },
+        registerNewAddress() {
+            this.dataNewAddress.selectedProvince = this.provinces.filter(
+                (value) => value.ProvinceID == this.fillProvince
+            )[0]?.ProvinceName;
+            this.dataNewAddress.selectedDistrict = this.districts.filter(
+                (value) => value.DistrictID == this.fillDistrict
+            )[0]?.DistrictName;
+            this.dataNewAddress.selectedWard = this.fillWard;
+            this.lazyLoad = true;
+            newAddress(this.dataNewAddress)
+                .then((res) => {
+                    this.statusRegister = true;
+                    this.statusMessage = res.data;
+                    this.lazyLoad = false;
+                    this.fillProvince = "";
+                    this.fillDistrict = "";
+                    this.fillWard = "";
+                    this.dataNewAddress.addressNote = "";
+                    this.dataNewAddress.is_default = false;
+                    this.showModalAddNewAddress = !this.showModalAddNewAddress;
+                    this.getAddressUser();
+                })
+                .catch((error) => {
+                    this.statusRegister = false;
+                    this.errors = error.response.data.errors;
+                    this.lazyLoad = false;
+                });
+        },
 
-    }
+        getProvinces() {
+            this.isLoadingProvince = true;
+            axios
+                .get(
+                    "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                    {
+                        headers: {
+                            token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
+                        },
+                    }
+                )
+                .then((res) => {
+                    this.provinces = res.data.data;
+                    this.isLoadingProvince = false;
+                });
+        },
+
+        getDistricts(province) {
+            this.isLoadingDistrict = true;
+            this.changeProvince = true;
+            this.fillDistrict = "";
+            this.fillWard = "";
+            this.errors = [];
+            const provinceId = province.target.value;
+            if (provinceId == "") {
+                this.districts = [];
+                this.isLoadingDistrict = false;
+                return;
+            }
+            axios
+                .get(
+                    "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                    {
+                        headers: {
+                            token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
+                        },
+                        params: {
+                            province_id: provinceId,
+                        },
+                    }
+                )
+                .then((res) => {
+                    this.districts = res.data.data;
+                    this.isLoadingDistrict = false;
+                    this.wards = [];
+                });
+        },
+
+        getWards(district) {
+            this.isLoadingWard = true;
+            this.changeProvince = false;
+            this.fillWard = "";
+            this.errors = [];
+            const districtId = district.target.value;
+            if (districtId == "") {
+                this.wards = [];
+                this.isLoadingWard = false;
+                return;
+            }
+            axios
+                .get(
+                    "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
+                    {
+                        headers: {
+                            token: "d0cbad49-5c4b-11ed-b824-262f869eb1a7",
+                        },
+                        params: {
+                            district_id: district.target.value,
+                        },
+                    }
+                )
+                .then((res) => {
+                    this.wards = res.data.data;
+                    this.isLoadingWard = false;
+                });
+        },
+    },
+
+
 }
 </script>
 <style>

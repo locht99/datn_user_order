@@ -63,6 +63,7 @@ Route::middleware('auth:api,web')->group(function ()
         Route::post('create', [CartController::class, 'cartCreate']);
     });
     Route::delete("cart-product/{id}", [CartController::class, 'removeProduct']);
+    Route::post("cart-deleteAll",[CartController::class,'deleteAllCart']);
     Route::post("cart-checkout", [CartController::class, "cartCheckout"]);
     Route::post("cart-checkoutByProduct",[CartController::class,"cartCheckByProduct"]);
     Route::get("get-address/{id}",[CartController::class,'getAddressUser']);

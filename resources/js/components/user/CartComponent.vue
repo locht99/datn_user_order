@@ -174,7 +174,7 @@
                 <div v-else="" class="min-h-14 flex items-center">
                   <div class="py-2">
                     Loading....
-                  </div> 
+                  </div>
                 </div>
                 <div class="pt-2">
                   <textarea v-model="noteByShop[cart.id]" name="" id="" class="
@@ -205,7 +205,8 @@
             class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400">
           <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"> Chọn
             tất cả </label>
-          <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
+          <label for="checkboxAll" v-on:click="deleteAll()"
+            class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
             tất cả</label>
         </div>
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
@@ -382,7 +383,7 @@
       <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
         :showModalAction="showModalAddress">
       </AddRessComponent>
-    <vue-topprogress ref="topProgress"></vue-topprogress>
+      <vue-topprogress ref="topProgress"></vue-topprogress>
 
     </section>
 
@@ -391,7 +392,7 @@
 </template>
 
 <script>
-import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct } from "../../config/cart";
+import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct, deleteAllCart } from "../../config/cart";
 import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -468,7 +469,32 @@ export default {
     updateIdAddress(event) {
       this.id_address = event;
       this.info_Address = event;
+    },
+    deleteAll() {
+      this.$swal.fire({
+        title: 'Bạn có chắc chắn muốn xóa giỏ hàng',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xóa'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteAllCart({ Id: Object.keys(this.checkBoxItem) }).then((response) => {
+            this.getTotalQuantity();
+            this.getCartByUser();
+            this.$swal.fire(
+              'Deleted!',
+              'Xóa sản phẩm khỏi giỏ hàng thành công',
+              'success'
+            )
+          }).catch((error) => {
 
+          })
+        }
+      });
+
+      // console.log(Object.keys(this.checkBoxItem));
     },
     mouseover(id) {
       this.isTrash[id] = true;
@@ -480,10 +506,10 @@ export default {
     toggleModalCart(cartid = null, index = null) {
       let infoAddress = JSON.parse(window.localStorage.getItem("is_default_Address"));
       this.info_Address = infoAddress;
-      console.log(this.info_Address);
       let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
       if (this.showModal == false) {
         this.objPayment.quantity = 0;
+        // console.log();
 
       }
       if (cartid != null) {
@@ -715,15 +741,15 @@ export default {
             this.checkBoxItem = this.object;
           })
         })
-      }).then(()=>{
+      }).then(() => {
         this.checkOutCart(this.listCart);
 
       })
-      .catch((error) => {
-        this.is_loading = false;
-      }).finally(() => {
-        this.is_loading = false;
-      });
+        .catch((error) => {
+          this.is_loading = false;
+        }).finally(() => {
+          this.is_loading = false;
+        });
 
 
     },
