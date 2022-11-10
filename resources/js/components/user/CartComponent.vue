@@ -11,10 +11,10 @@
             <b class="mx-2 text-lg">Giỏ hàng</b>
           </div>
           <div class="border-b-2 border-b-gray-400">
-            <label for="search" class="">
+            <!-- <label for="search" class="">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="search" placeholder="Tìm kiếm sản phẩm" class="border-none focus:ring-0" />
-            </label>
+            </label> -->
           </div>
         </div>
         <div>
@@ -43,8 +43,8 @@
                 <img src="/images/1688-logo.png" alt="" v-if="cart.source == '1688'" />
                 <img src="/images/tmall-logo.png" alt="" v-else-if="cart.source == 'TMALL'" />
                 <img src="/images/taobao-logo.png" alt="" v-else-if="cart.source == 'TAOBAO'" />
-                <p class="ml-10 text-xl" v-if="cart.shop_name">{{ cart.shop_name }}</p>
-                <p class="ml-10 text-xl" v-else>Không xác định</p>
+                <p v-on:click="openShop(cart.shop_url)" class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{ cart.shop_name }}</p>
+                <p v-on:click="openShop(cart.shop_url)" class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
               </div>
               <div class="flex items-center">
                 <label for="kiemhang" class="mx-4 cursor-pointer select-none">
@@ -109,9 +109,12 @@
                           v-model="checkBoxItem[listCartProduct.id]"
                           class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                       </td>
-                      <td class="pl-8 items-center">
-                        <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left" />
-                        <a class="mt-8 underline block">{{ listCartProduct.product_name }}</a>
+                      <td class="pl-8 items-center" >
+                        <div v-on:click="openShop(listCartProduct.url)">
+                          <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
+                        <a class="mt-7 underline block cursor-pointer" >{{ listCartProduct.product_name }}</a>
+                        </div>
+                        
                       </td>
                       <td class="pl-8">
                         <div class="inline-flex rounded-md shadow-sm">
@@ -457,6 +460,10 @@ export default {
     // checkByNote(){
     //   console.log(this.noteByShop);
     // },
+    openShop(url){
+      window.open(url, '_blank');
+
+    },
     openModalAddRess() {
       this.showModalAddress = !this.showModalAddress;
       this.showModal = !this.showModal;
@@ -841,7 +848,13 @@ export default {
       };
       createCart(data).then((response) => {
         // console.log(response);
-        this.$swal('Thanh toán đơn hàng thành công');
+        this.$swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Thanh toán đơn hàng thành công',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.listCart = [];
         this.checkBoxItem = [];
         this.showModal = false;
