@@ -11,10 +11,10 @@
             <b class="mx-2 text-lg">Giỏ hàng</b>
           </div>
           <div class="border-b-2 border-b-gray-400">
-            <label for="search" class="">
+            <!-- <label for="search" class="">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="search" placeholder="Tìm kiếm sản phẩm" class="border-none focus:ring-0" />
-            </label>
+            </label> -->
           </div>
         </div>
         <div>
@@ -841,7 +841,13 @@ export default {
       };
       createCart(data).then((response) => {
         // console.log(response);
-        this.$swal('Thanh toán đơn hàng thành công');
+        this.$swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Thanh toán đơn hàng thành công',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.listCart = [];
         this.checkBoxItem = [];
         this.showModal = false;

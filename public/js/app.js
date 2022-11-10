@@ -21190,7 +21190,13 @@ __webpack_require__.r(__webpack_exports__);
       };
       (0,_config_cart__WEBPACK_IMPORTED_MODULE_0__.createCart)(data).then(function (response) {
         // console.log(response);
-        _this11.$swal('Thanh toán đơn hàng thành công');
+        _this11.$swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Thanh toán đơn hàng thành công',
+          showConfirmButton: false,
+          timer: 1500
+        });
         _this11.listCart = [];
         _this11.checkBoxItem = [];
         _this11.showModal = false;
@@ -22904,17 +22910,7 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
     "class": "mx-2 text-lg"
   }, "Giỏ hàng")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "border-b-2 border-b-gray-400"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "search",
-    "class": ""
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "fa-solid fa-magnifying-glass"
-  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "text",
-    id: "search",
-    placeholder: "Tìm kiếm sản phẩm",
-    "class": "border-none focus:ring-0"
-  })])])], -1 /* HOISTED */);
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <label for=\"search\" class=\"\">\r\n              <i class=\"fa-solid fa-magnifying-glass\"></i>\r\n              <input type=\"text\" id=\"search\" placeholder=\"Tìm kiếm sản phẩm\" class=\"border-none focus:ring-0\" />\r\n            </label> ")])], -1 /* HOISTED */);
 });
 var _hoisted_4 = {
   style: {
