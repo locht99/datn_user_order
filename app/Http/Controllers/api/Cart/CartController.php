@@ -256,7 +256,7 @@ class CartController extends Controller
         $input = [];
         $idShop  = [];
         $id_Address = $request->data['id_address'];
-        
+
         foreach ($request['data']['data'] as $item) {
             $idShop[] = $item['id'];
         }
@@ -392,7 +392,7 @@ class CartController extends Controller
                 'shop_url' => $item->shop_url,
                 'order_id' => $order->id,
                 'note' => isset($note[$item->id]) ? $note[$item->id] : "",
-                'source'=>$item->source
+                'source' => $item->source
             ];
         }
         OrderDetail::insert($dataShopInsert);
@@ -503,5 +503,29 @@ class CartController extends Controller
         $address = DB::table('user_addresses')->where('user_id', $id)->get();
 
         return response()->json($address);
+    }
+    public function deleteAllCart(Request $request)
+    {
+        try {
+            $data =  CartProductModel::whereIn('id', $request->Id)->get();
+            CartProductModel::whereIn('id', $request->Id)->update(['is_delete' => true]);
+            $countCartProducts = DB::table('cart_products')
+                ->select('cart_products.id', 'cart_products.cart_id')
+                ->whereIn('cart_products.cart_id', $request->Id)
+                ->where('cart_products.is_delete', false)
+                ->count();
+
+            $dataCart = [];
+            foreach ($data as $item) {
+                $dataCart[] = $item->cart_id;
+            }
+            //xóa cart nếu trong cart k còn cartProduct
+            DB::table('carts')
+                ->whereIn('carts.id', $dataCart)
+                ->update(['carts.is_delete' => true]);
+            return response()->json(['success' => 'Đã xóa sản phẩm khỏi giỏ hàng']);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Có lỗi xảy ra vui lòng liên hệ quản trị viên']);
+        }
     }
 }

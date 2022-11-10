@@ -114,9 +114,20 @@
                         <a class="mt-8 underline block">{{ listCartProduct.product_name }}</a>
                       </td>
                       <td class="pl-8">
-                        <input type="number" v-on:change="cartQuantity(listCartProduct, index, index2)"
-                          v-model="listCartProduct.quantity" min="0"
-                          class="w-24 rounded-md h-8 border-2 border-gray-400 font-semibold text-lg focus:ring-0">
+                        <div class="inline-flex rounded-md shadow-sm">
+                          <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
+                            class="py-2 px-4 text-sm font-medium text-white bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            -
+                          </button>
+                          <input type="text" v-on:change="cartQuantity(listCartProduct, index, index2)"
+                            v-model="listCartProduct.quantity"
+                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          <button v-on:click="increasingProduct(listCartProduct, index, index2)"
+                            class="py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            +
+                          </button>
+                        </div>
+
                       </td>
                       <td class="pl-8">
                         <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
@@ -129,8 +140,9 @@
                             <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.price_cn }}</p>
                             <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
-                          <div class="pr-1">
-                            <label for="" v-on:click="deleteProductCart(listCartProduct.id)" class="cursor-pointer"
+                          <div class="pr-1 relative">
+                            <label for="" v-on:click="deleteProductCart(listCartProduct.id, index, index2)"
+                              class="cursor-pointer absolute left-[-11px]"
                               :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
                               <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
                             </label>
@@ -142,7 +154,7 @@
                 </table>
               </div>
               <div class="text-xl px-5 w-1/4">
-                <div class="min-h-14 flex items-center">
+                <div class="min-h-14 flex items-center" v-if="isLoadingTotal == false">
                   <div class="py-2">
                     <div v-for="(item, index4) in feeCartByShop[cart.id]" class="nameShop" :key="index4">
                       <span class="text-sm">{{
@@ -158,9 +170,13 @@
                       <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }}</span>
                     </div>
                   </div>
-
                 </div>
-                <div>
+                <div v-else="" class="min-h-14 flex items-center">
+                  <div class="py-2">
+                    Loading....
+                  </div>
+                </div>
+                <div class="pt-2">
                   <textarea v-model="noteByShop[cart.id]" name="" id="" class="
                     h-28
                     w-full
@@ -189,12 +205,13 @@
             class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400">
           <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"> Chọn
             tất cả </label>
-          <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
+          <label for="checkboxAll" v-on:click="deleteAll()"
+            class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
             tất cả</label>
         </div>
         <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
-        <span class="text-red-600 text-xl font-semibold">¥0 ~ {{ formatPrice(totalPriceShop) }}</span>
+        <span class="text-red-600 text-xl font-semibold"> {{ formatPrice(totalPriceShop) }}đ</span>
         <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
@@ -241,14 +258,14 @@
                               <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
                                 tên</label>
                               <p class="w-full px-4 py-3 text-sm border lg:text-sm">
-                                Bùi Tiến Huy
+                                {{ info_Address.name }}
                               </p>
                             </div>
                             <div class="w-full lg:w-1/2 ">
                               <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
                                 thoại</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                0338898903
+                                {{ info_Address.phone }}
                               </p>
                             </div>
                           </div>
@@ -258,7 +275,7 @@
                               <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
                                 chỉ</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                Nghách 63/33/71 nhà số 17 Lê Đức Thọ, Nam Từ Liêm, Hà Nội
+                                {{ info_Address.note }}
                               </p>
                             </div>
                           </div>
@@ -267,7 +284,7 @@
                               <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
                                 chỉ</label>
                               <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                Phường Mỹ Đình 2, Quận Nam Từ Liêm, Thành phố Hà Nội
+                                {{ info_Address.ward }}, {{ info_Address.district }}, {{ info_Address.province }}
                               </p>
                             </div>
                           </div>
@@ -366,20 +383,24 @@
       <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
         :showModalAction="showModalAddress">
       </AddRessComponent>
+      <vue-topprogress ref="topProgress"></vue-topprogress>
+
     </section>
+
   </Transition>
 
 </template>
 
 <script>
-import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct } from "../../config/cart";
+import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct, deleteAllCart } from "../../config/cart";
 import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   components: {
     loading,
-    AddRessComponent
+    AddRessComponent,
 
   },
   data() {
@@ -396,6 +417,7 @@ export default {
       checkBoxItem: [],
       keyObject: '',
       showModal: false,
+      isLoadingTotal: false,
       object: {},
       keyObjectGoods: '',
       objectGoods: {},
@@ -422,7 +444,8 @@ export default {
       index: 0,
       checkBoxAllIn: false,
       showModalAddress: false,
-      id_address: 0
+      id_address: {},
+      info_Address: {}
 
     };
   },
@@ -445,7 +468,33 @@ export default {
     },
     updateIdAddress(event) {
       this.id_address = event;
+      this.info_Address = event;
+    },
+    deleteAll() {
+      this.$swal.fire({
+        title: 'Bạn có chắc chắn muốn xóa giỏ hàng',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xóa'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteAllCart({ Id: Object.keys(this.checkBoxItem) }).then((response) => {
+            this.getTotalQuantity();
+            this.getCartByUser();
+            this.$swal.fire(
+              'Deleted!',
+              'Xóa sản phẩm khỏi giỏ hàng thành công',
+              'success'
+            )
+          }).catch((error) => {
 
+          })
+        }
+      });
+
+      // console.log(Object.keys(this.checkBoxItem));
     },
     mouseover(id) {
       this.isTrash[id] = true;
@@ -455,9 +504,12 @@ export default {
 
     },
     toggleModalCart(cartid = null, index = null) {
+      let infoAddress = JSON.parse(window.localStorage.getItem("is_default_Address"));
+      this.info_Address = infoAddress;
       let moneyProfile = JSON.parse(window.localStorage.getItem("user"));
       if (this.showModal == false) {
         this.objPayment.quantity = 0;
+        // console.log();
 
       }
       if (cartid != null) {
@@ -511,7 +563,7 @@ export default {
     syncCart() {
       this.syncItem = !this.syncItem;
       this.getCartByUser();
-      this.checkOutCart();
+      // this.checkOutCart();
     },
     formatPrice(value) {
       return new Intl.NumberFormat("en-US", {
@@ -522,7 +574,7 @@ export default {
         .replace("VND", "")
         .trim();
     },
-    deleteProductCart(id) {
+    deleteProductCart(id, index, index2) {
       this.$swal.fire({
         title: 'Bạn có chắc chắn muốn xóa sản phẩm khỏi giỏ hàng',
         icon: 'warning',
@@ -532,15 +584,18 @@ export default {
         confirmButtonText: 'Xóa'
       }).then((result) => {
         if (result.isConfirmed) {
+          this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
           deleteCart(id).then((response) => {
             this.getCartByUser();
             this.getTotalQuantity();
+          }).then(() => {
+            this.$swal.fire(
+              'Deleted!',
+              'Xóa sản phẩm khỏi giỏ hàng thành công',
+              'success'
+            )
           })
-          this.$swal.fire(
-            'Deleted!',
-            'Xóa sản phẩm khỏi giỏ hàng thành công',
-            'success'
-          )
+
         }
       })
 
@@ -661,8 +716,9 @@ export default {
       let totalShop = 0;
       let quantityShop = 0;
       let quantityItem = 0;
-
       this.is_loading = true;
+      this.isLoadingTotal = true;
+
       getCart().then((res) => {
         this.listCart = res.data.data;
         this.listCart.forEach((element) => {
@@ -684,27 +740,59 @@ export default {
             this.object[this.keyObject] = false;
             this.checkBoxItem = this.object;
           })
-        });
+        })
+      }).then(() => {
         this.checkOutCart(this.listCart);
 
-      }).catch((error) => {
-        this.is_loading = false;
       })
-        .finally(() => {
+        .catch((error) => {
+          this.is_loading = false;
+        }).finally(() => {
           this.is_loading = false;
         });
 
 
     },
     cartQuantity(listCartProduct, index, index2) {
+      if (listCartProduct.quantity <= 0) {
+        this.$swal("Số lượng không được nhỏ hơn 1");
+        listCartProduct.quantity = 1;
+      } else {
+        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+        let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2)
+        this.getTotalQuantity();
+        this.getTotal(index);
+      }
+    },
+    increasingProduct(listCartProduct, index, index2) {
+      listCartProduct.quantity++;
       this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
       this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
       let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2)
+      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
       this.getTotalQuantity();
       this.getTotal(index);
-      this.checkOutCart();
+      // this.checkOutCart();
 
+    },
+    decreasingProduct(listCartProduct, index, index2) {
+      listCartProduct.quantity--;
+      if (listCartProduct.quantity <= 0) {
+        this.$swal("Số lượng không được nhỏ hơn 1");
+        listCartProduct.quantity = 1;
+      } else {
+        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
+        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
+        let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
+        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
+        this.getTotalQuantity();
+        this.getTotal(index);
+      }
+
+
+      // this.checkOutCart();
     },
 
     checkOutCart(value = null, quantity = null) {
@@ -714,7 +802,6 @@ export default {
         quantity: this.quantity || quantity,
         inventory: this.checkGoods
       }
-      this.is_loading = true
       cartCheckout(data).then((response) => {
         const { data } = response.data;
         this.listTotalCart = response.data;
@@ -730,29 +817,11 @@ export default {
       }).catch((error) => {
 
       }).finally(() => {
-        this.is_loading = false;
         this.syncItem = false;
-
+        this.isLoadingTotal = false;
       })
     },
-    // createOrderByShop(cartid,index) {
 
-    //   const data = {
-    //     'money_deposite': this.deposite_money,
-    //     'data': { ids: this.checkBoxItem, data: [this.listCart[index]], note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
-    //   };
-    //   createCart(data).then((response) => {
-    //     // console.log(response);
-    //     window.localStorage.removeItem("cart");
-    //     this.$swal('Thanh toán đơn hàng thành công');
-    //     this.getCartByUser();
-    //     this.checkOutCart();
-    //     this.getTotalQuantity();
-    //   }).catch((error) => {
-    //     console.log(error);
-    //     this.$swal(error.response.data.message);
-    //   })
-    // },
     createOrder(cartid = null, index = null, deposite_money = null) {
       // console.log(this.checkBoxItem);
       let listCart = this.listCart;
@@ -773,9 +842,8 @@ export default {
       createCart(data).then((response) => {
         // console.log(response);
         this.$swal('Thanh toán đơn hàng thành công');
-        this.getCartByUser();
-        this.checkOutCart();
-        this.getTotalQuantity();
+        this.listCart = [];
+        this.checkBoxItem = [];
         this.showModal = false;
       }).catch((error) => {
         this.$swal(error.response.data.message);
