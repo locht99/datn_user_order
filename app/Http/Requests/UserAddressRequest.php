@@ -34,7 +34,7 @@ class UserAddressRequest extends FormRequest
     {
         return [
             "selectedProvince.required" => "Tỉnh, thành phố không được để trống",
-            "selectedDistrict.required" => "Quận,huyện không được để trống",
+            "selectedDistrict.required" => "Quận, huyện không được để trống",
             "selectedWard.required" => "Phường, xã không được để trống"
         ];
     }
