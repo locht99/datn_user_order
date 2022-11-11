@@ -136,13 +136,13 @@ export default {
                     this.statusLogin = true
                     this.statusMessage = "Đăng nhập thành công!"
                     setTimeout(() => {
-                        this.lazyLoad = false
                         if(this.$router.options.history.base == ""){
                             return this.$router.replace('/')
                         }else{
                             this.$router.back();
                         }
                     }, 1500)
+                    this.lazyLoad = false
                 }).catch(error => {
                     this.checkSubmit = false
                     this.statusLogin = false
