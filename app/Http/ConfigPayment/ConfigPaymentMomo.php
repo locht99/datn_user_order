@@ -150,7 +150,7 @@ class ConfigPaymentMomo extends Controller
             $m2signature = $jsonResult["signature"];
 
             $rawHash = "partnerCode=" . $partnerCode . "&accessKey=" . $accessKey . "&requestId=" . $requestId . "&orderId=" . $orderId . "&errorCode=" . $errorCode . "&transId=" . $transId . "&amount=" . $amount . "&message=" . $message . "&localMessage=" . $localMessage . "&requestType=" . $requestType . "&payType=" . $payType . "&extraData=" . $extraData;
-            $response =  $partnerSignature = hash_hmac("sha256", $rawHash, $this->ConfigPayment->serec_key);
+            $response = $partnerSignature = hash_hmac("sha256", $rawHash, $this->ConfigPayment->serec_key);
         }
         return $response;
     }

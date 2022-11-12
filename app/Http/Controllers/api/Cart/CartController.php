@@ -396,7 +396,7 @@ class CartController extends Controller
             ];
         }
         OrderDetail::insert($dataShopInsert);
-        $items_price_vn = 0;
+        $total_price = 0;
         foreach ($cartProducts as $key => $value) {
             //tao orderProducts
             $orderProducts = OrderProductModel::create([
@@ -418,17 +418,18 @@ class CartController extends Controller
                 'image_link' => $value->image,
                 'image_detail' => $value->image_detail,
             ]);
-            $items_price_vn += $orderProducts->price;
+            $total_price += $orderProducts->price;
         }
         $purchase_fee = getFeePurchase(
             config('const.config.PURCHASE_FEE'),
-            $items_price_vn
-        ) * $items_price_vn / 100;
+            $total_price
+        ) * $total_price / 100;
 
-        $order->items_price_vnd = $items_price_vn;
         $order->purchase_fee = $purchase_fee;
         $order->order_code = $orderCode;
         $order->address_id = $id_Address;
+        $order->total_price = $total_price;
+
         $order->save();
 
         // lấy cartId trùng với những sản phẩm được chọn trong cart
