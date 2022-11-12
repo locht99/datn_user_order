@@ -19,6 +19,7 @@ class Address extends Model
         'district',
         'ward',
         'note',
+        'region_id',
         'is_default'
     ];
 }

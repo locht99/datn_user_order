@@ -20324,13 +20324,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.statusLogin = true;
         _this.statusMessage = "Đăng nhập thành công!";
         setTimeout(function () {
-          _this.lazyLoad = false;
           if (_this.$router.options.history.base == "") {
             return _this.$router.replace('/');
           } else {
             _this.$router.back();
           }
         }, 1500);
+        _this.lazyLoad = false;
       })["catch"](function (error) {
         _this.checkSubmit = false;
         _this.statusLogin = false;
@@ -20371,7 +20371,8 @@ __webpack_require__.r(__webpack_exports__);
         confirm_password: "",
         selectedProvince: "",
         selectedDistrict: "",
-        selectedWard: ""
+        selectedWard: "",
+        region_id: ""
       },
       fillProvince: "",
       fillDistrict: "",
@@ -20440,6 +20441,18 @@ __webpack_require__.r(__webpack_exports__);
       this.fillWard = "";
       this.errors = [];
       var provinceId = province.target.value;
+      var provinceDetail = this.provinces.find(function (val) {
+        return val.ProvinceID == provinceId;
+      });
+      switch (provinceDetail.RegionID) {
+        case 6:
+          this.dataRegister.region_id = 1;
+          break;
+        case 4:
+        case 5:
+          this.dataRegister.region_id = 2;
+          break;
+      }
       if (provinceId == "") {
         this.districts = [];
         this.isLoadingDistrict = false;
@@ -21349,6 +21362,7 @@ __webpack_require__.r(__webpack_exports__);
         selectedDistrict: "",
         selectedWard: "",
         addressNote: "",
+        region_id: "",
         is_default: false
       },
       fillProvince: "",
@@ -21420,6 +21434,18 @@ __webpack_require__.r(__webpack_exports__);
       this.fillWard = "";
       this.errors = [];
       var provinceId = province.target.value;
+      var provinceDetail = this.provinces.find(function (val) {
+        return val.ProvinceID == provinceId;
+      });
+      switch (provinceDetail.RegionID) {
+        case 6:
+          this.dataNewAddress.region_id = 1;
+          break;
+        case 4:
+        case 5:
+          this.dataNewAddress.region_id = 2;
+          break;
+      }
       if (provinceId == "") {
         this.districts = [];
         this.isLoadingDistrict = false;

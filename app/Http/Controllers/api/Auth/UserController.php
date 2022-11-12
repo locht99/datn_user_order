@@ -70,6 +70,7 @@ class UserController extends Controller
                 'district' => $request->selectedDistrict,
                 'ward' => $request->selectedWard,
                 'note' => $request->addressNote,
+                'region_id' => $request->region_id,
                 'is_default' => 1,
                 'phone' => $newUser->phone,
             ]);
@@ -125,6 +126,7 @@ class UserController extends Controller
                 "ward"    => $request->selectedWard,
                 "note"      => $request->addressNote,
                 "phone"     => $user->phone,
+                "region_id" => $request->region_id,
                 "is_default" => $isDefault,
             ]);
             return response()->json("Thêm mới địa chỉ thành công!");

@@ -196,6 +196,7 @@ export default {
                 selectedDistrict: "",
                 selectedWard: "",
                 addressNote: "",
+                region_id: "",
                 is_default: false,
             },
             fillProvince: "",
@@ -278,6 +279,17 @@ export default {
             this.fillWard = "";
             this.errors = [];
             const provinceId = province.target.value;
+            const provinceDetail = this.provinces.find(val => val.ProvinceID == provinceId)
+            switch (provinceDetail.RegionID) {
+                case 6:
+                    this.dataNewAddress.region_id = 1
+                    break;
+                case 4:
+                case 5:
+                    this.dataNewAddress.region_id = 2
+                    break;
+            }
+
             if (provinceId == "") {
                 this.districts = [];
                 this.isLoadingDistrict = false;

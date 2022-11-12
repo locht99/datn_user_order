@@ -52,7 +52,7 @@ class ApiUserRegisterRequest extends FormRequest
             "confirm_password.same" => "Nhập lại mật khẩu không khớp",
             "password.min" => "Mật khẩu phải lớn hơn 6 kí tự",
             "selectedProvince.required" => "Tỉnh, thành phố không được để trống",
-            "selectedDistrict.required" => "Quận,huyện không được để trống",
+            "selectedDistrict.required" => "Quận, huyện không được để trống",
             "selectedWard.required" => "Phường, xã không được để trống"
         ];
     }
