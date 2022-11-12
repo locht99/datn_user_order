@@ -46,6 +46,10 @@ Route::middleware('auth:api,web')->group(function ()
         Route::post('get-filter-order', [OrderController::class, 'getFilterOrder']);
 
         Route::post('create-order', [OrderController::class, 'createOrder']);
+
+        Route::get('order-detail/{id}', [OrderController::class, 'orderDetail']);
+
+        Route::post('order-info', [OrderController::class, 'orderInfoes']);
     });
 
     //Thông báo

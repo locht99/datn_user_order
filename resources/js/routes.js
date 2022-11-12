@@ -10,13 +10,11 @@ import ProfileComponent from "./components/ProfileComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import CreateTransaction from './components/user/Transaction/CreateTransactionComponent.vue';
-const routes = [
-    {
+const routes = [{
         path: "/",
         component: UserLayout,
         meta: { requiresAuth: true },
-        children: [
-            {
+        children: [{
                 path: "/",
                 component: Home,
             },
@@ -29,7 +27,7 @@ const routes = [
                 component: Order,
             },
             {
-                path: "/order-detail",
+                path: "/order-detail/:id",
                 component: OrderDetail,
             },
             {
@@ -53,12 +51,12 @@ const routes = [
     {
         path: "/login",
         component: LoginComponent,
-        meta: {notLogin: true}
+        meta: { notLogin: true }
     },
     {
         path: "/register",
         component: RegisterComponent,
-        meta: {notLogin: true}
+        meta: { notLogin: true }
     },
     { path: "/:catchAll(.*)", redirect: "/" },
 ];
