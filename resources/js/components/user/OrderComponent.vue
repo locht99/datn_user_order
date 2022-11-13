@@ -126,7 +126,7 @@
                                 {{format_date(order.updated_at)}}
                             </td>
                             <td class="w-1/6 text-left pl-4">
-                                <router-link :to="{ path: '/order-detail/'+order.id}"><i class="fa-solid fa-list" style="padding: inherit;"></i></router-link>    
+                                <router-link :to="'/order-detail/'+order.id"><i class="fa-solid fa-list" style="padding: inherit;"></i></router-link>    
                             </td>
                         </tr>
                     </tbody>

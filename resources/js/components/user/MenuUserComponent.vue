@@ -10,7 +10,7 @@
             src="/images/menu-icon/cart.png" alt=""><span class="pl-2">Giỏ hàng</span></router-link>
       </li>
       <li class="menuItem my-6 rounded-lg">
-        <router-link to="order" class="text-white flex font-semibold text-lg pl-3 py-2 rounded-lg"><img
+        <router-link to="/order" class="text-white flex font-semibold text-lg pl-3 py-2 rounded-lg"><img
             src="/images/menu-icon/order.png" alt=""><span class="pl-2">Đơn hàng</span></router-link>
       </li>
       <!-- <li class="menuItem my-6 rounded-lg">
