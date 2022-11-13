@@ -34,5 +34,6 @@ class OrderProductModel extends Model
         'url',
         'image_link',
         'image_detail',
+        'order_status_id'
     ];
 }

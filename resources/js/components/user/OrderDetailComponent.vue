@@ -65,9 +65,9 @@
                                     Đường dẫn sản phẩm ( link ):
                                     <a
                                         :href="product.url"
-                                        class="text-white bg-red-700 pb-1 px-4 rounded-2xl"
+                                        class="text-white bg-red-600 pb-1 px-4 rounded-2xl"
                                     >
-                                        xem
+                                    <i class="fa-sharp fa-solid fa-eye"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -105,11 +105,14 @@ export default {
         },
         getOrderProductDetailByUser() {
             this.is_loading = true;
-
             getOrderProductDetail(this.$route.params.id)
             .then((res) => {
-                this.listProducts = res.data.data.orderDetail.order_products;
-                this.order_code = res.data.data.orderDetail.order;
+                if(res.data.status == 404){
+                    this.$swal.fire(res.data.data.message);
+                }else{
+                    this.listProducts = res.data.data.orderDetail.order_products;
+                    this.order_code = res.data.data.orderDetail.order;
+                }
             })
             .catch((error) => {
                 this.is_loading = false;

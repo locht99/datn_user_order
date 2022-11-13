@@ -65,15 +65,28 @@ class OrderController extends Controller
     }
 
     public function orderDetail($order_id){
+        if($order_id){
+            $order = $this->getOrderEntity->orderDetail($order_id)->first();
+            if(is_null($order)){
+                return response()->json([
 
-        $orderDetail = $this->getOrderEntity->orderProductDetail($order_id);
-        return response()->json([
+                    'status' => 404,
+                    'data' => [
+                        'message' => 'The requested URL was not found on this server!',
+                    ]
+                    
+                ],200);
+            }
+            $orderDetail = $this->getOrderEntity->orderProductDetail($order_id);
+            return response()->json([
 
-            'status' => 200,
-            'data' => [
-                'orderDetail' => $orderDetail,
-            ]
+                'status' => 200,
+                'data' => [
+                    'orderDetail' => $orderDetail,
+                ]
 
-        ],200);
+            ],200);
+        }
+        
     }
 }
