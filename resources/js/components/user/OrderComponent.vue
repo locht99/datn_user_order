@@ -13,43 +13,6 @@
                 <ul class="pt-3 pb-5">
                     <li class="flex items-center text-xl">
                         <i class="fa-solid fa-caret-right cursor-pointer"></i>
-                        <h3 class="ml-2">Theo website</h3>
-                    </li>
-                    <li class="flex items-center text-lg my-2">
-                        <input
-                            type="checkbox"
-                            id="1688"
-                            @click="fillterSource('1688')"
-                            v-model="checkBoxSource['1688']"
-                            value="1688"
-                            class="rounded-md ml-4 focus:ring-0 cursor-pointer"
-                        />
-                        <label
-                            for="1688"
-                            class="cursor-pointer pl-2 select-none"
-                            >1688.com</label
-                        >
-                    </li>
-                    <li class="flex items-center text-lg my-2">
-                        <input
-                            type="checkbox"
-                            value="TAOBAO"
-                            @click="fillterSource('taobao')"
-                            v-model="checkBoxSource['taobao']"
-                            id="taobao"
-                            class="rounded-md ml-4 focus:ring-0 cursor-pointer"
-                        />
-                        <label
-                            for="taobao"
-                            class="cursor-pointer pl-2 select-none"
-                            >taobao.com</label
-                        >
-                    </li>
-                </ul>
-
-                <ul class="pt-3 pb-5">
-                    <li class="flex items-center text-xl">
-                        <i class="fa-solid fa-caret-right cursor-pointer"></i>
                         <h3 class="ml-2">Theo trạng thái</h3>
                     </li>
                     <li class="flex items-center text-lg my-2">
@@ -100,7 +63,7 @@
             </div>
 
             <div class="border-t-2">
-                <button @click="undo()" class="text-center block m-auto mt-2 text-white px-10 py-2 rounded-lg">
+                <button @click="undo()" class="undo text-center block m-auto mt-2 text-white px-10 py-2 rounded-lg">
                     Hoàn tác
                 </button>
             </div>
@@ -123,7 +86,7 @@
                         placeholder="Tìm kiếm mã đơn hàng"
                         class="border-none focus:ring-0"
                     />
-                    <button @click="searchs()" type="submit" class="p-2 px-3 ml-2 text-sm font-medium text-white rounded-lg border border-red-500 hover:bg-[#fe7500] focus:ring-4 ">
+                    <button @click="searchs()" type="submit" class="searchs p-2 px-3 ml-2 text-sm font-medium text-white rounded-lg border border-red-500 hover:bg-[#fe7500] focus:ring-4 ">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </label>
@@ -134,33 +97,36 @@
                     <thead>
                         <tr class="bg-gray-100 h-14">
                             <th class="w-3 pl-4">Stt</th>
-                            <th class="w-1/3 text-left pl-4">
+                            <th class="w-1/5 text-left pl-4">
                                 Thông tin đơn hàng
                             </th>
-                            <th class="w-1/5 text-left pl-4">Gian hàng</th>
-                            <th class="w-1/5 text-left pl-4">Mã đơn hàng</th>
+                            <th class="w-3 pl-4">SL</th>
+                            <th class="w-1/4 text-left pl-4">Mã đơn hàng</th>
                             <th class="w-1/5 text-left pl-4">Trạng thái</th>
+                            <th class="w-1/5 text-left pl-4">Thời gian</th>
+                            <th class="w-1/6 text-left pl-4">Chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            class="border-b border-gray-200"
-                            v-for="(order, index) in listOrder"
-                            :key="index"
-                        >
+                        <tr class="border-b border-gray-200" v-for="(order, index) in listOrder" :key="index">
                             <td class="text-center">
                                 #{{ index + 1 + (this.current_page - 1) * 7 }}
                             </td>
-                            <td class="py-3 flex items-center mt-1">
-                                <a href="" class="mx-2 underline">{{
-                                    order.shop_name
-                                }}</a>
+                            <td class="py-2 items-center mt-1">
+                                <button @click="showModalDetail(true, order.id)" class="detail-order mx-2 font-semibold text-center block m-auto mt-2 text-white px-4 rounded-lg">Xem chi tiết</button>    
+                            </td>
+                            <td class="w-3 pl-4">
                                 <span>x{{order.product_count}}</span>
                             </td>
-                            <td class="w-1/5 pl-4">{{ order.source }}</td>
-                            <td class="w-1/5 pl-4">{{ order.order_code }}</td>
+                            <td class="w-1/4 text-left pl-4">{{ order.order_code }}</td>
                             <td :class="(this.color[order.order_status_id])" class="first-line:w-1/5 pl-4 font-semibold">
                                 {{ order.status_name }}
+                            </td>
+                            <td class="w-1/5 text-left pl-4 font-semibold">
+                                {{format_date(order.updated_at)}}
+                            </td>
+                            <td class="w-1/6 text-left pl-4">
+                                <router-link :to="{ path: '/order-detail/'+order.id}"><i class="fa-solid fa-list" style="padding: inherit;"></i></router-link>    
                             </td>
                         </tr>
                     </tbody>
@@ -174,29 +140,107 @@
             </div>
         </section>
     </section>
+    <div v-if="showModal"
+        class="overflow-x-hidden overflow-y-auto  fade  fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+            <loading v-model:active="is_loading_detail" :is-full-page="false" />
+          <!--content-->
+          <div
+            class="modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none ">
+            <!--header-->
+            <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <div>
+                    <h4 class="text-xl font-bold">Thông tin đơn hàng</h4><button class="detail-order mx-2 font-semibold text-center block m-auto mt-2 text-white px-4 rounded-lg">{{this.listInfo['order_code']}}</button>
+                </div>
+                <button v-on:click="showModalDetail(false)"
+                    class="pb-2 ml-auto bg-transparent border-0 text-gray-500 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+                    x
+                </button>
+            </div>
+            <!--body-->
+            <div class="relative p-3">
+              <div class="items-center justify-between">
+                <div class="container px-4 mx-auto">
+                    <div class="pt-12 md:pt-0 2xl:ps-4">
+                        
+                        <div class="mt-4">
+                          <div class="flex flex-col space-y-4">
+
+                            <div
+                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                              <div>
+                                Tổng tiền (tạm tính):
+                              </div>
+                              <div>
+                                <span class="ml-2">{{formatPrice(this.listInfo['total_price'])}}</span>
+                              </div>
+                            </div>
+                            <div 
+                                class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                              <div>
+                                Nguồn hàng: 
+                              </div>
+                              <div>
+                                <span class="ml-2 text-red" v-for="(source, index) in listSource" :key="index">{{source.source}}</span>
+                              </div>
+                            </div>
+                            <div
+                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                              <div>
+                                Tiền đã trả (đặt cọc):
+                              </div>
+                              <div>
+                                <span class="ml-2">{{formatPrice(this.listInfo['deposit_amount'])}}</span>
+                              </div>
+                            </div>
+                            <div
+                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                              <div>
+                                Địa chỉ nhận: 
+                              </div>
+                              <div>
+                                <span class="ml-2 text-sm">SDT: {{this.address['phone']}}/{{this.address['note']}}/{{this.address['district']}}/{{this.address['ward']}}/{{this.address['province']}}.</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 </template>
 
 <script>
 import { getFilterOrder } from "../../config/order";
+import { getOrderInfo } from "../../config/order";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import { useAttrs } from "vue";
+import moment from 'moment';
+import { isBuffer } from "util";
 export default {
     components: {
         loading,
     },
     data() {
         return {
+            showModal: false,
             arr_status_id: [],
-            arr_source: [],
             checkBoxStatus: [],
-            checkBoxSource: [],
             search: '',
             allChecked: true,
             is_loading: false,
+            is_loading_detail: false,
             color: [],
+            address: [],
             listOrder: [],
             listStatus: [],
+            listInfo: [],
+            listSource: [],
             countStatusConfirmation: 0,
             dataPagination: {},
             current_page: 0,
@@ -213,11 +257,15 @@ export default {
                 currency: "VND",
             }).format(value);
         },
+        format_date(value){
+         if (value) {
+           return moment(String(value)).format('DD-MM-YYYY')
+          }
+        },
         getFilterOrderByUser(page = 1) {
             this.is_loading = true;
             getFilterOrder(page, {
                 order_status_id: this.arr_status_id,
-                source: this.arr_source,
                 search: this.search,
             })
                 .then((res) => {
@@ -259,29 +307,24 @@ export default {
                     this.is_loading = false;
                 });
         },
+       
         searchs(){
             if(this.search == ''){
                 return this.$swal.fire('Chưa có thông tin mã đơn hàng!');
             }
             this.allChecked = true;
-            this.checkBoxSource['taobao'] = false;
-            this.checkBoxSource['1688'] = false;
             this.listStatus.forEach((value) => {
                 this.checkBoxStatus[value.order_status_id] = false;
             })
-            this.arr_source = [];
             this.arr_status_id = [];
             this.getFilterOrderByUser();
         },
         undo(){
             this.allChecked = true;
-            this.checkBoxSource['taobao'] = false;
-            this.checkBoxSource['1688'] = false;
             this.listStatus.forEach((value) => {
                 this.checkBoxStatus[value.order_status_id] = false;
             })
             this.search = '';
-            this.arr_source = [];
             this.arr_status_id = [];
             this.getFilterOrderByUser();
         },
@@ -296,17 +339,6 @@ export default {
             this.search = '';
             this.arr_status_id = [];
             this.getFilterOrderByUser();
-        },
-        fillterSource(source) {
-          this.checkBoxSource[source] = !this.checkBoxSource[source];
-
-          if (this.checkBoxSource[source]) {
-            this.arr_source.push(source);
-          }else if (this.checkBoxSource[source] == false) {
-            this.arr_source = this.arr_source.filter((item) => item != source);
-          }
-          this.search = '';
-          this.getFilterOrderByUser();
         },
         fillter(id) {
             this.search = '';
@@ -326,18 +358,40 @@ export default {
             }
             this.getFilterOrderByUser();
         },
+        showModalDetail(data, order_id = null){
+            this.showModal = data;
+            if(order_id){
+                this.is_loading_detail = true;
+                getOrderInfo({
+                    order_id: order_id,
+                })
+                .then((res) => {
+                    this.listInfo = res.data.data.orderInfo.order;
+                    this.listSource = res.data.data.orderInfo.source;
+                    this.address = res.data.data.orderInfo.address;
+                })
+                .catch((error) => {
+                    this.is_loading_detail = false;
+                })
+                .finally(() => {
+                    this.is_loading_detail = false;
+                });
+            }
+        },
         pageChange(pageNumber) {
             this.currentPage = pageNumber;
             this.getFilterOrderByUser();
         },
+        
     },
 };
 </script>
 
 <style scoped>
-button {
+.undo, .detail-order, .searchs{
     background-color: #ff3f3a;
 }
+
 ::-webkit-scrollbar {
     width: 15px;
     height: 20px;
@@ -361,5 +415,21 @@ button {
 .min-w-max.pagination div {
     display: none !important;
     background: yellow;
+}
+.modal-cart {
+  transition: ease-in-out;
+  animation-name: modalCart;
+  animation-duration: 0.5s;
+}
+
+@keyframes modalCart {
+  0% {
+    transform: translateY(-160px);
+
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

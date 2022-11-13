@@ -88,27 +88,18 @@ class GetOrderEntity extends Controller
 
     }
 
-    public function filterDataOder($source, $order_status_id, $search){
+    public function filterDataOder($order_status_id, $search){
         $filterDataOderProduct = OrderModel::join('order_statuses', 'orders.order_status_id', 'order_statuses.id')
-            ->select('orders.id', 'orders.order_status_id', 'orders.shop_name', 'orders.source', 'orders.order_code', 'order_statuses.status_name')
+            ->select('orders.id', 'orders.order_status_id', 'orders.order_code', 'order_statuses.status_name', 'orders.updated_at')
             ->withCount('product')
             ->where('orders.user_id', auth()->user()->id)
             ->when($search, function ($query, $search) {
 
                 $query->where('orders.order_code', 'like', '%'.$search.'%');
 
-            }, function ($query) use ($source, $order_status_id) {
+            }, function ($query) use ($order_status_id) {
 
-                $query->when($source, function ($query, $source) {
-
-                    $query->whereIn('orders.source', $source);
-    
-                }, function ($query) {
-    
-                    $sources = DB::table('orders')->select('source')->distinct();
-                    $query->whereIn('orders.source',$sources);
-    
-                })->when($order_status_id, function ($query, $order_status_id) {
+                $query->when($order_status_id, function ($query, $order_status_id) {
     
                     $query->whereIn('orders.order_status_id', $order_status_id); 
     
@@ -119,9 +110,47 @@ class GetOrderEntity extends Controller
     
                 });
 
-            })->paginate(7);
+            })->orderBy('orders.updated_at', 'DESC')->paginate(7);
 
         return $filterDataOderProduct;
 
+    }
+
+    public function orderProductDetail($order_id){
+        $order_products = DB::table('order_products')
+            ->join('order_statuses', 'order_products.order_status_id', 'order_statuses.id')
+            ->select('order_statuses.status_name', 'order_products.product_name', 'order_products.source', 'order_products.properties', 'order_products.quantity_bought', 'order_products.promotion_price', 'order_products.original_price', 'order_products.price', 'order_products.image_link', 'order_products.url')
+            ->where('order_products.order_id', $order_id)
+            ->where('order_products.user_id', auth()->user()->id)
+            ->get();
+        $order_product_detail = [
+            'order_products' => $order_products,
+            'order'          => $this->orderDetail($order_id)->select('order_code')->first(),
+        ];
+        return $order_product_detail;
+    }
+
+    public function orderInfo($order_id){
+
+        $order_info = [
+            'source' => $this->listSource($order_id),
+            'order'  => $this->orderDetail($order_id)->select('deposit_amount', 'order_code', 'total_price')->first(),
+            'address'=> $this->orderDetail($order_id)->join('user_addresses', 'orders.address_id', 'user_addresses.id')->select('user_addresses.*')->first(),
+        ];
+        return $order_info;
+    }
+
+    public function orderDetail($order_id){
+        $data = DB::table('orders')
+            ->where('orders.id', $order_id);
+        return $data;
+    }
+
+    public function listSource($order_id){
+        $data = DB::table('order_detail')
+            ->where('order_id', $order_id)
+            ->groupBy('order_detail.source')
+            ->select('order_detail.source')->get();
+        return $data;
     }
 }
