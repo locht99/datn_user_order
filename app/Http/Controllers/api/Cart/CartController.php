@@ -327,6 +327,7 @@ class CartController extends Controller
             ->select(
                 'cart_products.id',
                 'cart_products.user_id',
+                'cart_products.source',
                 'cart_products.cart_id',
                 'cart_products.product_id',
                 'cart_products.product_name',
@@ -383,7 +384,6 @@ class CartController extends Controller
                 ? $separately_wood_packing_fee : 0,
             'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
-
         ]);
         foreach ($Shop as $key => $item) {
             $dataShopInsert[] = [
@@ -396,7 +396,7 @@ class CartController extends Controller
             ];
         }
         OrderDetail::insert($dataShopInsert);
-        $items_price_vn = 0;
+        $total_price = 0;
         foreach ($cartProducts as $key => $value) {
             //tao orderProducts
             $orderProducts = OrderProductModel::create([
@@ -404,6 +404,7 @@ class CartController extends Controller
                 'partner_id' => 1,
                 'order_id' => $order->id,
                 'product_id' => $value->product_id,
+                'source'=>$value->source,
                 'product_name' => $value->product_name,
                 'propertiesId' => $value->propertiesId,
                 'properties' => $value->properties,
@@ -417,18 +418,20 @@ class CartController extends Controller
                 'url' => $value->url,
                 'image_link' => $value->image,
                 'image_detail' => $value->image_detail,
+                'order_status_id' => 1,
             ]);
-            $items_price_vn += $orderProducts->price;
+            $total_price += $orderProducts->price;
         }
         $purchase_fee = getFeePurchase(
             config('const.config.PURCHASE_FEE'),
-            $items_price_vn
-        ) * $items_price_vn / 100;
+            $total_price
+        ) * $total_price / 100;
 
-        $order->items_price_vnd = $items_price_vn;
         $order->purchase_fee = $purchase_fee;
         $order->order_code = $orderCode;
-        $order->address_id = $id_Address;
+        $order->address_id = $id_Address['id'];
+        $order->total_price = $total_price;
+        $order->id_warehouse = $id_Address['region_id'];
         $order->save();
 
         // lấy cartId trùng với những sản phẩm được chọn trong cart

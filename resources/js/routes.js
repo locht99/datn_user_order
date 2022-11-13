@@ -11,7 +11,8 @@ import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import CreateTransaction from './components/user/Transaction/CreateTransactionComponent.vue';
 import NewAddressComponent from "./components/user/NewAddressComponent"
-const routes = [{
+const routes = [
+    {
         path: "/",
         component: UserLayout,
         meta: { requiresAuth: true },
