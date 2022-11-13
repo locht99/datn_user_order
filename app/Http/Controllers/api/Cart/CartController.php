@@ -383,7 +383,6 @@ class CartController extends Controller
                 ? $separately_wood_packing_fee : 0,
             'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
-
         ]);
         foreach ($Shop as $key => $item) {
             $dataShopInsert[] = [
@@ -417,6 +416,7 @@ class CartController extends Controller
                 'url' => $value->url,
                 'image_link' => $value->image,
                 'image_detail' => $value->image_detail,
+                'order_status_id' => 1
             ]);
             $total_price += $orderProducts->price;
         }
