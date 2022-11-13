@@ -34,7 +34,7 @@ class OrderController extends Controller
 
         $filterStatus = $this->getOrderEntity->filterStatus($dataOder->source);
         $countStatusConfirmation = $this->getOrderEntity->countStatusConfirmation();
-        $filterDataOder = $this->getOrderEntity->filterDataOder($dataOder->source ,$dataOder->order_status_id, $dataOder->search);
+        $filterDataOder = $this->getOrderEntity->filterDataOder($dataOder->order_status_id, $dataOder->search);
         return response()->json([
 
             'status' => 200,
@@ -49,6 +49,44 @@ class OrderController extends Controller
 
     public function createOrder(Request $dataOrder){
 
+        
+    }
+
+    public function orderInfoes(Request $data){
+        $orderInfo = $this->getOrderEntity->orderInfo($data->order_id);
+        return response()->json([
+
+            'status' => 200,
+            'data' => [
+                'orderInfo' => $orderInfo,
+            ]
+
+        ],200);
+    }
+
+    public function orderDetail($order_id){
+        if($order_id){
+            $order = $this->getOrderEntity->orderDetail($order_id)->first();
+            if(is_null($order)){
+                return response()->json([
+
+                    'status' => 404,
+                    'data' => [
+                        'message' => 'The requested URL was not found on this server!',
+                    ]
+                    
+                ],200);
+            }
+            $orderDetail = $this->getOrderEntity->orderProductDetail($order_id);
+            return response()->json([
+
+                'status' => 200,
+                'data' => [
+                    'orderDetail' => $orderDetail,
+                ]
+
+            ],200);
+        }
         
     }
 }

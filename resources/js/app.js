@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
                     next();
                 }
             });
-    }else{
+    } else {
         if (to.matched.some((record) => record.meta.requiresAuth)) {
             router.replace("/login");
         } else if (to.matched.some((record) => record.meta.notLogin)) {
