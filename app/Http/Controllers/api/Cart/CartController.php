@@ -327,6 +327,7 @@ class CartController extends Controller
             ->select(
                 'cart_products.id',
                 'cart_products.user_id',
+                'cart_products.source',
                 'cart_products.cart_id',
                 'cart_products.product_id',
                 'cart_products.product_name',
@@ -403,6 +404,7 @@ class CartController extends Controller
                 'partner_id' => 1,
                 'order_id' => $order->id,
                 'product_id' => $value->product_id,
+                'source'=>$value->source,
                 'product_name' => $value->product_name,
                 'propertiesId' => $value->propertiesId,
                 'properties' => $value->properties,
@@ -416,7 +418,7 @@ class CartController extends Controller
                 'url' => $value->url,
                 'image_link' => $value->image,
                 'image_detail' => $value->image_detail,
-                'order_status_id' => 1
+                'order_status_id' => 1,
             ]);
             $total_price += $orderProducts->price;
         }
@@ -427,9 +429,9 @@ class CartController extends Controller
 
         $order->purchase_fee = $purchase_fee;
         $order->order_code = $orderCode;
-        $order->address_id = $id_Address;
+        $order->address_id = $id_Address['id'];
         $order->total_price = $total_price;
-
+        $order->id_warehouse = $id_Address['region_id'];
         $order->save();
 
         // lấy cartId trùng với những sản phẩm được chọn trong cart

@@ -43,8 +43,12 @@
                 <img src="/images/1688-logo.png" alt="" v-if="cart.source == '1688'" />
                 <img src="/images/tmall-logo.png" alt="" v-else-if="cart.source == 'TMALL'" />
                 <img src="/images/taobao-logo.png" alt="" v-else-if="cart.source == 'TAOBAO'" />
-                <p v-on:click="openShop(cart.shop_url)" class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{ cart.shop_name }}</p>
-                <p v-on:click="openShop(cart.shop_url)" class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
+                <p v-on:click="openShop(cart.shop_url)"
+                  class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
+                      cart.shop_name
+                  }}</p>
+                <p v-on:click="openShop(cart.shop_url)"
+                  class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
               </div>
               <div class="flex items-center">
                 <label for="kiemhang" class="mx-4 cursor-pointer select-none">
@@ -109,12 +113,12 @@
                           v-model="checkBoxItem[listCartProduct.id]"
                           class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                       </td>
-                      <td class="pl-8 items-center" >
+                      <td class="pl-8 items-center">
                         <div v-on:click="openShop(listCartProduct.url)">
                           <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
-                        <a class="mt-7 underline block cursor-pointer" >{{ listCartProduct.product_name }}</a>
+                          <a class="mt-7 underline block cursor-pointer">{{ listCartProduct.product_name }}</a>
                         </div>
-                        
+
                       </td>
                       <td class="pl-8">
                         <div class="inline-flex rounded-md shadow-sm">
@@ -448,7 +452,8 @@ export default {
       checkBoxAllIn: false,
       showModalAddress: false,
       id_address: {},
-      info_Address: {}
+      info_Address: {},
+      count: 0
 
     };
   },
@@ -460,7 +465,7 @@ export default {
     // checkByNote(){
     //   console.log(this.noteByShop);
     // },
-    openShop(url){
+    openShop(url) {
       window.open(url, '_blank');
 
     },
@@ -543,13 +548,12 @@ export default {
         this.objPayment.point = moneyProfile.point;
 
       }
-      let count = 0;
       Object.keys(this.checkBoxItem).forEach((ele) => {
         if (this.checkBoxItem[ele]) {
-          count++;
+          this.count++;
         }
       });
-      if (count == 0) {
+      if (this.count == 0) {
         return this.$swal("Vui lòng chọn ít nhất 1 sản phẩm");
       } else {
         this.showModal = !this.showModal;
@@ -743,9 +747,7 @@ export default {
           element.cart_products.forEach((ele) => {
             this.quantity[ele.id] = ele.quantity;
             quantityItem += +ele.quantity;
-            this.keyObject = ele.id;
-            this.object[this.keyObject] = false;
-            this.checkBoxItem = this.object;
+            this.checkBoxItem[ele.id] = false;
           })
         })
       }).then(() => {
@@ -844,7 +846,7 @@ export default {
       }
       const data = {
         'money_deposite': deposite_money,
-        'data': { ids: this.checkBoxItem, data: listCart, id_address: JSON.parse(window.localStorage.getItem("is_default_Address")).id, note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
+        'data': { ids: this.checkBoxItem, data: listCart, id_address: JSON.parse(window.localStorage.getItem("is_default_Address")), note: this.noteByShop, quantity: this.quantity, option: { ownGood: this.ownGood, goodWorking: this.woodWorking, inventory: this.feeCartByShop } },
       };
       createCart(data).then((response) => {
         // console.log(response);
@@ -855,12 +857,18 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
-        this.listCart = [];
-        this.checkBoxItem = [];
         this.showModal = false;
+        listCart = [];
+        this.clear();
       }).catch((error) => {
         this.$swal(error.response.data.message);
       })
+    },
+    clear() {
+      this.checkBoxItem = [];
+      this.checkBox = [];
+      this.listCart = [];
+      this.count = 0;
     }
   }
 };

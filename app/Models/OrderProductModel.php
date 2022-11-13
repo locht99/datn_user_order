@@ -20,6 +20,7 @@ class OrderProductModel extends Model
         'partner_id',
         'order_id',
         'product_id',
+        'source',
         'product_name',
         'propertiesId',
         'properties',

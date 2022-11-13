@@ -20797,7 +20797,8 @@ __webpack_require__.r(__webpack_exports__);
       checkBoxAllIn: false,
       showModalAddress: false,
       id_address: {},
-      info_Address: {}
+      info_Address: {},
+      count: 0
     };
   },
   mounted: function mounted() {
@@ -20886,13 +20887,12 @@ __webpack_require__.r(__webpack_exports__);
         this.objPayment.money_deposite = this.listTotalCart.data.money_deposite_byShop[cartid];
         this.objPayment.point = moneyProfile.point;
       }
-      var count = 0;
       Object.keys(this.checkBoxItem).forEach(function (ele) {
         if (_this2.checkBoxItem[ele]) {
-          count++;
+          _this2.count++;
         }
       });
-      if (count == 0) {
+      if (this.count == 0) {
         return this.$swal("Vui lòng chọn ít nhất 1 sản phẩm");
       } else {
         this.showModal = !this.showModal;
@@ -21092,9 +21092,7 @@ __webpack_require__.r(__webpack_exports__);
           element.cart_products.forEach(function (ele) {
             _this9.quantity[ele.id] = ele.quantity;
             quantityItem += +ele.quantity;
-            _this9.keyObject = ele.id;
-            _this9.object[_this9.keyObject] = false;
-            _this9.checkBoxItem = _this9.object;
+            _this9.checkBoxItem[ele.id] = false;
           });
         });
       }).then(function () {
@@ -21194,7 +21192,7 @@ __webpack_require__.r(__webpack_exports__);
         'data': {
           ids: this.checkBoxItem,
           data: listCart,
-          id_address: JSON.parse(window.localStorage.getItem("is_default_Address")).id,
+          id_address: JSON.parse(window.localStorage.getItem("is_default_Address")),
           note: this.noteByShop,
           quantity: this.quantity,
           option: {
@@ -21213,12 +21211,18 @@ __webpack_require__.r(__webpack_exports__);
           showConfirmButton: false,
           timer: 1500
         });
-        _this11.listCart = [];
-        _this11.checkBoxItem = [];
         _this11.showModal = false;
+        listCart = [];
+        _this11.clear();
       })["catch"](function (error) {
         _this11.$swal(error.response.data.message);
       });
+    },
+    clear: function clear() {
+      this.checkBoxItem = [];
+      this.checkBox = [];
+      this.listCart = [];
+      this.count = 0;
     }
   }
 });
