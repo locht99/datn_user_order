@@ -1919,9 +1919,9 @@ input:checked + .toggle-bg {
   background-color: rgb(240 82 82 / var(--tw-bg-opacity));
 }
 
-.bg-blue-600 {
+.bg-orange-600 {
   --tw-bg-opacity: 1;
-  background-color: rgb(28 100 242 / var(--tw-bg-opacity));
+  background-color: rgb(208 56 1 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#F9C74F\] {
@@ -2576,9 +2576,9 @@ input:checked + .toggle-bg {
   background-color: rgb(240 82 82 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-blue-900:hover {
+.hover\:bg-orange-500:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(35 56 118 / var(--tw-bg-opacity));
+  background-color: rgb(255 90 31 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-\[\#fe7500\]:hover {

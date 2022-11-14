@@ -12,7 +12,6 @@ class OrderModel extends Model
 
     public $timestamps = true;
 
-    const UPDATED_AT = null;
     // const CREATED_AT = "create_at";
 
     protected $fillable = [

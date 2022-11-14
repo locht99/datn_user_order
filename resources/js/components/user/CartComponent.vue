@@ -170,11 +170,11 @@
                       </span>
                       <span class="text-sm">{{
                           formatPrice(item.value)
-                      }}đ</span>
+                      }} đ</span>
                     </div>
                     <div>
                       <span>Tổng tiền: </span>
-                      <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }}</span>
+                      <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }} đ</span>
                     </div>
                   </div>
                 </div>
@@ -299,12 +299,12 @@
                           <div class="mt-4">
                             <div v-if="cartid != 0">
                               <button v-on:click="createOrder(cartid, index, objPayment.money_deposite)"
-                                class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
+                                class="w-full px-6 py-2 text-white bg-orange-600 hover:bg-orange-500">Thanh
                                 Toán</button>
                             </div>
                             <div v-if="cartid == 0">
                               <button v-on:click="createOrder(null, null, objPayment.money_deposite)"
-                                class="w-full px-6 py-2 text-white bg-blue-600 hover:bg-blue-900">Thanh
+                                class="w-full px-6 py-2 text-white bg-orange-600 hover:bg-orange-500">Thanh
                                 Toán</button>
                             </div>
 
@@ -390,7 +390,7 @@
       <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
         :showModalAction="showModalAddress">
       </AddRessComponent>
-      <vue-topprogress ref="topProgress"></vue-topprogress>
+      <!-- <vue-topprogress ref="topProgress"></vue-topprogress> -->
 
     </section>
 
