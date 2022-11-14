@@ -379,10 +379,10 @@ class CartController extends Controller
             'user_id' => Auth::id(),
             'partner_id' => 1,
             'order_status_id' => config('const.order_status.deposited'),
-            'wood_packing_fee' => isset($wood_packing_fee) && $wood_packing_fee ? $wood_packing_fee : 0,
-            'separately_wood_packing_fee' => isset($separately_wood_packing_fee) && $separately_wood_packing_fee
+            'wood_packing_fee' => isset($wood_packing_fee) && $wood_packing_fee ? +$wood_packing_fee : 0,
+            'separately_wood_packing_fee' => isset($separately_wood_packing_fee) && +$separately_wood_packing_fee
                 ? $separately_wood_packing_fee : 0,
-            'inventory_fee' => isset($inventory_fee) && $inventory_fee ? $inventory_fee : 0,
+            'inventory_fee' => isset($inventory_fee) && $inventory_fee ? +$inventory_fee : 0,
             'deposit_amount' => - ($deposite_money),
         ]);
         foreach ($Shop as $key => $item) {
@@ -404,7 +404,7 @@ class CartController extends Controller
                 'partner_id' => 1,
                 'order_id' => $order->id,
                 'product_id' => $value->product_id,
-                'source'=>$value->source,
+                'source' => $value->source,
                 'product_name' => $value->product_name,
                 'propertiesId' => $value->propertiesId,
                 'properties' => $value->properties,
@@ -433,6 +433,8 @@ class CartController extends Controller
         $order->total_price = $total_price;
         $order->id_warehouse = $id_Address['region_id'];
         $order->save();
+        $totalPriceOrder = $order->total_price + $order->total_price_order;
+        DB::table('orders')->where('id', $order->id)->update(['total_price_order' => $totalPriceOrder]);
 
         // lấy cartId trùng với những sản phẩm được chọn trong cart
         $getCartId = DB::table('cart_products')

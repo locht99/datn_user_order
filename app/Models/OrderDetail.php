@@ -10,7 +10,6 @@ class OrderDetail extends Model
     use HasFactory;
     protected $table = "order_detail";
     public $timestamps = true;
-    const UPDATED_AT =null;
     protected $fillable = [
         'shop_id',
         'shop_name',
