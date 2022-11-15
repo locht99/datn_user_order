@@ -28,7 +28,7 @@
 
       <!-- Content cart -->
       <section style="max-height: 424px" class="overflow-auto">
-        <section class="py-5 px-5" v-for="(cart, index) in listCart" :key="index">
+        <section class="py-2 px-5" v-for="(cart, index) in listCart" :key="index">
           <div class="rounded-xl shadow-md shadow-gray-400">
             <div class="
               px-5
@@ -37,18 +37,18 @@
               justify-between
               items-center
               bg-gray-100
-              rounded-xl
+              rounded-t-lg
             ">
               <div class="flex items-center">
-                <img src="/images/1688-logo.png" alt="" v-if="cart.source == '1688'" />
-                <img src="/images/tmall-logo.png" alt="" v-else-if="cart.source == 'TMALL'" />
-                <img src="/images/taobao-logo.png" alt="" v-else-if="cart.source == 'TAOBAO'" />
+                <img src="/images/1688-logo.png" alt="" class="w-[32px]" v-if="cart.source == '1688'" />
+                <img src="/images/tmall-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TMALL'" />
+                <img src="/images/taobao-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TAOBAO'" />
                 <p v-on:click="openShop(cart.shop_url)"
-                  class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
+                  class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
                       cart.shop_name
                   }}</p>
                 <p v-on:click="openShop(cart.shop_url)"
-                  class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
+                  class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
               </div>
               <div class="flex items-center">
                 <label for="kiemhang" class="mx-4 cursor-pointer select-none">
@@ -63,7 +63,7 @@
                     border-2 border-gray-400
                   " />
                   <i class="fa-solid fa-box-open mx-2 text-lg text-gray-700"></i>
-                  <span class="text-lg font-semibold text-gray-600">Kiểm hàng</span>
+                  <span class="text-sm font-semibold text-gray-600">Kiểm hàng</span>
                 </label>
 
                 <label for="donggo" class="mx-4 cursor-pointer select-none">
@@ -77,14 +77,14 @@
                     border-2 border-gray-400
                   " />
                   <i class="fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700"></i>
-                  <span class="text-lg font-semibold text-gray-600">Đóng gỗ</span>
+                  <span class="text-sm font-semibold text-gray-600">Đóng gỗ</span>
                 </label>
 
                 <label for="donggorieng" class="mx-4 cursor-pointer select-none">
                   <input type="checkbox" v-on:click="checkOwn(cart.id)" v-model="ownGood[cart.id]"
                     class="mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                   <i class="fa-solid fa-box mx-2 text-lg text-gray-700"></i>
-                  <span class="text-lg font-semibold text-gray-600">Đóng gỗ riêng</span>
+                  <span class="text-sm font-semibold text-gray-600">Đóng gỗ riêng</span>
                 </label>
 
               </div>
@@ -92,16 +92,16 @@
             <div class="w-full flex">
               <div class="w-3/4 border-r-2">
                 <table class="w-full">
-                  <thead class="h-20 border-b-2">
+                  <thead class="h-19 border-b">
                     <tr>
                       <th class="text-left pl-8">
                         <input type="checkbox" v-model="checkBox[index]" v-on:click="checkAllByShop(index)"
                           class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                       </th>
 
-                      <th class="text-xl text-left pl-8">Sản phẩm</th>
-                      <th class="text-xl text-left pl-8">Số lượng</th>
-                      <th class="text-xl text-left pl-8">Tiền hàng</th>
+                      <th class="text-lg text-left pl-8">Sản phẩm</th>
+                      <th class="text-lg text-left pl-8">Số lượng</th>
+                      <th class="text-lg text-left pl-8">Tiền hàng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,7 +116,19 @@
                       <td class="pl-8 items-center">
                         <div v-on:click="openShop(listCartProduct.url)">
                           <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
-                          <a class="mt-7 underline block cursor-pointer">{{ listCartProduct.product_name }}</a>
+                          <a class="mt-7 text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
+                          <div>
+
+                            <label for="">
+                              <span class="font-semibold text-sm">
+                                Thuộc tính:
+                              </span>
+                              <span class="block cursor-pointer text-[12px]">
+                                {{ listCartProduct.properties }}
+                              </span>
+                            </label>
+
+                          </div>
                         </div>
 
                       </td>
@@ -137,15 +149,15 @@
 
                       </td>
                       <td class="pl-8">
-                        <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ
+                        <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.unit_price_cn }}</p>
+                        <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.unit_price_vn) }} đ
                         </p>
                       </td>
                       <td class="pl-8 ">
                         <div class="flex items-center justify-between">
                           <div>
-                            <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.price_cn }}</p>
-                            <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.price) }} đ</p>
+                            <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.price_cn }}</p>
+                            <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
                           <div class="pr-1 relative">
                             <label for="" v-on:click="deleteProductCart(listCartProduct.id, index, index2)"
@@ -216,10 +228,10 @@
             class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
             tất cả</label>
         </div>
-        <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
+        <span class="font-semibold text-lg text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ): 
         </span>
-        <span class="text-red-600 text-xl font-semibold"> {{ formatPrice(totalPriceShop) }}đ</span>
-        <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
+        <span class="text-red-600 text-lg font-semibold mx-1">  {{ formatPrice(totalPriceShop) }} đ</span>
+        <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm font-semibold rounded-md text-white ">
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
       </section>

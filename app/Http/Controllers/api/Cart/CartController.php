@@ -51,6 +51,7 @@ class CartController extends Controller
                     "price_cn",
                     "quantity",
                     "quantity_min",
+                    "properties",
                     "stock",
                     "url",
                     "unit_price_cn",
