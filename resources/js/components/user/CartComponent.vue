@@ -116,9 +116,8 @@
                       <td class="pl-8 items-center">
                         <div v-on:click="openShop(listCartProduct.url)">
                           <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
-                          <a class="mt-7 text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
-                          <div>
-
+                          <div class="relative top-[20px]">
+                            <a class=" text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
                             <label for="">
                               <span class="font-semibold text-sm">
                                 Thuộc tính:
@@ -127,7 +126,6 @@
                                 {{ listCartProduct.properties }}
                               </span>
                             </label>
-
                           </div>
                         </div>
 
@@ -163,11 +161,15 @@
                             <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
                           <div class="pr-1 relative">
-                            <label for="" v-on:click="deleteProductCart(listCartProduct.id, index, index2)"
+                            <a-popconfirm class="cursor-pointer" title="Bạn có muốn xóa sản phẩm?"
+                              @confirm="deleteProductCart(listCartProduct.id, index, index2)">
+                              <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
+                            </a-popconfirm>
+                            <!-- <label for="" v-on:click=""
                               class="cursor-pointer absolute left-[-11px]"
                               :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
-                              <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
-                            </label>
+                              
+                            </label> -->
                           </div>
                         </div>
                       </td>
@@ -604,31 +606,19 @@ export default {
         .trim();
     },
     deleteProductCart(id, index, index2) {
-      this.$swal.fire({
-        title: 'Bạn có chắc chắn muốn xóa sản phẩm khỏi giỏ hàng',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Xóa'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
-          if (this.listCart[index].cart_products.length <= 1) {
-            this.listCart = this.listCart.filter((item) => item.id != this.listCart[index].id);
-          }
-          deleteCart(id).then((response) => {
-            // this.getTotalQuantity();
-          }).then(() => {
-            this.$swal.fire(
-              'Deleted!',
-              'Xóa sản phẩm khỏi giỏ hàng thành công',
-              'success'
-            )
-          })
+      this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
 
-        }
+      deleteCart(id).then((response) => {
+        this.checkOutCart();
+        // this.getTotalQuantity();
+      }).then(() => {
+        this.$swal.fire(
+          'Deleted!',
+          'Xóa sản phẩm khỏi giỏ hàng thành công',
+          'success'
+        )
       })
+
 
     },
     checkOwn(cartid) {
