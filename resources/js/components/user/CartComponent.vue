@@ -134,17 +134,20 @@
                       </td>
                       <td class="pl-8">
                         <div class="inline-flex rounded-md shadow-sm">
-                          <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
+                          <!-- <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
                             class="py-2 px-4 text-sm font-medium text-white bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             -
-                          </button>
-                          <input type="text" v-on:change="cartQuantity(listCartProduct, index, index2)"
-                            v-model="listCartProduct.quantity"
-                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                          <button v-on:click="increasingProduct(listCartProduct, index, index2)"
+                          </button> -->
+                          <!-- v-on:keyup="checkString(listCartProduct.quantity,listCartProduct, index, index2)" -->
+                          <a-input-number id="inputNumber" @blur="cartQuantity(listCartProduct, index, index2)"
+                            v-model:value="listCartProduct.quantity" />
+                          <!-- <input type="text" autocomplete="off" 
+                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"> -->
+                          <!-- <input type="hidden" :value="listCartProduct.quantity" /> -->
+                          <!-- <button v-on:click="increasingProduct(listCartProduct, index, index2)"
                             class="py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             +
-                          </button>
+                          </button> -->
                         </div>
 
                       </td>
@@ -185,6 +188,7 @@
                       }} đ</span>
                     </div>
                     <div>
+
                       <span>Tổng tiền: </span>
                       <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }} đ</span>
                     </div>
@@ -228,10 +232,11 @@
             class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
             tất cả</label>
         </div>
-        <span class="font-semibold text-lg text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ): 
+        <span class="font-semibold text-lg text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
-        <span class="text-red-600 text-lg font-semibold mx-1">  {{ formatPrice(totalPriceShop) }} đ</span>
-        <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm font-semibold rounded-md text-white ">
+        <span class="text-red-600 text-lg font-semibold mx-1"> {{ formatPrice(totalPriceShop) }} đ</span>
+        <button @click="toggleModalCart()"
+          class="mx-10 py-2 px-12 border-none text-sm font-semibold rounded-md text-white ">
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
       </section>
@@ -415,12 +420,10 @@ import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct, d
 import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-
 export default {
   components: {
     loading,
     AddRessComponent,
-
   },
   data() {
     return {
@@ -472,11 +475,14 @@ export default {
 
   mounted() {
     this.getCartByUser();
+
+
   },
   methods: {
     // checkByNote(){
     //   console.log(this.noteByShop);
     // },
+
     openShop(url) {
       window.open(url, '_blank');
 
@@ -505,7 +511,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           deleteAllCart({ Id: Object.keys(this.checkBoxItem) }).then((response) => {
-            this.getTotalQuantity();
+            // this.getTotalQuantity();
             this.getCartByUser();
             this.$swal.fire(
               'Deleted!',
@@ -608,9 +614,11 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
+          if (this.listCart[index].cart_products.length <= 1) {
+            this.listCart = this.listCart.filter((item) => item.id != this.listCart[index].id);
+          }
           deleteCart(id).then((response) => {
-            this.getCartByUser();
-            this.getTotalQuantity();
+            // this.getTotalQuantity();
           }).then(() => {
             this.$swal.fire(
               'Deleted!',
@@ -725,15 +733,9 @@ export default {
     },
 
     getTotalQuantity() {
-      let quantityItem = 0;
-      this.listCart.forEach((element) => {
-        element.cart_products.forEach((ele) => {
-          this.quantity[ele.id] = ele.quantity;
-          quantityItem += +ele.quantity;
-        })
-      });
+
       this.checkOutCart(this.listCart, this.quantity);
-      this.totalQuantityShop = quantityItem;
+
     },
     getCartByUser() {
       let totalShop = 0;
@@ -787,40 +789,19 @@ export default {
         this.getTotal(index);
       }
     },
-    increasingProduct(listCartProduct, index, index2) {
-      listCartProduct.quantity++;
-      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-      this.getTotalQuantity();
-      this.getTotal(index);
-      // this.checkOutCart();
-
-    },
-    decreasingProduct(listCartProduct, index, index2) {
-      listCartProduct.quantity--;
-      if (listCartProduct.quantity <= 0) {
-        this.$swal("Số lượng không được nhỏ hơn 1");
-        listCartProduct.quantity = 1;
-      } else {
-        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-        let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-        this.getTotalQuantity();
-        this.getTotal(index);
-      }
-
-
-      // this.checkOutCart();
-    },
 
     checkOutCart(value = null, quantity = null) {
+      let quantityItem = 0;
+      this.listCart.forEach((element) => {
+        element.cart_products.forEach((ele) => {
+          this.quantity[ele.id] = ele.quantity;
+          quantityItem += +ele.quantity;
+        })
+      });
       const data = {
         ids: this.checkBoxItem,
         data: this.listCart || value,
-        quantity: this.quantity || quantity,
+        quantity: this.quantity || quantityItem,
         inventory: this.checkGoods
       }
       cartCheckout(data).then((response) => {
@@ -832,7 +813,7 @@ export default {
         let dataCheckout = JSON.parse(data.request).data;
         this.listCart = dataCheckout;
         this.totalPriceShop = data.total_money;
-        this.totalQuantityShop = data.product_quantity.reduce((partialSum, a) => partialSum + a, 0);
+        this.totalQuantityShop = data.totalQuantityOrder;
         this.syncItem = false;
 
       }).catch((error) => {
@@ -893,7 +874,7 @@ button {
 }
 
 table tbody td {
-  max-width: 250px;
+  max-width: 280px;
 }
 
 ::-webkit-scrollbar {
