@@ -30,7 +30,7 @@
                         class="h-16 border-b border-gray-300 table w-full box-border"
                     >
                         <td class="py-4 flex items-center pl-8 mt-1">
-                            <a href="" class="mx-2 underline text-sm">{{
+                            <a :href="item.url" class="mx-2 underline text-sm">{{
                                 item.product_name
                             }}</a>
                             <span>x{{ item.quantity_bought }}</span>
