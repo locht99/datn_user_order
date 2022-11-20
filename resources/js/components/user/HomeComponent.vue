@@ -38,7 +38,7 @@
                         <td class="w-1/4 pl-16">
                             <img :src="item.image_link" width="100" />
                         </td>
-                        <td class="w-1/4 pl-16"># {{ item.order_id }}</td>
+                        <td class="w-1/4 pl-16"># {{ item.order_code }}</td>
                         <td class="w-1/4 pl-16">{{ item.status_name }}</td>
                     </tr>
                 </tbody>
