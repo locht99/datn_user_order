@@ -8,7 +8,6 @@
         >
             <loading v-model:active="is_loading" :is-full-page="false" />
             <p v-show="!is_loading" class="my-5 items-center flex">
-                <img src="/images/trolley.png" alt="" />
                 <b class="mx-2 text-lg">Đã đặt gần đây: </b>
                 <span class="text-lg font-semibold text-gray-500"
                     >{{ listLimit.length }} sản phẩm</span
@@ -49,7 +48,6 @@
                 class="w-full flex flex-col items-center justify-center"
                 style="height: 100%; padding-bottom: 150px"
             >
-                <img src="/images/order-empty.jpg" width="200" />
                 <span class="font-semibold text-lg"
                     >Bạn chưa có đơn hàng nào!</span
                 >
