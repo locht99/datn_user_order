@@ -108,6 +108,14 @@ export default {
     components: {
         loading,
     },
+    watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Đặt hàng trung gian Việt - Trung';
+            }
+        },
+    },
     data() {
         return {
             is_loading: false,
