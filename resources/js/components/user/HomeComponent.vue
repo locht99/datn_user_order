@@ -70,7 +70,7 @@
                     v-for="(item, index) in listLog"
                     :key="index"
                     class="flex px-[25px] m-auto h-[90px]"
-                    :class="{ 'no-line': index == 4 }"
+                    :class="{ 'no-line': index == listLog.length - 1 }"
                 >
                     <span class="font-semibold text-md w-[100px]">{{
                         item.created_at
