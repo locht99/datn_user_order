@@ -27,7 +27,7 @@
       </section>
 
       <!-- Content cart -->
-      <section style="max-height: 424px" class="overflow-auto">
+      <section v-if="listCart.length > 0" style="max-height: 424px" class="overflow-auto">
         <section class="py-5 px-5" v-for="(cart, index) in listCart" :key="index">
           <div class="rounded-xl shadow-md shadow-gray-400">
             <div class="
@@ -203,7 +203,13 @@
         </section>
 
       </section>
-
+      <section v-if="listCart.length <= 0" style="max-height: 424px" class="overflow-auto">
+        <div class="flex justify-center items-center" style="height: 400px;">
+          <p class="font-bold text-center px-3">
+            Bạn chưa có sản phẩm nào trong giỏ hàng.
+          </p>
+        </div>
+      </section>
 
       <!-- Footer cart -->
       <section v-if="listCart.length != 0" class="flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
