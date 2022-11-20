@@ -4,6 +4,7 @@ use App\Http\Controllers\api\Auth\UserController;
 use App\Http\Controllers\api\Cart\CartController;
 use App\Http\Controllers\api\CreateCartConTroller;
 use App\Http\Controllers\api\ExtensionController;
+use App\Http\Controllers\api\Log\AppLogController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Transaction\TransactionController;
 use App\Http\Controllers\TestController;
@@ -39,6 +40,7 @@ Route::middleware('auth:api,web')->group(function ()
     Route::get('/user', [UserController::class, 'getUserInfo']);
     Route::put('/update-user', [UserController::class, 'UpdateUser']);
     Route::post('/user/new-address', [UserController::class, 'newAddress']);
+    Route::get('/logs', [AppLogController::class, 'getLog']);
     //Đơn hàng
     Route::prefix('order')->group(function () {
 
