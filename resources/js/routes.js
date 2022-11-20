@@ -19,6 +19,7 @@ const routes = [
         children: [{
                 path: "/",
                 component: Home,
+                title: 'Homehh'
             },
             {
                 path: "/cart",

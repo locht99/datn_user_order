@@ -100,6 +100,14 @@ import Pusher from 'pusher-js';
 import { Swal } from 'sweetalert2/dist/sweetalert2';
 
 export default {
+    watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Nạp tiền';
+            }
+        },
+    },
     data() {
         return {
             formTransaction: {

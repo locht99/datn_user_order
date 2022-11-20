@@ -1,7 +1,6 @@
 <template>
     <section style="height: 568px; max-height: 568px"
-        class="flex rounded-xl w-full border my-10 shadow-md shadow-gray-400">
-        <loading v-model:active="is_loading" :is-full-page="false" />
+        class="flex rounded-xl w-full border my-10 shadow-md shadow-gray-400 relative">
         <section class="w-1/4 border-r-2 px-8 py-5">
             <div class="sticky border-b-2 pb-4 pt-2">
                 <i class="fa-solid fa-filter text-2xl text-gray-700 mr-5"></i>
@@ -48,7 +47,8 @@
             </div>
         </section>
 
-        <section class="w-3/4">
+        <section class="w-3/4 relative">
+            <loading v-model:active="is_loading" :is-full-page="false" />
             <div class="sticky w-full flex justify-between p-5 bg-white rounded-xl">
                 <div class="flex items-center">
                     <i class="fa-solid fa-receipt text-red-500 text-2xl"></i>
@@ -111,7 +111,7 @@
                 <Pagination v-if="dataPagination.last_page > 1" :pagination="dataPagination" :offset="7"
                     @pagination-change-page="getFilterOrderByUser"></Pagination>
             </div>
-            <div v-if="listOrder <= 0" class="flex justify-center items-center" style="height: 400px;">
+            <div v-if="listOrder.length <= 0 && is_loading == false" class="flex justify-center items-center" style="height: 400px;">
                 <p class="font-semibold text-center px-3">
                     Bạn chưa có đơn hàng nào.
                 </p>
@@ -206,6 +206,14 @@ import { useAttrs } from "vue";
 import moment from 'moment';
 import { isBuffer } from "util";
 export default {
+    watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Đơn hàng';
+            }
+        },
+    },
     components: {
         loading,
     },
