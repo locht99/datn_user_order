@@ -71,8 +71,8 @@ class ConfigPaymentMomo extends Controller
         $orderCodeResponse = $request['orderCodeResponse'];
         $orderInfo = $request['OrderInfo'];
         $amount = +$request['amount'];
-        $ipnUrl = route("routesss");
-        $redirectUrl = route("routesss");
+        $ipnUrl = route("getRequest");
+        $redirectUrl = route("getRequest");
         $requestId = time() . "";
         $requestType = "captureWallet";
         $extraData = $request['extraData'] ? $request['extraData'] : "";
