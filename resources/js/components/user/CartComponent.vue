@@ -37,18 +37,18 @@
               justify-between
               items-center
               bg-gray-100
-              rounded-xl
+              rounded-t-lg
             ">
               <div class="flex items-center">
-                <img src="/images/1688-logo.png" alt="" v-if="cart.source == '1688'" />
-                <img src="/images/tmall-logo.png" alt="" v-else-if="cart.source == 'TMALL'" />
-                <img src="/images/taobao-logo.png" alt="" v-else-if="cart.source == 'TAOBAO'" />
+                <img src="/images/1688-logo.png" alt="" class="w-[32px]" v-if="cart.source == '1688'" />
+                <img src="/images/tmall-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TMALL'" />
+                <img src="/images/taobao-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TAOBAO'" />
                 <p v-on:click="openShop(cart.shop_url)"
-                  class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
+                  class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
                       cart.shop_name
                   }}</p>
                 <p v-on:click="openShop(cart.shop_url)"
-                  class="ml-10 text-xl hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
+                  class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
               </div>
               <div class="flex items-center">
                 <label for="kiemhang" class="mx-4 cursor-pointer select-none">
@@ -63,7 +63,7 @@
                     border-2 border-gray-400
                   " />
                   <i class="fa-solid fa-box-open mx-2 text-lg text-gray-700"></i>
-                  <span class="text-lg font-semibold text-gray-600">Kiểm hàng</span>
+                  <span class="text-sm font-semibold text-gray-600">Kiểm hàng</span>
                 </label>
 
                 <label for="donggo" class="mx-4 cursor-pointer select-none">
@@ -77,14 +77,14 @@
                     border-2 border-gray-400
                   " />
                   <i class="fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700"></i>
-                  <span class="text-lg font-semibold text-gray-600">Đóng gỗ</span>
+                  <span class="text-sm font-semibold text-gray-600">Đóng gỗ</span>
                 </label>
 
                 <label for="donggorieng" class="mx-4 cursor-pointer select-none">
                   <input type="checkbox" v-on:click="checkOwn(cart.id)" v-model="ownGood[cart.id]"
                     class="mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                   <i class="fa-solid fa-box mx-2 text-lg text-gray-700"></i>
-                  <span class="text-lg font-semibold text-gray-600">Đóng gỗ riêng</span>
+                  <span class="text-sm font-semibold text-gray-600">Đóng gỗ riêng</span>
                 </label>
 
               </div>
@@ -92,16 +92,16 @@
             <div class="w-full flex">
               <div class="w-3/4 border-r-2">
                 <table class="w-full">
-                  <thead class="h-20 border-b-2">
+                  <thead class="h-19 border-b">
                     <tr>
                       <th class="text-left pl-8">
                         <input type="checkbox" v-model="checkBox[index]" v-on:click="checkAllByShop(index)"
                           class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                       </th>
 
-                      <th class="text-xl text-left pl-8">Sản phẩm</th>
-                      <th class="text-xl text-left pl-8">Số lượng</th>
-                      <th class="text-xl text-left pl-8">Tiền hàng</th>
+                      <th class="text-lg text-left pl-8">Sản phẩm</th>
+                      <th class="text-lg text-left pl-8">Số lượng</th>
+                      <th class="text-lg text-left pl-8">Tiền hàng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,43 +116,60 @@
                       <td class="pl-8 items-center">
                         <div v-on:click="openShop(listCartProduct.url)">
                           <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
-                          <a class="mt-7 underline block cursor-pointer">{{ listCartProduct.product_name }}</a>
+                          <div class="relative top-[20px]">
+                            <a class=" text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
+                            <label for="">
+                              <span class="font-semibold text-sm">
+                                Thuộc tính:
+                              </span>
+                              <span class="block cursor-pointer text-[12px]">
+                                {{ listCartProduct.properties }}
+                              </span>
+                            </label>
+                          </div>
                         </div>
 
                       </td>
                       <td class="pl-8">
                         <div class="inline-flex rounded-md shadow-sm">
-                          <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
+                          <!-- <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
                             class="py-2 px-4 text-sm font-medium text-white bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             -
-                          </button>
-                          <input type="text" v-on:change="cartQuantity(listCartProduct, index, index2)"
-                            v-model="listCartProduct.quantity"
-                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                          <button v-on:click="increasingProduct(listCartProduct, index, index2)"
+                          </button> -->
+                          <!-- v-on:keyup="checkString(listCartProduct.quantity,listCartProduct, index, index2)" -->
+                          <a-input-number id="inputNumber" @blur="cartQuantity(listCartProduct, index, index2)"
+                            v-model:value="listCartProduct.quantity" />
+                          <!-- <input type="text" autocomplete="off" 
+                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"> -->
+                          <!-- <input type="hidden" :value="listCartProduct.quantity" /> -->
+                          <!-- <button v-on:click="increasingProduct(listCartProduct, index, index2)"
                             class="py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             +
-                          </button>
+                          </button> -->
                         </div>
 
                       </td>
                       <td class="pl-8">
-                        <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.unit_price_vn) }} đ
+                        <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.unit_price_cn }}</p>
+                        <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.unit_price_vn) }} đ
                         </p>
                       </td>
                       <td class="pl-8 ">
                         <div class="flex items-center justify-between">
                           <div>
-                            <p class="text-red-500 font-semibold text-xl">¥{{ listCartProduct.price_cn }}</p>
-                            <p class="text-red-500 font-semibold text-xl">{{ formatPrice(listCartProduct.price) }} đ</p>
+                            <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.price_cn }}</p>
+                            <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
                           <div class="pr-1 relative">
-                            <label for="" v-on:click="deleteProductCart(listCartProduct.id, index, index2)"
+                            <a-popconfirm class="cursor-pointer" title="Bạn có muốn xóa sản phẩm?"
+                              @confirm="deleteProductCart(listCartProduct.id, index, index2)">
+                              <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
+                            </a-popconfirm>
+                            <!-- <label for="" v-on:click=""
                               class="cursor-pointer absolute left-[-11px]"
                               :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
-                              <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
-                            </label>
+                              
+                            </label> -->
                           </div>
                         </div>
                       </td>
@@ -173,6 +190,7 @@
                       }} đ</span>
                     </div>
                     <div>
+
                       <span>Tổng tiền: </span>
                       <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }} đ</span>
                     </div>
@@ -222,10 +240,11 @@
             class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
             tất cả</label>
         </div>
-        <span class="font-semibold text-xl text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
+        <span class="font-semibold text-lg text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
         </span>
-        <span class="text-red-600 text-xl font-semibold"> {{ formatPrice(totalPriceShop) }}đ</span>
-        <button @click="toggleModalCart()" class="mx-10 py-2 px-12 border-none text-sm rounded-md text-white ">
+        <span class="text-red-600 text-lg font-semibold mx-1"> {{ formatPrice(totalPriceShop) }} đ</span>
+        <button @click="toggleModalCart()"
+          class="mx-10 py-2 px-12 border-none text-sm font-semibold rounded-md text-white ">
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
       </section>
@@ -409,7 +428,6 @@ import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct, d
 import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-
 export default {
   watch: {
         $route: {
@@ -422,7 +440,6 @@ export default {
   components: {
     loading,
     AddRessComponent,
-
   },
   data() {
     return {
@@ -474,11 +491,14 @@ export default {
 
   mounted() {
     this.getCartByUser();
+
+
   },
   methods: {
     // checkByNote(){
     //   console.log(this.noteByShop);
     // },
+
     openShop(url) {
       window.open(url, '_blank');
 
@@ -507,7 +527,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           deleteAllCart({ Id: Object.keys(this.checkBoxItem) }).then((response) => {
-            this.getTotalQuantity();
+            // this.getTotalQuantity();
             this.getCartByUser();
             this.$swal.fire(
               'Deleted!',
@@ -600,29 +620,19 @@ export default {
         .trim();
     },
     deleteProductCart(id, index, index2) {
-      this.$swal.fire({
-        title: 'Bạn có chắc chắn muốn xóa sản phẩm khỏi giỏ hàng',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Xóa'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
-          deleteCart(id).then((response) => {
-            this.getCartByUser();
-            this.getTotalQuantity();
-          }).then(() => {
-            this.$swal.fire(
-              'Deleted!',
-              'Xóa sản phẩm khỏi giỏ hàng thành công',
-              'success'
-            )
-          })
+      this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
 
-        }
+      deleteCart(id).then((response) => {
+        this.checkOutCart();
+        // this.getTotalQuantity();
+      }).then(() => {
+        this.$swal.fire(
+          'Deleted!',
+          'Xóa sản phẩm khỏi giỏ hàng thành công',
+          'success'
+        )
       })
+
 
     },
     checkOwn(cartid) {
@@ -727,15 +737,9 @@ export default {
     },
 
     getTotalQuantity() {
-      let quantityItem = 0;
-      this.listCart.forEach((element) => {
-        element.cart_products.forEach((ele) => {
-          this.quantity[ele.id] = ele.quantity;
-          quantityItem += +ele.quantity;
-        })
-      });
+
       this.checkOutCart(this.listCart, this.quantity);
-      this.totalQuantityShop = quantityItem;
+
     },
     getCartByUser() {
       let totalShop = 0;
@@ -789,40 +793,19 @@ export default {
         this.getTotal(index);
       }
     },
-    increasingProduct(listCartProduct, index, index2) {
-      listCartProduct.quantity++;
-      this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-      this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-      let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-      this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-      this.getTotalQuantity();
-      this.getTotal(index);
-      // this.checkOutCart();
-
-    },
-    decreasingProduct(listCartProduct, index, index2) {
-      listCartProduct.quantity--;
-      if (listCartProduct.quantity <= 0) {
-        this.$swal("Số lượng không được nhỏ hơn 1");
-        listCartProduct.quantity = 1;
-      } else {
-        this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
-        this.listCart[index].cart_products[index2].price = listCartProduct.quantity * listCartProduct.unit_price_vn;
-        let totalPriceCN = listCartProduct.quantity * listCartProduct.unit_price_cn;
-        this.listCart[index].cart_products[index2].price_cn = totalPriceCN.toFixed(2);
-        this.getTotalQuantity();
-        this.getTotal(index);
-      }
-
-
-      // this.checkOutCart();
-    },
 
     checkOutCart(value = null, quantity = null) {
+      let quantityItem = 0;
+      this.listCart.forEach((element) => {
+        element.cart_products.forEach((ele) => {
+          this.quantity[ele.id] = ele.quantity;
+          quantityItem += +ele.quantity;
+        })
+      });
       const data = {
         ids: this.checkBoxItem,
         data: this.listCart || value,
-        quantity: this.quantity || quantity,
+        quantity: this.quantity || quantityItem,
         inventory: this.checkGoods
       }
       cartCheckout(data).then((response) => {
@@ -834,7 +817,7 @@ export default {
         let dataCheckout = JSON.parse(data.request).data;
         this.listCart = dataCheckout;
         this.totalPriceShop = data.total_money;
-        this.totalQuantityShop = data.product_quantity.reduce((partialSum, a) => partialSum + a, 0);
+        this.totalQuantityShop = data.totalQuantityOrder;
         this.syncItem = false;
 
       }).catch((error) => {
@@ -895,7 +878,7 @@ button {
 }
 
 table tbody td {
-  max-width: 250px;
+  max-width: 280px;
 }
 
 ::-webkit-scrollbar {

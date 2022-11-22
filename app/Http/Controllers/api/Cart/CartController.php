@@ -51,6 +51,7 @@ class CartController extends Controller
                     "price_cn",
                     "quantity",
                     "quantity_min",
+                    "properties",
                     "stock",
                     "url",
                     "unit_price_cn",
@@ -190,6 +191,7 @@ class CartController extends Controller
         $data['cart_Shop'] = DB::table('carts')->whereIn('id', $idShop)->get();
         $totalByShopProduct = [];
         $total_quantity_byShop = [];
+        $data['totalQuantityOrder'] = 0;
         foreach ($data['cart_Shop'] as $index => $item) {
             $totalByShopProduct[$item->id] = 0;
             $total_quantity_byShop[$item->id] = 0;
@@ -197,6 +199,7 @@ class CartController extends Controller
                 if ($item->id == $it->cart_id) {
                     $totalByShopProduct[$item->id] += $it->unit_price_vn * $data['product_quantity'][$it->id];
                     $total_quantity_byShop[$item->id] += $data['product_quantity'][$it->id];
+                    $data['totalQuantityOrder'] += $data['product_quantity'][$it->id];
                 }
             }
 
@@ -226,6 +229,7 @@ class CartController extends Controller
             $data['totalFee'] += +$purchase_fee[$item->id]  + $inventorytotal;
             $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id]  + $inventorytotal;
         }
+
         foreach ($data['fee'] as $index => $value) {
             $data['money_deposite_byShop'][$index] = 0;
 
