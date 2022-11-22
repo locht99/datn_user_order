@@ -26,7 +26,7 @@
                 <div class="flex justify-between">
                     <div>
                         <div class="my-3">
-                            <label for="" class="block text-left font-semibold"
+                            <label for="" class="block text-white text-left font-semibold"
                                 >Tên đăng nhập</label
                             >
                             <input
@@ -42,7 +42,7 @@
                             ></i>
                         </div>
                         <div class="my-3">
-                            <label for="" class="block text-left font-semibold"
+                            <label for="" class="block text-white text-left font-semibold"
                                 >Email</label
                             >
                             <input
@@ -58,7 +58,7 @@
                             ></i>
                         </div>
                         <div class="my-3">
-                            <label for="" class="block text-left font-semibold"
+                            <label for="" class="block text-white text-left font-semibold"
                                 >Số điện thoại</label
                             >
                             <input
@@ -75,9 +75,8 @@
                         </div>
                     </div>
                     <div class="my-3">
-                        <label for="" class="block text-left font-semibold"
-                            >Địa chỉ</label
-                        >
+                        <label for="" class="block text-white text-left font-semibold"
+                            >Địa chỉ</label>
                         <textarea
                             name="address"
                             id=""

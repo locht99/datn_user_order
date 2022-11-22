@@ -8,8 +8,9 @@ import routes from "./routes";
 import Pagination from "./helpers/pagination.vue";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import Vue from 'vue'
-
+import vco from "v-click-outside";
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
 const router = createRouter({
     history: createWebHistory(),
     routes,
@@ -49,8 +50,12 @@ router.beforeEach((to, from, next) => {
 });
 
 const app = createApp(App);
+app.config.productionTip = false;
+
 app.component("Pagination", Pagination);
 app.use(router);
 app.use(VueSweetalert2);
+app.use(vco);
+app.use(Antd);
 
 app.mount("#app");

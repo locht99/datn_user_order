@@ -20,11 +20,11 @@
       <li class=" menuItem  rounded-lg">
         <dropdown imageIcon="/images/menu-icon/transaction.png" class=" text-white  font-semibold text-lg pl-3" title="Giao dịch">
         <li class="mb-2">
-          <router-link to="transaction" class="flex text-[16px]"><span class="pl-2">Danh sách Giao dịch</span></router-link>
+          <router-link to="transaction" class="flex text-[16px] text-white"><span class="pl-2">Danh sách Giao dịch</span></router-link>
         </li>
         <li class="mb-2">
           <router-link to="transaction/create">
-            <span class="pl-2 text-[16px]">Nạp tiền </span>
+            <span class="pl-2 text-[16px] text-white">Nạp tiền </span>
           </router-link>
         </li>
       </dropdown>
