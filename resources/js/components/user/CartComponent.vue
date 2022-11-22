@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade-in">
 
-    <section style="height: 568px; max-height: 568px" class="border rounded-xl shadow-md shadow-gray-400 my-10 ">
+    <section style="height: 568px; max-height: 568px" class="border rounded-xl shadow-md shadow-gray-400 my-10 relative">
       <loading v-model:active="is_loading" :is-full-page="false" />
       <!-- Header cart -->
       <section class="sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl">
@@ -221,7 +221,7 @@
         </section>
 
       </section>
-      <section v-if="listCart.length <= 0" style="max-height: 424px" class="overflow-auto">
+      <section v-if="listCart.length <= 0 && is_loading == false" style="max-height: 424px" class="overflow-auto">
         <div class="flex justify-center items-center" style="height: 400px;">
           <p class="font-bold text-center px-3">
             Bạn chưa có sản phẩm nào trong giỏ hàng.
@@ -429,6 +429,14 @@ import AddRessComponent from "./AddRessComponent.vue";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+  watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Giỏ hàng';
+            }
+        },
+  },
   components: {
     loading,
     AddRessComponent,

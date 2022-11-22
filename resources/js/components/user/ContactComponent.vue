@@ -43,5 +43,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Liên hệ';
+            }
+        },
+  },
+};
 </script>

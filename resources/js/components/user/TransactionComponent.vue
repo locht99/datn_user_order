@@ -47,6 +47,14 @@ import { getTransaction } from "../../config/transaction";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+  watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Giao dịch';
+            }
+        },
+  },
   components: {
     loading,
   },

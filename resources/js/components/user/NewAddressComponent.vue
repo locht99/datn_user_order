@@ -189,6 +189,14 @@ import { newAddress } from "../../config/user";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+    watch: {
+        $route: {
+            immediate: true,
+            handler(to, from) {
+                document.title ='Địa chỉ mới';
+            }
+        },
+    },
     data() {
         return {
             dataNewAddress: {

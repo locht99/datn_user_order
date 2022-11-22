@@ -69,7 +69,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in dataAddress">
+                                                    <tr v-for="item in dataAddress" :key="item.id">
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <input type="radio" name="radio" 
                                                             v-on:click="checkedAddress(item)" >
