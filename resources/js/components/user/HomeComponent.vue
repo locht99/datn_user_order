@@ -38,8 +38,8 @@
                         <td class="w-1/4 pl-16">
                             <img :src="item.image_link" width="100" />
                         </td>
-                        <td class="w-1/4 pl-16"># {{ item.order_code }}</td>
-                        <td class="w-1/4 pl-16">{{ item.status_name }}</td>
+                        <td class="w-1/4 pl-16 font-semibold">{{ item.order_code }}</td>
+                        <td class="w-1/4 pl-16 font-semibold">{{ item.status_name }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -86,7 +86,7 @@
                             }"
                         ></p>
                     </div>
-                    <span class="w-[200px]">{{ item.content }}</span>
+                    <span class="w-[200px] font-semibold">{{ item.content }}</span>
                 </div>
             </div>
             <div v-show="listLog.length == 0 && is_loading_activity == false" class="flex justify-center items-center" style="height: 400px;">
