@@ -75,7 +75,7 @@
                             </th>
                             <th class="w-3 pl-4">SL</th>
                             <th class="w-1/4 text-left pl-4">Mã đơn hàng</th>
-                            <th class="w-1/5 text-left pl-4">Trạng thái</th>
+                            <th class="w-1/5 text-left pl-12">Trạng thái</th>
                             <th class="w-1/5 text-left pl-4">Thời gian</th>
                             <th class="w-1/6 text-left pl-4">Chi tiết</th>
                         </tr>
@@ -94,9 +94,10 @@
                                 <span>x{{ order.product_count }}</span>
                             </td>
                             <td class="w-1/4 text-left pl-4">{{ order.order_code }}</td>
-                            <td :class="(this.color[order.order_status_id])"
-                                class="first-line:w-1/5 pl-4 font-semibold">
-                                {{ order.status_name }}
+                            <td class="mt-1">
+                                <button @click="showModalStatus(true, order.id)" :class="(this.color[order.order_status_id])" class=" w-[150px] first-line:w-1/5 pl-4 font-semibold rounded-lg px-3 ml-2 text-sm text-white border border-white hover:text-white hover:bg-red-500 focus:ring-4 ">
+                                    {{ order.status_name }}
+                                </button>
                             </td>
                             <td class="w-1/5 text-left pl-4 font-semibold">
                                 {{ format_date(order.updated_at) }}
@@ -137,7 +138,7 @@
                     </button>
                 </div>
                 <!--body-->
-                <div class="relative p-3">
+                <div class="relative p-3 pb-5">
                     <div class="items-center justify-between">
                         <div class="container px-4 mx-auto">
                             <div class="pt-12 md:pt-0 2xl:ps-4">
@@ -151,7 +152,7 @@
                                                 Tổng tiền (tạm tính):
                                             </div>
                                             <div>
-                                                <span class="ml-2">{{ formatPrice(this.listInfo['total_price']) }}</span>
+                                                <span class="ml-2 text-red-500">{{ formatPrice(this.listInfo['total_price']) }}</span>
                                             </div>
                                         </div>
                                         <div
@@ -160,7 +161,7 @@
                                                 Nguồn hàng:
                                             </div>
                                             <div>
-                                                <span class="ml-2 text-red" v-for="(source, index) in listSource"
+                                                <span class="ml-2" v-for="(source, index) in listSource"
                                                     :key="index">{{ source.source }}</span>
                                             </div>
                                         </div>
@@ -170,8 +171,26 @@
                                                 Tiền đã trả (đặt cọc):
                                             </div>
                                             <div>
-                                                <span
-                                                    class="ml-2">{{ formatPrice(this.listInfo['deposit_amount']) }}</span>
+                                                <span class="ml-2 text-red-500">{{ formatPrice(this.listInfo['deposit_amount']) }}</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                                            <div>
+                                                Phí vận chuyển (VN):
+                                            </div>
+                                            <div>
+                                                <span class="ml-2 text-red-500">{{ this.listInfo['express_shipping_fee'] == "0.00" ? 'Được cập nhập sau khi về kho Việt Nam' : formatPrice(this.listInfo['express_shipping_fee']) }}</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                                            <div>
+                                               <span> Tiền còn nợ (số tiền còn lại cần thanh toán khi nhận hàng):</span><br>
+                                                <span>(Tiền nợ + phí vận chuyển bên Việt Nam)</span>
+                                            </div>
+                                            <div>
+                                                <span class="ml-2 text-red-500">{{ this.listInfo['total_price_order'] == null ? 'Được cập nhập sau khi về kho Việt Nam' : formatPrice(this.listInfo['total_price_order']) }}</span>
                                             </div>
                                         </div>
                                         <div
@@ -194,12 +213,57 @@
         </div>
     </div>
     <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+    <div v-if="show_modal_status"
+        class="overflow-x-hidden overflow-y-auto  fade  fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+            <loading v-model:active="is_loading_status" :is-full-page="false" />
+            <!--content-->
+            <div
+                class="modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none ">
+                <!--header-->
+                <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                    <div>
+                        <h4 class="text-xl font-bold">Lịch sử đơn hàng</h4>
+                        <button class="detail-order mx-2 font-semibold text-center block m-auto mt-2 text-white px-4 rounded-lg">{{this.trackingStatusOderId['order_code']}}</button>
+                    </div>
+                    <button v-on:click="showModalStatus(false)"
+                        class="pb-2 ml-auto bg-transparent border-0 text-gray-500 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+                        x
+                    </button>
+                </div>
+                <!--body-->
+                <div class="relative p-3 pb-5">
+                    <div class="items-center justify-between">
+                        <div class="container px-4 mx-auto">
+                            <div class="pt-12 md:pt-0 2xl:ps-4">
+                                <div class="flex m-auto h-auto" v-for="(statusDetail, index) in listStatusDetail" :class="{ 'no-line': index == listStatusDetail.length - 1 }">
+                                    <span class="font-semibold text-md w-[150px]">{{statusDetail.created_at}}</span>
+                                        <div class="relative">
+                                            <p class="break-point inline-block relative w-[10px] h-[10px] bg-[#E93B3B]"
+                                            :class="{ 'bg-[#5672fd]': index == 0}"></p>
+                                        </div>
+                                    <span class="w-auto font-semibold" :class="{ 'true-color': index == 0}">{{statusDetail.tracking_status_name}}</span>
+                                </div>
+                                <div v-if="listStatusDetail.length <= 0 && is_loading == false" class="flex justify-center items-center" style="height: 100px;">
+                                    <p class="font-semibold text-center px-3">
+                                        Lịch sử đơn hàng của bạn sẽ được cập nhập sau khi đơn hàng được giao.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="show_modal_status" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
 
 </template>
 
 <script>
 import { getFilterOrder } from "../../config/order";
 import { getOrderInfo } from "../../config/order";
+import { getHistoryDetail } from "../../config/order";
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import { useAttrs } from "vue";
@@ -210,7 +274,7 @@ export default {
         $route: {
             immediate: true,
             handler(to, from) {
-                document.title ='Đơn hàng';
+                document.title ='Đơn hàng Việt - Trung';
             }
         },
     },
@@ -220,18 +284,22 @@ export default {
     data() {
         return {
             showModal: false,
+            show_modal_status: false,
             arr_status_id: [],
             checkBoxStatus: [],
             search: '',
             allChecked: true,
             is_loading: false,
             is_loading_detail: false,
+            is_loading_status: false,
             color: [],
             address: [],
             listOrder: [],
             listStatus: [],
             listInfo: [],
             listSource: [],
+            listStatusDetail: [],
+            trackingStatusOderId: [],
             countStatusConfirmation: 0,
             dataPagination: {},
             current_page: 0,
@@ -349,6 +417,29 @@ export default {
             }
             this.getFilterOrderByUser();
         },
+        showModalStatus(data, order_id = null) {
+            this.show_modal_status = data;
+            this.trackingStatusOderId = [];
+            this.listStatusDetail = [];
+            if (order_id) {
+                this.is_loading_status = true;
+                getHistoryDetail({
+                    order_id: order_id,
+                })
+                    .then((res) => {
+                        this.trackingStatusOderId = res.data.data.historyDetail.order;
+                        this.listStatusDetail = res.data.data.historyDetail.tracking_status;
+                        console.log(this.trackingStatusOderId);
+
+                    })
+                    .catch((error) => {
+                        this.is_loading_status = false;
+                    })
+                    .finally(() => {
+                        this.is_loading_status = false;
+                    });
+            }
+        },
         showModalDetail(data, order_id = null) {
             this.showModal = data;
             if (order_id) {
@@ -409,7 +500,29 @@ export default {
     display: none !important;
     background: yellow;
 }
+.break-point {
+    margin: 5px 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+}
+.break-point:after {
+    content: "";
+    width: 3px;
+    height: 25px;
+    background: #eee8e8;
+    position: absolute;
+    top: 17px;
+}
+.no-line .break-point::after {
+    position: unset;
+    width: 0;
+    height: 0;
+}
 
+.true-color {
+    color: #5672fd;
+}
 .modal-cart {
     transition: ease-in-out;
     animation-name: modalCart;

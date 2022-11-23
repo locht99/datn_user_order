@@ -64,7 +64,8 @@
                                 <li>
                                     Đường dẫn sản phẩm ( link ):
                                     <a
-                                        :href="product.url"
+                                        
+                                        @click="viewTab(product.url)"
                                         class="text-white bg-red-600 pb-1 px-4 rounded-2xl"
                                     >
                                     <i class="fa-sharp fa-solid fa-eye"></i>
@@ -102,6 +103,9 @@ export default {
                 style: "currency",
                 currency: "VND",
             }).format(value);
+        },
+        viewTab(url){
+            window.open(url);
         },
         getOrderProductDetailByUser() {
             this.is_loading = true;

@@ -85,4 +85,29 @@ class OrderController extends Controller
         }
         
     }
+
+    public function historyDetail(Request $data){
+        if($data->order_id){
+            $order = $this->getOrderEntity->trackingStatus($data->order_id)->first();
+            if(is_null($order)){
+                return response()->json([
+
+                    'status' => 404,
+                    'data' => [
+                        'message' => 'The requested URL was not found on this server!',
+                    ]
+                    
+                ],200);
+            }
+            $historyDetail = $this->getOrderEntity->historyStatusDetail($data->order_id);
+            return response()->json([
+
+                'status' => 200, 
+                'data' => [
+                    'historyDetail' => $historyDetail,
+                ]
+
+            ],200);
+        }
+    }
 }

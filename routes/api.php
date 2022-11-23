@@ -53,6 +53,8 @@ Route::middleware('auth:api,web')->group(function ()
         Route::get('order-detail/{id}', [OrderController::class, 'orderDetail']);
 
         Route::post('order-info', [OrderController::class, 'orderInfoes']);
+
+        Route::post('history-detail', [OrderController::class, 'historyDetail']);
     });
 
     //Thông báo

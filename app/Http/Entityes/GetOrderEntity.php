@@ -135,7 +135,7 @@ class GetOrderEntity extends Controller
 
         $order_info = [
             'source' => $this->listSource($order_id),
-            'order'  => $this->orderDetail($order_id)->select('deposit_amount', 'order_code', 'total_price')->first(),
+            'order'  => $this->orderDetail($order_id)->select('deposit_amount', 'order_code', 'total_price', 'total_price_order', 'express_shipping_fee')->first(),
             'address'=> $this->orderDetail($order_id)->join('user_addresses', 'orders.address_id', 'user_addresses.id')->select('user_addresses.*')->first(),
         ];
         return $order_info;
@@ -147,11 +147,30 @@ class GetOrderEntity extends Controller
         return $data;
     }
 
+    public function trackingStatus($order_id){
+        $data = DB::table('tracking_statuses')
+            ->where('order_id', $order_id);
+        return $data;
+    }
+
     public function listSource($order_id){
         $data = DB::table('order_detail')
             ->where('order_id', $order_id)
             ->groupBy('order_detail.source')
             ->select('order_detail.source')->get();
         return $data;
+    }
+
+    public function historyStatusDetail($order_id){
+        $tracking_status = DB::table('tracking_statuses')
+            ->where('order_id', $order_id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        $statusDetail = [
+            'order'        => $this->orderDetail($order_id)->select('order_code')->first(),
+            'tracking_status' => $tracking_status,
+        ];
+        return $statusDetail;
     }
 }

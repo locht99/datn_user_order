@@ -11,3 +11,7 @@ export function getOrderProductDetail(data) {
 export function getOrderInfo(data) {
     return instance.post("/order/order-info", data);
 }
+
+export function getHistoryDetail(data) {
+    return instance.post("/order/history-detail", data);
+}
