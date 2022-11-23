@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/getUser', [TestController::class, 'index'])->middleware();
-Route::post('/getRequest',[TransactionController::class,'sendTransaction'])->name('routesss');
-Route::get('/getRequest',[TransactionController::class,'sendTransaction'])->name('routesss');
+Route::post('/getRequest',[TransactionController::class,'sendTransaction'])->name('getRequest');
+Route::get('/getRequest',[TransactionController::class,'sendTransaction'])->name('getRequest');
 Route::get('/{any}', function () {
     return view('index');
 })->where('any', '^(?!api).*$');
