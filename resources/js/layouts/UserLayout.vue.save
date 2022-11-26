@@ -1,4 +1,3 @@
-
 <template>
   <div class="flex m-auto w-[98%] h-screen py-4">
     <aside class="w-72 rounded-xl  h-screen relative z-10 bg-[#ff3f3a]">
@@ -37,7 +36,10 @@
                 <li class="border-b py-3">
                   <router-link to="user/new-address" class="text-base font-semibold">Cập nhật địa chỉ</router-link>
                 </li>
-                               <li class="border-b py-3">
+                <li class="border-b py-3">
+                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
+                </li>
+              		 <li class="border-b py-3">
                   <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
                 </li>
                 <li class="py-3">
