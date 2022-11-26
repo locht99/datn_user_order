@@ -31,8 +31,8 @@ class ConfigPaymentMomo extends Controller
         $this->partnerCode = $this->dataPayment->partnerCode;
         $this->accessKey = $this->dataPayment->access_key;
         $this->serectKey = $this->dataPayment->serec_key;
-        $this->redirectUrl = $resultDomain . ':8000' . "/transaction/create";
-        $this->ipnUrl = $resultDomain . ':8000' . "/transaction/create";
+        $this->redirectUrl = $resultDomain . "/transaction/create";
+        $this->ipnUrl = $resultDomain  . "/transaction/create";
         $this->extraData = "";
     }
     public function execPostRequest($url, $data)
