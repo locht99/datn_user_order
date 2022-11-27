@@ -8,6 +8,7 @@ use App\Http\Entityes\GetTransaction;
 use App\Http\Transaction\Transaction;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

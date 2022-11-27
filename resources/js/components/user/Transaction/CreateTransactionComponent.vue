@@ -174,14 +174,17 @@ export default {
         this.getGenerateCode();
         this.fetchTransaction();
         // console.log($Auth.check());
-        // console.log(Echo.private('eventTransaction').listen('TransactionSend'));
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        // console.log(window.Echo.private('eventTransaction'+user.id).listen('TransactionSent'));
 
 
     },
     mounted() {
         // Pusher.logToConsole = true;
-        
-        window.Echo.channel('eventTransaction').listen('TransactionSent', (res) => {
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        let test = 'eventTransaction.'+user.id;
+        window.Echo.channel('eventTransaction.'+user.id).listen('TransactionSent', (res) => {
+            console.log(res);
              if(res.transaction.success == false){
                 this.$swal('Nạp tiền thất bại', '', 'OK');
              }else{
