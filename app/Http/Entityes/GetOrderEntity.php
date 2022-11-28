@@ -15,7 +15,14 @@ class GetOrderEntity extends Controller
             ->join('orders', 'orders.id', '=', 'order_products.order_id')
             ->orderBy('order_products.created_at', 'DESC')
             ->where('order_products.user_id', auth()->id())
-            ->select('order_products.id', 'orders.order_code', 'order_products.product_name','order_products.url', 'order_products.image_link', 'order_products.quantity_bought', 'order_products.order_status_id')
+            ->select(
+                'order_products.id', 
+                'orders.order_code', 
+                'order_products.product_name',
+                'order_products.url',
+                'order_products.image_link',
+                'order_products.quantity_bought', 
+                'orders.order_status_id')
             ->get()->map(function ($oderProduct) {
                 $oderProduct->status_name = DB::table('order_statuses')
                     ->where('id', $oderProduct->order_status_id)

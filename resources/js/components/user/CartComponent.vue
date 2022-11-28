@@ -1,7 +1,8 @@
 <template>
   <Transition name="fade-in">
 
-    <section style="height: 568px; max-height: 568px" class="border rounded-xl shadow-md shadow-gray-400 my-10 relative">
+    <section style="height: 568px; max-height: 568px"
+      class="border rounded-xl shadow-md shadow-gray-400 my-10 relative">
       <loading v-model:active="is_loading" :is-full-page="false" />
       <!-- Header cart -->
       <section class="sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl">
@@ -248,170 +249,133 @@
           Đặt hàng tất cả sản phẩm đã chọn
         </button>
       </section>
-      <div v-if="showModal"
-        class="overflow-x-hidden overflow-y-auto  fade  fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-        <div class="relative w-auto my-6 mx-auto max-w-6xl">
-          <!--content-->
-          <div
-            class="modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none w-[1200px]">
-            <!--header-->
-            <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-              <h3 class="text-3xl font-semibold">
-                Địa chỉ và đặt cọc
-              </h3>
-              <button
-                class="p-1 ml-auto bg-white bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                v-on:click="toggleModalCart()">
-                <i class="fas fa-times text-black"></i>
-              </button>
+
+
+      <a-modal v-model:visible="showModal" width="1000px" title="Địa chỉ và đặt cọc" @ok="handleOk">
+        <div class="flex flex-col w-full px-0 mx-auto md:flex-row" v-if="is_loading == false">
+          <div class="flex flex-col md:w-full">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="mb-4 font-bold md:text-xl text-heading ">Địa chỉ giao hàng
+                </h2>
+              </div>
+              <div>
+                <span v-on:click="openModalAddRess()"
+                  class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
+                  Chỉnh sửa
+                </span>
+              </div>
             </div>
-            <!--body-->
-            <div class="relative p-3 flex-auto">
-              <div class="flex items-center justify-between">
-                <div class="container p-10 mx-auto">
-                  <div class="flex flex-col w-full px-0 mx-auto md:flex-row" v-if="is_loading == false">
-                    <div class="flex flex-col md:w-full">
-                      <div class="flex items-center justify-between">
-                        <div>
-                          <h2 class="mb-4 font-bold md:text-xl text-heading ">Địa chỉ giao hàng
-                          </h2>
-                        </div>
-                        <div>
-                          <span v-on:click="openModalAddRess()"
-                            class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
-                            Chỉnh sửa
-                          </span>
-                        </div>
-                      </div>
-                      <div class="justify-center w-full mx-auto">
-                        <div class="">
-                          <div class="space-x-0 lg:flex lg:space-x-4">
-                            <div class="w-full lg:w-1/2">
-                              <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
-                                tên</label>
-                              <p class="w-full px-4 py-3 text-sm border lg:text-sm">
-                                {{ info_Address.name }}
-                              </p>
-                            </div>
-                            <div class="w-full lg:w-1/2 ">
-                              <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
-                                thoại</label>
-                              <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                {{ info_Address.phone }}
-                              </p>
-                            </div>
-                          </div>
+            <div class="justify-center w-full mx-auto">
+              <div class="">
+                <div class="space-x-0 lg:flex lg:space-x-4">
+                  <div class="w-full lg:w-1/2">
+                    <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
+                      tên</label>
+                    <p class="w-full px-4 py-3 text-sm border lg:text-sm">
+                      {{ info_Address.name }}
+                    </p>
+                  </div>
+                  <div class="w-full lg:w-1/2 ">
+                    <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
+                      thoại</label>
+                    <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
+                      {{ info_Address.phone }}
+                    </p>
+                  </div>
+                </div>
 
-                          <div class="mt-4">
-                            <div class="w-full">
-                              <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
-                                chỉ</label>
-                              <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                {{ info_Address.note }}
-                              </p>
-                            </div>
-                          </div>
-                          <div class="mt-4">
-                            <div class="w-full">
-                              <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
-                                chỉ</label>
-                              <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                                {{ info_Address.ward }}, {{ info_Address.district }}, {{ info_Address.province }}
-                              </p>
-                            </div>
-                          </div>
+                <div class="mt-4">
+                  <div class="w-full">
+                    <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
+                      chỉ</label>
+                    <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
+                      {{ info_Address.note }}
+                    </p>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div class="w-full">
+                    <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
+                      chỉ</label>
+                    <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
+                      {{ info_Address.ward }}, {{ info_Address.district }}, {{ info_Address.province }}
+                    </p>
+                  </div>
+                </div>
 
-                          <div class="mt-4">
-                            <div v-if="cartid != 0">
-                              <button v-on:click="createOrder(cartid, index, objPayment.money_deposite)"
-                                class="w-full px-6 py-2 text-white bg-orange-600 hover:bg-orange-500">Thanh
-                                Toán</button>
-                            </div>
-                            <div v-if="cartid == 0">
-                              <button v-on:click="createOrder(null, null, objPayment.money_deposite)"
-                                class="w-full px-6 py-2 text-white bg-orange-600 hover:bg-orange-500">Thanh
-                                Toán</button>
-                            </div>
+                <div class="mt-4">
+                 
 
-                          </div>
-                        </div>
-                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
+            <div class="pt-12 md:pt-0 2xl:ps-4">
+              <h2 class="text-xl font-bold">Chi tiết thanh toán
+              </h2>
+              <div class="mt-4">
+                <div class="flex flex-col space-y-4">
+
+                  <div
+                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                    <div>
+                      Phí dịch vụ(tạm tính)
                     </div>
-                    <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
-                      <div class="pt-12 md:pt-0 2xl:ps-4">
-                        <h2 class="text-xl font-bold">Chi tiết thanh toán
-                        </h2>
-                        <div class="mt-4">
-                          <div class="flex flex-col space-y-4">
-
-                            <div
-                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                              <div>
-                                Phí dịch vụ(tạm tính)
-                              </div>
-                              <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.fee) }}đ</span>
-                              </div>
-                            </div>
-                            <div
-                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                              <div>
-                                Tạm tính({{ objPayment.quantity }} sản phẩm)
-                              </div>
-                              <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.provisional) }}đ</span>
-                              </div>
-                            </div>
-                            <div
-                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                              <div>
-                                Đặt cọc 50%
-                              </div>
-                              <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}đ</span>
-                              </div>
-                            </div>
-                            <div
-                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                              <div>
-                                Số dư tài khoản
-                              </div>
-                              <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.point) }}đ</span>
-                              </div>
-                            </div>
-                            <div v-if="objPayment.point <= 0"
-                              class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                              <div>
-                                Bạn còn thiếu
-                              </div>
-                              <div>
-                                <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}đ</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-                      </div>
+                    <div>
+                      <span class="ml-2">{{ formatPrice(objPayment.fee) }}đ</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                    <div>
+                      Tạm tính({{ objPayment.quantity }} sản phẩm)
+                    </div>
+                    <div>
+                      <span class="ml-2">{{ formatPrice(objPayment.provisional) }}đ</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                    <div>
+                      Đặt cọc 50%
+                    </div>
+                    <div>
+                      <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}đ</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                    <div>
+                      Số dư tài khoản
+                    </div>
+                    <div>
+                      <span class="ml-2">{{ formatPrice(objPayment.point) }}đ</span>
+                    </div>
+                  </div>
+                  <div v-if="objPayment.point <= 0"
+                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                    <div>
+                      Bạn còn thiếu
+                    </div>
+                    <div>
+                      <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}đ</span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!--footer-->
-            <!-- <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
 
-              <button
-                class="text-white bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button" v-on:click="toggleModal()">
-                Thanh toán
-              </button>
-            </div> -->
+
+            </div>
           </div>
         </div>
-      </div>
-      <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        <template #footer>
+          <a-button key="back" type="danger">QUAY LẠI</a-button>
+          <a-button key="submit" type="danger" @click="createOrder(null, null, objPayment.money_deposite)">ĐẶT HÀNG
+          </a-button>
+        </template>
+      </a-modal>
       <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
         :showModalAction="showModalAddress">
       </AddRessComponent>
@@ -430,12 +394,12 @@ import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   watch: {
-        $route: {
-            immediate: true,
-            handler(to, from) {
-                document.title ='Giỏ hàng';
-            }
-        },
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = 'Giỏ hàng';
+      }
+    },
   },
   components: {
     loading,
@@ -511,6 +475,9 @@ export default {
       this.showModalAddress = !event;
       this.showModal = !this.showModal;
 
+    },
+    handleOk(e) {
+      this.showModal = !this.showModal;
     },
     updateIdAddress(event) {
       this.id_address = event;
