@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.1.8 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -24,6 +24,7 @@
 2. Prevent adjustments of font size after orientation changes in iOS.
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
 */
 
 html {
@@ -31,6 +32,7 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */ /* 3 */
   tab-size: 4; /* 3 */
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
 }
 
 /*
@@ -361,6 +363,11 @@ video {
   height: auto;
 }
 
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden] {
+  display: none;
+}
+
 [type='text'],[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {
   -webkit-appearance: none;
           appearance: none;
@@ -639,7 +646,7 @@ input:checked + .toggle-bg {
 
 [data-tooltip-style^='light'] + .tooltip > .tooltip-arrow:before {
   border-style: solid;
-  border-color: #E5E7EB;
+  border-color: #e5e7eb;
 }
 
 [data-tooltip-style^='light'] + .tooltip[data-popper-placement^='top'] > .tooltip-arrow:before {
@@ -711,22 +718,22 @@ input:checked + .toggle-bg {
 
 [role="tooltip"] > [data-popper-arrow]:before {
   border-style: solid;
-  border-color: #E5E7EB;
+  border-color: #e5e7eb;
 }
 
 .dark [role="tooltip"] > [data-popper-arrow]:before {
   border-style: solid;
-  border-color: #4B5563;
+  border-color: #4b5563;
 }
 
 [role="tooltip"] > [data-popper-arrow]:after {
   border-style: solid;
-  border-color: #E5E7EB;
+  border-color: #e5e7eb;
 }
 
 .dark [role="tooltip"] > [data-popper-arrow]:after {
   border-style: solid;
-  border-color: #4B5563;
+  border-color: #4b5563;
 }
 
 [data-popover][role="tooltip"][data-popper-placement^='top'] > [data-popper-arrow]:before {
@@ -944,6 +951,10 @@ input:checked + .toggle-bg {
 
 .invisible {
   visibility: hidden;
+}
+
+.collapse {
+  visibility: collapse;
 }
 
 .static {
@@ -1312,12 +1323,12 @@ input:checked + .toggle-bg {
   height: 17px;
 }
 
-.h-14 {
-  height: 3.5rem;
-}
-
 .h-\[10px\] {
   height: 10px;
+}
+
+.h-14 {
+  height: 3.5rem;
 }
 
 .h-6 {
@@ -1432,6 +1443,14 @@ input:checked + .toggle-bg {
   width: 200px;
 }
 
+.w-\[150px\] {
+  width: 150px;
+}
+
+.w-\[10px\] {
+  width: 10px;
+}
+
 .w-\[600px\] {
   width: 600px;
 }
@@ -1446,14 +1465,6 @@ input:checked + .toggle-bg {
 
 .w-1\/6 {
   width: 16.666667%;
-}
-
-.w-\[150px\] {
-  width: 150px;
-}
-
-.w-\[10px\] {
-  width: 10px;
 }
 
 .w-64 {
@@ -1954,6 +1965,11 @@ input:checked + .toggle-bg {
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
+.bg-gray-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -2160,6 +2176,10 @@ input:checked + .toggle-bg {
   padding-top: 1.25rem;
 }
 
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+
 .pl-3 {
   padding-left: 0.75rem;
 }
@@ -2170,10 +2190,6 @@ input:checked + .toggle-bg {
 
 .pt-3 {
   padding-top: 0.75rem;
-}
-
-.pb-5 {
-  padding-bottom: 1.25rem;
 }
 
 .pl-4 {
@@ -2403,9 +2419,9 @@ input:checked + .toggle-bg {
   color: rgb(77 77 167 / var(--tw-text-opacity));
 }
 
-.text-\[\#000000\] {
+.text-\[\#00ff09\] {
   --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
+  color: rgb(0 255 9 / var(--tw-text-opacity));
 }
 
 .text-\[\#808080\] {
@@ -2432,14 +2448,9 @@ input:checked + .toggle-bg {
   color: rgb(28 100 242 / var(--tw-text-opacity));
 }
 
-.text-\[\#5672fd\] {
+.text-\[\#E93B3B\] {
   --tw-text-opacity: 1;
-  color: rgb(86 114 253 / var(--tw-text-opacity));
-}
-
-.text-red-900 {
-  --tw-text-opacity: 1;
-  color: rgb(119 29 29 / var(--tw-text-opacity));
+  color: rgb(233 59 59 / var(--tw-text-opacity));
 }
 
 .underline {

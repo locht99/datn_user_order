@@ -96,6 +96,42 @@
             </div>
         </section>
     </section>
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div v-if="show_modal_noti"
+        class="overflow-x-hidden overflow-y-auto fade  fixed inset-0 z-50 outline-none focus:outline-none flex">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+            <loading v-model:active="is_loading_noti" :is-full-page="false" />
+            <!--content-->
+            <div
+                class="modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none ">
+                <!--header-->
+                <div class="flex items-start justify-between px-5 pb-1 border-b border-solid border-slate-200 rounded-t">
+                    <div>
+                        <h4 class="text-xl font-bold pt-5"><i class="fa-regular fa-bell"></i> Thông báo</h4>
+                    </div>
+                    <button v-on:click="showModalNoti(false)"
+                        class="detail-order mx-2 font-semibold text-center block m-auto mt-4 text-white px-4 py-1 rounded-lg">
+                        Đóng
+                    </button>
+                </div>
+                <!--body-->
+                <div class="relative p-3 pb-5">
+                    <div class="items-center justify-between">
+                        <div class="container px-4 mx-auto">
+                            <div class="pt-12 md:pt-0 2xl:ps-4">
+                                <div class="m-auto h-auto" v-for="noti in notifications">
+                                    <span class="w-auto font-semibold" v-html="noti.description"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="show_modal_noti" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
 </template>
 
 <script>
@@ -118,9 +154,13 @@ export default {
     },
     data() {
         return {
+            showModal: false,
+            show_modal_noti: false,
+            is_loading_noti: false,
             is_loading: false,
             is_loading_activity: false,
             listItem: [],
+            notifications: [],
             dataPagination: {},
             lazyLoad: false,
             listLimit: [],
@@ -134,6 +174,7 @@ export default {
             getItem()
                 .then((res) => {
                     this.listItem = res.data.data.oderProducts;
+                    this.notifications = res.data.data.notifications;
                     for (const item of this.listItem) {
                         this.listLimit.push(item);
                         if (this.listLimit.length >= 5) {
@@ -146,9 +187,13 @@ export default {
                 })
                 .finally(() => {
                     this.is_loading = false;
+                    this.showModal = true;
+                    this.show_modal_noti = true;
                 });
         },
-
+        showModalNoti(data) {
+            this.show_modal_noti = data;
+        },
         getAllLog() {
             this.is_loading_activity = true;
             getLog().then((res) => {
@@ -187,5 +232,8 @@ export default {
     position: unset;
     width: 0;
     height: 0;
+}
+.detail-order{
+    background-color: #ff3f3a;
 }
 </style>
