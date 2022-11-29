@@ -154,7 +154,14 @@ class CartController extends Controller
         // try {
         $is_inventory = $request->inventory;
         $product_id = array_keys($request->ids);
-        $data['product_quantity'] = $request->quantity;
+        $product_id = [];
+        foreach ($request->quantity as $it) {
+            $product_id[$it['id']] = $it['quantity'];
+        }
+        $data['product_quantity'] = $product_id;
+
+        // dd();
+
         $data['note'] = $request->note;
         $data['total_money_product'] = 0;
         $data['total_money_product_byShop'] = [];
@@ -171,6 +178,7 @@ class CartController extends Controller
         foreach ($request->data as $item) {
             $idShop[] = $item['id'];
         }
+        // Sai truy vấn
         $data['cart_products'] = DB::table('cart_products')
             ->select(
                 'cart_products.id',
@@ -181,7 +189,7 @@ class CartController extends Controller
                 'unit_price_vn',
                 'cart_id'
             )
-            ->whereIn("cart_products.id", $product_id)
+            ->whereIn("cart_products.id",  array_keys($data['product_quantity']))
             ->orderByDesc("created_at")
             ->get()->toArray();
         $data['cart_Shop'] = DB::table('carts')->whereIn('id', $idShop)->get();
@@ -192,7 +200,9 @@ class CartController extends Controller
             $totalByShopProduct[$item->id] = 0;
             $total_quantity_byShop[$item->id] = 0;
             foreach ($data['cart_products'] as $it) {
+
                 if ($item->id == $it->cart_id) {
+
                     $totalByShopProduct[$item->id] += $it->unit_price_vn * $data['product_quantity'][$it->id];
                     $total_quantity_byShop[$item->id] += $data['product_quantity'][$it->id];
                     $data['totalQuantityOrder'] += $data['product_quantity'][$it->id];

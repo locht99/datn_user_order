@@ -118,6 +118,7 @@
                         <div v-on:click="openShop(listCartProduct.url)">
                           <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
                           <div class="relative top-[20px]">
+                            {{ listCartProduct.id }}
                             <a class=" text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
                             <label for="">
                               <span class="font-semibold text-sm">
@@ -163,7 +164,7 @@
                           </div>
                           <div class="pr-1 relative">
                             <a-popconfirm class="cursor-pointer" title="Bạn có muốn xóa sản phẩm?"
-                              @confirm="deleteProductCart(listCartProduct.id, index, index2)">
+                              @confirm="deleteProductCart(listCartProduct.id, index, index2, listCartProduct.quantity)">
                               <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
                             </a-popconfirm>
                             <!-- <label for="" v-on:click=""
@@ -305,7 +306,7 @@
                 </div>
 
                 <div class="mt-4">
-                 
+
 
                 </div>
               </div>
@@ -575,7 +576,6 @@ export default {
     syncCart() {
       this.syncItem = !this.syncItem;
       this.getCartByUser();
-      // this.checkOutCart();
     },
     formatPrice(value) {
       return new Intl.NumberFormat("en-US", {
@@ -586,12 +586,16 @@ export default {
         .replace("VND", "")
         .trim();
     },
-    deleteProductCart(id, index, index2) {
+    deleteProductCart(id, index, index2, quantity) {
+      this.totalQuantityShop = this.totalQuantityShop - quantity
+      // console.log(this.quantity);
+      this.quantity = this.quantity.filter((item) => item.id != id);
       this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
-
+      if (this.listCart[index].cart_products.length == 0) {
+        this.listCart.filter((shop) => shop.shop_id != this.listCart[index].shop_id);
+      }
       deleteCart(id).then((response) => {
         this.checkOutCart();
-        // this.getTotalQuantity();
       }).then(() => {
         this.$swal.fire(
           'Deleted!',
@@ -599,8 +603,6 @@ export default {
           'success'
         )
       })
-
-
     },
     checkOwn(cartid) {
       this.ownGood[cartid] = !this.ownGood[cartid];
@@ -730,10 +732,17 @@ export default {
           this.woodWorking[cartid] = false;
 
           element.cart_products.forEach((ele) => {
-            this.quantity[ele.id] = ele.quantity;
+            let quantity = ele.quantity;
+            let id = ele.id;
+            const exist = this.quantity.find((item) => item.id == id);
+            if (!exist) {
+              this.quantity.push({ quantity, id });
+            }
+
             quantityItem += +ele.quantity;
             this.checkBoxItem[ele.id] = false;
           })
+
         })
       }).then(() => {
         this.checkOutCart(this.listCart);
@@ -748,8 +757,10 @@ export default {
 
     },
     cartQuantity(listCartProduct, index, index2) {
+      console.log(this.quantity);
       if (listCartProduct.quantity <= 0) {
         this.$swal("Số lượng không được nhỏ hơn 1");
+
         listCartProduct.quantity = 1;
       } else {
         this.listCart[index].cart_products[index2].quantity = listCartProduct.quantity;
@@ -765,7 +776,16 @@ export default {
       let quantityItem = 0;
       this.listCart.forEach((element) => {
         element.cart_products.forEach((ele) => {
-          this.quantity[ele.id] = ele.quantity;
+          let quantity = ele.quantity;
+          let id = ele.id;
+          const exist = this.quantity.find((item) => item.id == id);
+          if (!exist) {
+            this.quantity.push({ quantity, id });
+          } else {
+            exist.quantity = quantity;
+          }
+          // console.log(this.quantity);
+
           quantityItem += +ele.quantity;
         })
       });
@@ -796,7 +816,6 @@ export default {
     },
 
     createOrder(cartid = null, index = null, deposite_money = null) {
-      // console.log(this.checkBoxItem);
       let listCart = this.listCart;
       if (cartid != null) {
         this.listCart[index].cart_products.forEach((element) => {

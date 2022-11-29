@@ -98,14 +98,14 @@ class Transaction
             $res['success'] = true;
             $res['data'] = $data;
             $res['message'] = $request;
-           
+
             $user = User::find($itemOrderId->user_id);
             $user->point = $user->point += $request['amount'];
             $user->save();
             $log = new AppLogController();
-            $log->insertLog(Auth::id(), $request);
+            $log->insertLog($itemOrderId->user_id, "Nạp số tiền" . $request["amount"] . 'vào tài khoản');
         }
-        event(new TransactionSent($res,$itemOrderId->user_id));
+        event(new TransactionSent($res, $itemOrderId->user_id));
         // $transactions= $user->messages()->create
         return "Successfully";
     }

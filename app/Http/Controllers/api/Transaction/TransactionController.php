@@ -64,7 +64,7 @@ class TransactionController extends Controller
         $resultDomain = $domain['scheme'] . '://' . $domain['host'];
         $transaction = new Transaction();
         $transaction->sendTransactions($request->all());
-        return redirect($resultDomain.':8000/transaction/create');
+        return redirect($resultDomain.'8002/transaction/create');
 
     }
     public function fetchTransaction()
