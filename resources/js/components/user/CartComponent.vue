@@ -118,7 +118,6 @@
                         <div v-on:click="openShop(listCartProduct.url)">
                           <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
                           <div class="relative top-[20px]">
-                            {{ listCartProduct.id }}
                             <a class=" text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
                             <label for="">
                               <span class="font-semibold text-sm">
@@ -460,10 +459,6 @@ export default {
 
   },
   methods: {
-    // checkByNote(){
-    //   console.log(this.noteByShop);
-    // },
-
     openShop(url) {
       window.open(url, '_blank');
 
@@ -588,11 +583,10 @@ export default {
     },
     deleteProductCart(id, index, index2, quantity) {
       this.totalQuantityShop = this.totalQuantityShop - quantity
-      // console.log(this.quantity);
       this.quantity = this.quantity.filter((item) => item.id != id);
       this.listCart[index].cart_products = this.listCart[index].cart_products.filter((item) => item.id != id);
       if (this.listCart[index].cart_products.length == 0) {
-        this.listCart.filter((shop) => shop.shop_id != this.listCart[index].shop_id);
+        this.listCart = this.listCart.filter((shop) => shop.shop_id != this.listCart[index].shop_id);
       }
       deleteCart(id).then((response) => {
         this.checkOutCart();
