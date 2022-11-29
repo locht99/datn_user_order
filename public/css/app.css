@@ -2428,6 +2428,11 @@ input:checked + .toggle-bg {
   color: rgb(28 100 242 / var(--tw-text-opacity));
 }
 
+.text-\[\#00ff09\] {
+  --tw-text-opacity: 1;
+  color: rgb(0 255 9 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }

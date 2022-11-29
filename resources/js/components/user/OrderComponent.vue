@@ -352,7 +352,7 @@ export default {
                         else if (value.order_status_id == 10)
                             this.color[value.order_status_id] = 'text-[#4d4da7]';
                         else if (value.order_status_id == 11)
-                            this.color[value.order_status_id] = 'text-[#000000]';
+                            this.color[value.order_status_id] = 'text-[#00ff09]';
                         else if (value.order_status_id == 13)
                             this.color[value.order_status_id] = 'text-[#ff0000]';
                         else

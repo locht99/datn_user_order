@@ -17,11 +17,13 @@ class OrderController extends Controller
     public function getOrder(){
 
         $oderProducts = $this->getOrderEntity->oderProducts();
+        $notifications = $this->getOrderEntity->notifications();
 
         return response()->json([
             'status' => 200,
             'data' => [
-                'oderProducts'          => $oderProducts,
+                'oderProducts' => $oderProducts,
+                'notifications' => $notifications,
             ]
         ],200);
     }

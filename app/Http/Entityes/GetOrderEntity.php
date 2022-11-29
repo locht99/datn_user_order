@@ -34,6 +34,13 @@ class GetOrderEntity extends Controller
         return $oderProducts;
     }
 
+    public function notifications(){
+        $notifications = DB::table('notifications')
+            ->where('is_active', 1)
+            ->get();
+        return $notifications;
+    }
+
     public function getCartNotifications()
     {
 
