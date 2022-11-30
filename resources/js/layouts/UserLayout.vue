@@ -71,14 +71,24 @@ export default {
     };
   },
   mounted() {
+
     this.getUserInfo();
   },
   methods: {
     getUserInfo() {
       getUser().then((res) => {
         this.userInfo = res.data;
-        window.localStorage.setItem("user",JSON.stringify(this.userInfo));
+        window.Echo.channel('eventTransaction.' + this.userInfo.id).listen('TransactionSent', (res) => {
+          if (res.transaction.success) {
+            this.userInfo.point = this.userInfo.point += +res.transaction.message.amount;
+            console.log(this.userInfo.point);
+            window.localStorage.setItem("user", JSON.stringify(this.userInfo));
+          }
+        });
+
+        window.localStorage.setItem("user", JSON.stringify(this.userInfo));
       });
+
     },
     formatPrice(value) {
       return new Intl.NumberFormat("en-US", {
