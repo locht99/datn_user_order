@@ -21,7 +21,8 @@
                                 </div>
                                 <div class="mx-2 my-2">
                                     <button
-                                        class="whitespace-nowrap inline-block px-[8rem] py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">Ví điện tử</button>
+                                        class="whitespace-nowrap inline-block px-[8rem] py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">Ví
+                                        điện tử</button>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +55,7 @@
                                                 <select v-model="formTransaction.typePayment" name="type-payment"
                                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                                                     <option :value="item.name" v-for="item in this.dataPayment">
-                                                        {{item.name}}</option>
+                                                        {{ item.name }}</option>
                                                 </select>
                                             </div>
                                             <div class="mb-5">
@@ -65,7 +66,7 @@
                                                     name="type-transaction" id="type-transaction"
                                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                                                     <option :value="item.id" v-for="item in this.data">
-                                                        {{item.type_name}}
+                                                        {{ item.type_name }}
                                                     </option>
                                                 </select>
                                             </div>
@@ -104,7 +105,7 @@ export default {
         $route: {
             immediate: true,
             handler(to, from) {
-                document.title ='Nạp tiền';
+                document.title = 'Nạp tiền';
             }
         },
     },
@@ -174,19 +175,21 @@ export default {
         this.getGenerateCode();
         this.fetchTransaction();
         // console.log($Auth.check());
-        // console.log(Echo.private('eventTransaction').listen('TransactionSend'));
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        // console.log(window.Echo.private('eventTransaction'+user.id).listen('TransactionSent'));
 
 
     },
     mounted() {
         // Pusher.logToConsole = true;
-        
-        window.Echo.channel('eventTransaction').listen('TransactionSent', (res) => {
-             if(res.transaction.success == false){
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        let test = 'eventTransaction.' + user.id;
+        window.Echo.channel('eventTransaction.' + user.id).listen('TransactionSent', (res) => {
+            if (res.transaction.success == false) {
                 this.$swal('Nạp tiền thất bại', '', 'OK');
-             }else{
-                this.$swal('Nạp tiền thành công','','OK');
-             }
+            } else {
+                this.$swal('Nạp tiền thành công', '', 'OK');
+            }
         })
     },
 }

@@ -6,6 +6,7 @@ use App\Http\ConfigPayment\ConfigPaymentMomo;
 use App\Http\Entityes\GetTransaction;
 use App\Models\TransactionModel;
 use App\Events\TransactionSent;
+use App\Http\Controllers\api\Log\AppLogController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -80,7 +81,7 @@ class Transaction
     }
     public function sendTransactions($request)
     {
-        $res = ['success' => false,'data'=>$request,'message'=>$request];
+        $res = ['success' => false, 'data' => $request, 'message' => $request];
         $content = $request['orderInfo'];
         $itemOrderId = DB::table('history_transaction_momo')->where('OrderId', $request['orderId'])->first();
         if ($request['resultCode'] == 0) {
@@ -97,11 +98,14 @@ class Transaction
             $res['success'] = true;
             $res['data'] = $data;
             $res['message'] = $request;
-            $user= User::find($itemOrderId->user_id);
-            $user->point = $user->point+=$request['amount'];
+
+            $user = User::find($itemOrderId->user_id);
+            $user->point = $user->point += $request['amount'];
             $user->save();
+            $log = new AppLogController();
+            $log->insertLog($itemOrderId->user_id, "Nạp số tiền" . $request["amount"] . 'vào tài khoản');
         }
-        event(new TransactionSent($res));
+        event(new TransactionSent($res, $itemOrderId->user_id));
         // $transactions= $user->messages()->create
         return "Successfully";
     }

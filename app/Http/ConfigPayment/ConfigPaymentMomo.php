@@ -31,8 +31,8 @@ class ConfigPaymentMomo extends Controller
         $this->partnerCode = $this->dataPayment->partnerCode;
         $this->accessKey = $this->dataPayment->access_key;
         $this->serectKey = $this->dataPayment->serec_key;
-        $this->redirectUrl = $resultDomain . "/transaction/create";
-        $this->ipnUrl = $resultDomain  . "/transaction/create";
+        $this->redirectUrl = route("getRequest");
+        $this->ipnUrl = route("getRequest");
         $this->extraData = "";
     }
     public function execPostRequest($url, $data)
@@ -103,7 +103,7 @@ class ConfigPaymentMomo extends Controller
             'signature' => $signature,
             'user_id' => Auth::user()->id,
             'OrderId' => $orderCodeResponse,
-            'type_id'=>$request['type_id']
+            'type_id' => $request['type_id']
 
         ];
         DB::table('history_transaction_momo')->insert($params);
