@@ -1,37 +1,38 @@
 <template>
   <Transition name="fade-in">
+    <div>
 
-    <section style="height: 568px; max-height: 568px"
-      class="border rounded-xl shadow-md shadow-gray-400 my-10 relative">
-      <loading v-model:active="is_loading" :is-full-page="false" />
-      <!-- Header cart -->
-      <section class="sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl">
-        <div class="flex justify-between w-[97%]">
-          <div class="flex items-center">
-            <img src="/images/trolley.png" alt="" />
-            <b class="mx-2 text-lg">Giỏ hàng</b>
-          </div>
-          <div class="border-b-2 border-b-gray-400">
-            <!-- <label for="search" class="">
+      <section style="height: 568px; max-height: 568px"
+        class="border rounded-xl shadow-md shadow-gray-400 my-10 relative">
+        <loading v-model:active="is_loading" :is-full-page="false" />
+        <!-- Header cart -->
+        <section class="sticky w-full flex justify-between px-5 py-5 bg-white rounded-xl">
+          <div class="flex justify-between w-[97%]">
+            <div class="flex items-center">
+              <img src="/images/trolley.png" alt="" />
+              <b class="mx-2 text-lg">Giỏ hàng</b>
+            </div>
+            <div class="border-b-2 border-b-gray-400">
+              <!-- <label for="search" class="">
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" id="search" placeholder="Tìm kiếm sản phẩm" class="border-none focus:ring-0" />
             </label> -->
+            </div>
           </div>
-        </div>
-        <div>
+          <div>
 
-          <button title="Cập nhật giỏ hàng" v-on:click="syncCart()" class="bg-red-500 px-3 py-2 rounded text-white"><i
-              class="fas fa-sync" :class="syncItem ? ' sync-cart' : ''"></i>
+            <button title="Cập nhật giỏ hàng" v-on:click="syncCart()" class="bg-red-500 px-3 py-2 rounded text-white"><i
+                class="fas fa-sync" :class="syncItem ? ' sync-cart' : ''"></i>
 
-          </button>
-        </div>
-      </section>
+            </button>
+          </div>
+        </section>
 
-      <!-- Content cart -->
-      <section v-if="listCart.length > 0" style="max-height: 424px" class="overflow-auto">
-        <section class="py-5 px-5" v-for="(cart, index) in listCart" :key="index">
-          <div class="rounded-xl shadow-md shadow-gray-400">
-            <div class="
+        <!-- Content cart -->
+        <section v-if="listCart.length > 0" style="max-height: 424px" class="overflow-auto">
+          <section class="py-5 px-5" v-for="(cart, index) in listCart" :key="index">
+            <div class="rounded-xl shadow-md shadow-gray-400">
+              <div class="
               px-5
               py-3
               flex
@@ -40,21 +41,21 @@
               bg-gray-100
               rounded-t-lg
             ">
-              <div class="flex items-center">
-                <img src="/images/1688-logo.png" alt="" class="w-[32px]" v-if="cart.source == '1688'" />
-                <img src="/images/tmall-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TMALL'" />
-                <img src="/images/taobao-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TAOBAO'" />
-                <p v-on:click="openShop(cart.shop_url)"
-                  class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
-                      cart.shop_name
-                  }}</p>
-                <p v-on:click="openShop(cart.shop_url)"
-                  class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
-              </div>
-              <div class="flex items-center">
-                <label for="kiemhang" class="mx-4 cursor-pointer select-none">
+                <div class="flex items-center">
+                  <img src="/images/1688-logo.png" alt="" class="w-[32px]" v-if="cart.source == '1688'" />
+                  <img src="/images/tmall-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TMALL'" />
+                  <img src="/images/taobao-logo.png" alt="" class="w-[32px]" v-else-if="cart.source == 'TAOBAO'" />
+                  <p v-on:click="openShop(cart.shop_url)"
+                    class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-if="cart.shop_name">{{
+                        cart.shop_name
+                    }}</p>
+                  <p v-on:click="openShop(cart.shop_url)"
+                    class="ml-10 text-lg hover:underline hover:decoration-1 cursor-pointer" v-else>Không xác định</p>
+                </div>
+                <div class="flex items-center">
+                  <label for="kiemhang" class="mx-4 cursor-pointer select-none">
 
-                  <input type="checkbox" v-on:click="checkBoxInventory(cart.id)" v-model="checkGoods[cart.id]" class="
+                    <input type="checkbox" v-on:click="checkBoxInventory(cart.id)" v-model="checkGoods[cart.id]" class="
                     mb-1
                     rounded-md
                     cursor-pointer
@@ -63,12 +64,12 @@
                     h-5
                     border-2 border-gray-400
                   " />
-                  <i class="fa-solid fa-box-open mx-2 text-lg text-gray-700"></i>
-                  <span class="text-sm font-semibold text-gray-600">Kiểm hàng</span>
-                </label>
+                    <i class="fa-solid fa-box-open mx-2 text-lg text-gray-700"></i>
+                    <span class="text-sm font-semibold text-gray-600">Kiểm hàng</span>
+                  </label>
 
-                <label for="donggo" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox" v-on:click="checkWoodWorking(cart.id)" v-model="woodWorking[cart.id]" class="
+                  <label for="donggo" class="mx-4 cursor-pointer select-none">
+                    <input type="checkbox" v-on:click="checkWoodWorking(cart.id)" v-model="woodWorking[cart.id]" class="
                     mb-1
                     rounded-md
                     cursor-pointer
@@ -77,133 +78,135 @@
                     h-5
                     border-2 border-gray-400
                   " />
-                  <i class="fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700"></i>
-                  <span class="text-sm font-semibold text-gray-600">Đóng gỗ</span>
-                </label>
+                    <i class="fa-solid fa-boxes-stacked mx-2 text-lg text-gray-700"></i>
+                    <span class="text-sm font-semibold text-gray-600">Đóng gỗ</span>
+                  </label>
 
-                <label for="donggorieng" class="mx-4 cursor-pointer select-none">
-                  <input type="checkbox" v-on:click="checkOwn(cart.id)" v-model="ownGood[cart.id]"
-                    class="mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400" />
-                  <i class="fa-solid fa-box mx-2 text-lg text-gray-700"></i>
-                  <span class="text-sm font-semibold text-gray-600">Đóng gỗ riêng</span>
-                </label>
+                  <label for="donggorieng" class="mx-4 cursor-pointer select-none">
+                    <input type="checkbox" v-on:click="checkOwn(cart.id)" v-model="ownGood[cart.id]"
+                      class="mb-1 rounded-md focus:ring-0 w-5 h-5 border-2 border-gray-400" />
+                    <i class="fa-solid fa-box mx-2 text-lg text-gray-700"></i>
+                    <span class="text-sm font-semibold text-gray-600">Đóng gỗ riêng</span>
+                  </label>
 
+                </div>
               </div>
-            </div>
-            <div class="w-full flex">
-              <div class="w-3/4 border-r-2">
-                <table class="w-full">
-                  <thead class="h-19 border-b">
-                    <tr>
-                      <th class="text-left pl-8">
-                        <input type="checkbox" v-model="checkBox[index]" v-on:click="checkAllByShop(index)"
-                          class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
-                      </th>
+              <div class="w-full flex">
+                <div class="w-3/4 border-r-2">
+                  <table class="w-full">
+                    <thead class="h-19 border-b">
+                      <tr>
+                        <th class="text-left pl-8">
+                          <input type="checkbox" v-model="checkBox[index]" v-on:click="checkAllByShop(index)"
+                            class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
+                        </th>
 
-                      <th class="text-lg text-left pl-8">Sản phẩm</th>
-                      <th class="text-lg text-left pl-8">Số lượng</th>
-                      <th class="text-lg text-left pl-8">Tiền hàng</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="items-center  pb-2" v-on:mouseover="mouseover(listCartProduct.id)"
-                      v-on:mouseleave="mouseleave(listCartProduct.id)"
-                      v-for="(listCartProduct, index2) in cart.cart_products" :key="index2">
-                      <td class="pl-8">
-                        <input type="checkbox" v-on:click="checkByItem(listCartProduct.id, index)"
-                          v-model="checkBoxItem[listCartProduct.id]"
-                          class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
-                      </td>
-                      <td class="pl-8 items-center">
-                        <div v-on:click="openShop(listCartProduct.url)">
-                          <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
-                          <div class="relative top-[20px]">
-                            <a class=" text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
-                            <label for="">
-                              <span class="font-semibold text-sm">
-                                Thuộc tính:
-                              </span>
-                              <span class="block cursor-pointer text-[12px]">
-                                {{ listCartProduct.properties }}
-                              </span>
-                            </label>
+                        <th class="text-lg text-left pl-8">Sản phẩm</th>
+                        <th class="text-lg text-left pl-8">Số lượng</th>
+                        <th class="text-lg text-left pl-8">Tiền hàng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="items-center  pb-2" v-on:mouseover="mouseover(listCartProduct.id)"
+                        v-on:mouseleave="mouseleave(listCartProduct.id)"
+                        v-for="(listCartProduct, index2) in cart.cart_products" :key="index2">
+                        <td class="pl-8">
+                          <input type="checkbox" v-on:click="checkByItem(listCartProduct.id, index)"
+                            v-model="checkBoxItem[listCartProduct.id]"
+                            class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
+                        </td>
+                        <td class="pl-8 items-center">
+                          <div v-on:click="openShop(listCartProduct.url)">
+                            <img :src="listCartProduct.image" class="w-24 py-4 pr-2 float-left cursor-pointer" />
+                            <div class="relative top-[20px]">
+                              <a class=" text-[13px]  block cursor-pointer">{{ listCartProduct.product_name }}</a>
+                              <label for="">
+                                <span class="font-semibold text-sm">
+                                  Thuộc tính:
+                                </span>
+                                <span class="block cursor-pointer text-[12px]">
+                                  {{ listCartProduct.properties }}
+                                </span>
+                              </label>
+                            </div>
                           </div>
-                        </div>
 
-                      </td>
-                      <td class="pl-8">
-                        <div class="inline-flex rounded-md shadow-sm">
-                          <!-- <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
+                        </td>
+                        <td class="pl-8">
+                          <div class="inline-flex rounded-md shadow-sm">
+                            <!-- <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
                             class="py-2 px-4 text-sm font-medium text-white bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             -
                           </button> -->
-                          <!-- v-on:keyup="checkString(listCartProduct.quantity,listCartProduct, index, index2)" -->
-                          <a-input-number id="inputNumber" @blur="cartQuantity(listCartProduct, index, index2)"
-                            v-model:value="listCartProduct.quantity" />
-                          <!-- <input type="text" autocomplete="off" 
+                            <!-- v-on:keyup="checkString(listCartProduct.quantity,listCartProduct, index, index2)" -->
+                            <a-input-number id="inputNumber" @blur="cartQuantity(listCartProduct, index, index2)"
+                              v-model:value="listCartProduct.quantity" />
+                            <!-- <input type="text" autocomplete="off" 
                             class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"> -->
-                          <!-- <input type="hidden" :value="listCartProduct.quantity" /> -->
-                          <!-- <button v-on:click="increasingProduct(listCartProduct, index, index2)"
+                            <!-- <input type="hidden" :value="listCartProduct.quantity" /> -->
+                            <!-- <button v-on:click="increasingProduct(listCartProduct, index, index2)"
                             class="py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             +
                           </button> -->
-                        </div>
-
-                      </td>
-                      <td class="pl-8">
-                        <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.unit_price_cn }}</p>
-                        <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.unit_price_vn) }} đ
-                        </p>
-                      </td>
-                      <td class="pl-8 ">
-                        <div class="flex items-center justify-between">
-                          <div>
-                            <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.price_cn }}</p>
-                            <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.price) }} đ</p>
                           </div>
-                          <div class="pr-1 relative">
-                            <a-popconfirm class="cursor-pointer" title="Bạn có muốn xóa sản phẩm?"
-                              @confirm="deleteProductCart(listCartProduct.id, index, index2, listCartProduct.quantity)">
-                              <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
-                            </a-popconfirm>
-                            <!-- <label for="" v-on:click=""
+
+                        </td>
+                        <td class="pl-8">
+                          <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.unit_price_cn }}</p>
+                          <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.unit_price_vn) }}
+                            đ
+                          </p>
+                        </td>
+                        <td class="pl-8 ">
+                          <div class="flex items-center justify-between">
+                            <div>
+                              <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.price_cn }}</p>
+                              <p class="text-red-500 font-semibold text-lg">{{ formatPrice(listCartProduct.price) }} đ
+                              </p>
+                            </div>
+                            <div class="pr-1 relative">
+                              <a-popconfirm class="cursor-pointer" title="Bạn có muốn xóa sản phẩm?"
+                                @confirm="deleteProductCart(listCartProduct.id, index, index2, listCartProduct.quantity)">
+                                <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
+                              </a-popconfirm>
+                              <!-- <label for="" v-on:click=""
                               class="cursor-pointer absolute left-[-11px]"
                               :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
                               
                             </label> -->
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="text-xl px-5 w-1/4">
-                <div class="min-h-14 flex items-center" v-if="isLoadingTotal == false">
-                  <div class="py-2">
-                    <div v-for="(item, index4) in feeCartByShop[cart.id]" class="nameShop" :key="index4">
-                      <span class="text-sm">{{
-                          item.name
-                      }}:
-                      </span>
-                      <span class="text-sm">{{
-                          formatPrice(item.value)
-                      }} đ</span>
-                    </div>
-                    <div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-xl px-5 w-1/4">
+                  <div class="min-h-14 flex items-center" v-if="isLoadingTotal == false">
+                    <div class="py-2">
+                      <div v-for="(item, index4) in feeCartByShop[cart.id]" class="nameShop" :key="index4">
+                        <span class="text-sm">{{
+                            item.name
+                        }}:
+                        </span>
+                        <span class="text-sm">{{
+                            formatPrice(item.value)
+                        }} đ</span>
+                      </div>
+                      <div>
 
-                      <span>Tổng tiền: </span>
-                      <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }} đ</span>
+                        <span>Tổng tiền: </span>
+                        <span class="text-red-500 font-semibold">{{ formatPrice(totalMoneyByShop[cart.id]) }} đ</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div v-else="" class="min-h-14 flex items-center">
-                  <div class="py-2">
-                    Loading....
+                  <div v-else="" class="min-h-14 flex items-center">
+                    <div class="py-2">
+                      Loading....
+                    </div>
                   </div>
-                </div>
-                <div class="pt-2">
-                  <textarea v-model="noteByShop[cart.id]" name="" id="" class="
+                  <div class="pt-2">
+                    <textarea v-model="noteByShop[cart.id]" name="" id="" class="
                     h-28
                     w-full
                     rounded-xl
@@ -211,178 +214,181 @@
                     border-1 border-gray-400
                     focus:ring-0
                   " placeholder="Chú thích cho đơn hàng..."></textarea>
-                  <button v-on:click="toggleModalCart(cart.id, index)"
-                    class="w-full mt-2 mb-4 rounded-md text-white py-1">
-                    Đặt hàng
-                  </button>
+                    <button v-on:click="toggleModalCart(cart.id, index)"
+                      class="w-full mt-2 mb-4 rounded-md text-white py-1">
+                      Đặt hàng
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
+
+        </section>
+        <section v-if="listCart.length <= 0 && is_loading == false" style="max-height: 424px" class="overflow-auto">
+          <div class="flex justify-center items-center" style="height: 400px;">
+            <p class="font-bold text-center px-3">
+              Bạn chưa có sản phẩm nào trong giỏ hàng.
+            </p>
           </div>
         </section>
 
-      </section>
-      <section v-if="listCart.length <= 0 && is_loading == false" style="max-height: 424px" class="overflow-auto">
-        <div class="flex justify-center items-center" style="height: 400px;">
-          <p class="font-bold text-center px-3">
-            Bạn chưa có sản phẩm nào trong giỏ hàng.
-          </p>
-        </div>
-      </section>
-
-      <!-- Footer cart -->
-      <section v-if="listCart.length != 0" class="flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
-        <div class="mx-2">
-          <input type="checkbox" id="checkboxAll" v-model="checkBoxAllIn" v-on:click="checkBoxAll()"
-            class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400">
-          <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"> Chọn
-            tất cả </label>
-          <label for="checkboxAll" v-on:click="deleteAll()"
-            class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
-            tất cả</label>
-        </div>
-        <span class="font-semibold text-lg text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
-        </span>
-        <span class="text-red-600 text-lg font-semibold mx-1"> {{ formatPrice(totalPriceShop) }} đ</span>
-        <button @click="toggleModalCart()"
-          class="mx-10 py-2 px-12 border-none text-sm font-semibold rounded-md text-white ">
-          Đặt hàng tất cả sản phẩm đã chọn
-        </button>
-      </section>
+        <!-- Footer cart -->
+        <section v-if="listCart.length != 0"
+          class="flex sticky px-10 items-center border-t-2 rounded-bl-xl w-full pt-2">
+          <div class="mx-2">
+            <input type="checkbox" id="checkboxAll" v-model="checkBoxAllIn" v-on:click="checkBoxAll()"
+              class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400">
+            <label for="checkboxAll" class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer"> Chọn
+              tất cả </label>
+            <label for="checkboxAll" v-on:click="deleteAll()"
+              class="text-gray-700 mx-1 hover:underline hover:decoration-1 cursor-pointer">| Xóa
+              tất cả</label>
+          </div>
+          <span class="font-semibold text-lg text-gray-700">Tổng thanh toán ( {{ totalQuantityShop }} sản phẩm ):
+          </span>
+          <span class="text-red-600 text-lg font-semibold mx-1"> {{ formatPrice(totalPriceShop) }} đ</span>
+          <button @click="toggleModalCart()"
+            class="mx-10 py-2 px-12 border-none text-sm font-semibold rounded-md text-white ">
+            Đặt hàng tất cả sản phẩm đã chọn
+          </button>
+        </section>
 
 
-      <a-modal v-model:visible="showModal" width="1000px" title="Địa chỉ và đặt cọc" @ok="handleOk">
-        <div class="flex flex-col w-full px-0 mx-auto md:flex-row" v-if="is_loading == false">
-          <div class="flex flex-col md:w-full">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="mb-4 font-bold md:text-xl text-heading ">Địa chỉ giao hàng
+        <a-modal v-model:visible="showModal" width="1000px" title="Địa chỉ và đặt cọc" @ok="handleOk">
+          <div class="flex flex-col w-full px-0 mx-auto md:flex-row" v-if="is_loading == false">
+            <div class="flex flex-col md:w-full">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="mb-4 font-bold md:text-xl text-heading ">Địa chỉ giao hàng
+                  </h2>
+                </div>
+                <div>
+                  <span v-on:click="openModalAddRess()"
+                    class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
+                    Chỉnh sửa
+                  </span>
+                </div>
+              </div>
+              <div class="justify-center w-full mx-auto">
+                <div class="">
+                  <div class="space-x-0 lg:flex lg:space-x-4">
+                    <div class="w-full lg:w-1/2">
+                      <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
+                        tên</label>
+                      <p class="w-full px-4 py-3 text-sm border lg:text-sm">
+                        {{ info_Address.name }}
+                      </p>
+                    </div>
+                    <div class="w-full lg:w-1/2 ">
+                      <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
+                        thoại</label>
+                      <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
+                        {{ info_Address.phone }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-4">
+                    <div class="w-full">
+                      <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
+                        chỉ</label>
+                      <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
+                        {{ info_Address.note }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <div class="w-full">
+                      <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
+                        chỉ</label>
+                      <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
+                        {{ info_Address.ward }}, {{ info_Address.district }}, {{ info_Address.province }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-4">
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
+              <div class="pt-12 md:pt-0 2xl:ps-4">
+                <h2 class="text-xl font-bold">Chi tiết thanh toán
                 </h2>
-              </div>
-              <div>
-                <span v-on:click="openModalAddRess()"
-                  class="text-blue-500 font-semibold text-[18px] cursor-pointer hover:underline hover:decoration-1">
-                  Chỉnh sửa
-                </span>
-              </div>
-            </div>
-            <div class="justify-center w-full mx-auto">
-              <div class="">
-                <div class="space-x-0 lg:flex lg:space-x-4">
-                  <div class="w-full lg:w-1/2">
-                    <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Họ
-                      tên</label>
-                    <p class="w-full px-4 py-3 text-sm border lg:text-sm">
-                      {{ info_Address.name }}
-                    </p>
-                  </div>
-                  <div class="w-full lg:w-1/2 ">
-                    <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Điện
-                      thoại</label>
-                    <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                      {{ info_Address.phone }}
-                    </p>
-                  </div>
-                </div>
-
                 <div class="mt-4">
-                  <div class="w-full">
-                    <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Tên địa
-                      chỉ</label>
-                    <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                      {{ info_Address.note }}
-                    </p>
+                  <div class="flex flex-col space-y-4">
+
+                    <div
+                      class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                      <div>
+                        Phí dịch vụ(tạm tính)
+                      </div>
+                      <div>
+                        <span class="ml-2">{{ formatPrice(objPayment.fee) }}đ</span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                      <div>
+                        Tạm tính({{ objPayment.quantity }} sản phẩm)
+                      </div>
+                      <div>
+                        <span class="ml-2">{{ formatPrice(objPayment.provisional) }}đ</span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                      <div>
+                        Đặt cọc 50%
+                      </div>
+                      <div>
+                        <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}đ</span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                      <div>
+                        Số dư tài khoản
+                      </div>
+                      <div>
+                        <span class="ml-2">{{ formatPrice(objPayment.point) }}đ</span>
+                      </div>
+                    </div>
+                    <div v-if="objPayment.point <= 0"
+                      class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                      <div>
+                        Bạn còn thiếu
+                      </div>
+                      <div>
+                        <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}đ</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="mt-4">
-                  <div class="w-full">
-                    <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Địa
-                      chỉ</label>
-                    <p class="w-full px-4 py-3 text-sm border  lg:text-sm">
-                      {{ info_Address.ward }}, {{ info_Address.district }}, {{ info_Address.province }}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="mt-4">
 
 
-                </div>
               </div>
-            </div>
-          </div>
-          <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
-            <div class="pt-12 md:pt-0 2xl:ps-4">
-              <h2 class="text-xl font-bold">Chi tiết thanh toán
-              </h2>
-              <div class="mt-4">
-                <div class="flex flex-col space-y-4">
-
-                  <div
-                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                    <div>
-                      Phí dịch vụ(tạm tính)
-                    </div>
-                    <div>
-                      <span class="ml-2">{{ formatPrice(objPayment.fee) }}đ</span>
-                    </div>
-                  </div>
-                  <div
-                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                    <div>
-                      Tạm tính({{ objPayment.quantity }} sản phẩm)
-                    </div>
-                    <div>
-                      <span class="ml-2">{{ formatPrice(objPayment.provisional) }}đ</span>
-                    </div>
-                  </div>
-                  <div
-                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                    <div>
-                      Đặt cọc 50%
-                    </div>
-                    <div>
-                      <span class="ml-2">{{ formatPrice(objPayment.money_deposite) }}đ</span>
-                    </div>
-                  </div>
-                  <div
-                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                    <div>
-                      Số dư tài khoản
-                    </div>
-                    <div>
-                      <span class="ml-2">{{ formatPrice(objPayment.point) }}đ</span>
-                    </div>
-                  </div>
-                  <div v-if="objPayment.point <= 0"
-                    class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                    <div>
-                      Bạn còn thiếu
-                    </div>
-                    <div>
-                      <span class="ml-2">{{ formatPrice(objPayment.lackMoney) }}đ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
             </div>
           </div>
-        </div>
-        <template #footer>
-          <a-button key="back" type="danger">QUAY LẠI</a-button>
-          <a-button key="submit" type="danger" @click="createOrder(null, null, objPayment.money_deposite)">ĐẶT HÀNG
-          </a-button>
-        </template>
-      </a-modal>
-      <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
-        :showModalAction="showModalAddress">
-      </AddRessComponent>
-      <!-- <vue-topprogress ref="topProgress"></vue-topprogress> -->
+          <template #footer>
+            <a-button key="back" type="danger">QUAY LẠI</a-button>
+            <a-button key="submit" type="danger" @click="createOrder(null, null, objPayment.money_deposite)">ĐẶT HÀNG
+            </a-button>
+          </template>
+        </a-modal>
+        <AddRessComponent v-on:showModalAddress="updateModalAddRess($event)" v-on:idAddRess="updateIdAddress($event)"
+          :showModalAction="showModalAddress">
+        </AddRessComponent>
+        <!-- <vue-topprogress ref="topProgress"></vue-topprogress> -->
 
-    </section>
+      </section>
+      <footerComponent></footerComponent>
 
+    </div>
   </Transition>
 
 </template>
@@ -390,6 +396,7 @@
 <script>
 import { getCart, createCart, cartCheckout, deleteCart, cartCheckoutByProduct, deleteAllCart } from "../../config/cart";
 import AddRessComponent from "./AddRessComponent.vue";
+import footerComponent from "../../layouts/footerComponent.vue"
 import loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 export default {
@@ -404,6 +411,7 @@ export default {
   components: {
     loading,
     AddRessComponent,
+    footerComponent
   },
   data() {
     return {
