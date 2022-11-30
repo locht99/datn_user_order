@@ -180,7 +180,7 @@ class GetOrderEntity extends Controller
             ->where('order_id', $order_id)
             ->orderBy('created_at', 'DESC')
             ->get();
-
+ 
         $statusDetail = [
             'order'        => $this->orderDetail($order_id)->select('order_code')->first(),
             'tracking_status' => $tracking_status,

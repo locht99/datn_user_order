@@ -8,6 +8,7 @@ use App\Http\Entityes\GetTransaction;
 use App\Http\Transaction\Transaction;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -63,7 +64,7 @@ class TransactionController extends Controller
         $resultDomain = $domain['scheme'] . '://' . $domain['host'];
         $transaction = new Transaction();
         $transaction->sendTransactions($request->all());
-        return redirect($resultDomain.':8000/transaction/create');
+        return redirect($resultDomain.'8002/transaction/create');
 
     }
     public function fetchTransaction()

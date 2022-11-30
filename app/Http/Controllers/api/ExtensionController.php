@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\api\Log\AppLogController;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartModel;
@@ -11,6 +12,7 @@ use App\Models\ConfigModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -62,8 +64,8 @@ class ExtensionController extends Controller
     {
         // get exchange from config 
         $exchangeRate = (float) ConfigModel::where("key", config('const.config.EXCHANGE_RATE'))
-        ->pluck('value')
-        ->first();
+            ->pluck('value')
+            ->first();
 
         $uid = auth('api')->id();
         $data = isset($request->all()["data"]) ? (array)json_decode($request->all()["data"]) : array();
@@ -114,8 +116,7 @@ class ExtensionController extends Controller
         $unit_price_cn = $unit_price_vn = 0;
         if (isset($data["promotion_price"])) {
             $unit_price_cn = $data["promotion_price"];
-        }
-        else if (isset($data["original_price"])) {
+        } else if (isset($data["original_price"])) {
             $unit_price_cn = $data["original_price"];
         }
         $unit_price_vn = $unit_price_cn * $exchangeRate;
@@ -144,14 +145,17 @@ class ExtensionController extends Controller
         // Create or update cart product
         if ($cart_product) {
             $cart_product->update($cart_product_data);
-        } else {         
+        } else {
+            $log = new AppLogController();
+            $content = "Thêm sản phẩm " . $cart_product_data['product_name'] . "vào giỏ hàng";
+            $log->insertLog($uid, "Thêm sản phẩm $content");
             CartProductModel::create($cart_product_data);
         }
-        
+
         // Update total price in cart
         $total_price = CartProductModel::where("user_id", $uid)
-                        ->where("cart_id", $cart->id)
-                        ->sum("price");
+            ->where("cart_id", $cart->id)
+            ->sum("price");
         $cart->update([
             "total_price" => $total_price ?? 0
         ]);
@@ -161,10 +165,11 @@ class ExtensionController extends Controller
         ], ResponseAlias::HTTP_OK);
     }
 
-    public function getExchangeRate() {
+    public function getExchangeRate()
+    {
         $exchangeRate = ConfigModel::where("key", config('const.config.EXCHANGE_RATE'))
-        ->pluck('value')
-        ->first();
+            ->pluck('value')
+            ->first();
         return response()->json((float)$exchangeRate, ResponseAlias::HTTP_OK);
     }
 }

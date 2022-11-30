@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\Cart;
 
+use App\Http\Controllers\api\Log\AppLogController;
 use App\Http\Controllers\Controller;
 use App\Http\GenerateCodeOrder\GenerateCode;
 use App\Models\CartModel;
@@ -102,6 +103,7 @@ class CartController extends Controller
                 ->where('cart_products.cart_id', $data->cart_id)
                 ->where('cart_products.is_delete', false)
                 ->count();
+            
             //xóa cart nếu trong cart k còn cartProduct
             if ($countCartProducts == 0) {
                 DB::table('carts')
@@ -146,366 +148,373 @@ class CartController extends Controller
             $data['totalMoney']
         ) *  $data['totalMoney'] / 100;
         $data['money_deposite'] = ($data['totalMoney'] + $data['feeCheckOrder'] + $data['feePurchase']) / 2;
-
-        // array_push($data['fee'][$item->id], (array) [
-        //     'name' => 'Phí kiểm hàng',
-        //     'value' => $invetory_fee[$item->id]
-        // ]);
         return response()->json($data);
     }
     public function cartCheckout(Request $request)
     {
-        // try {
-        $is_inventory = $request->inventory;
-        $product_id = array_keys($request->ids);
-        $data['product_quantity'] = $request->quantity;
-        $data['note'] = $request->note;
-        $data['total_money_product'] = 0;
-        $data['total_money_product_byShop'] = [];
+        try {
+            $is_inventory = $request->inventory;
+            $product_id = array_keys($request->ids);
+            $product_id = [];
+            foreach ($request->quantity as $it) {
+                $product_id[$it['id']] = $it['quantity'];
+            }
+            $data['product_quantity'] = $product_id;
 
-        $data['fee'] = [];
-        $data['totalFee'] = 0;
-        $data['request'] = json_encode($request->input());
-        $data['total_money'] = 0;
-        $data['money_deposit'] = 0;
-        $data['money_deposite_byShop'] = [];
-        $idShop = [];
-        $purchase_fee = [];
-        $invetory_fee = [];
-        foreach ($request->data as $item) {
-            $idShop[] = $item['id'];
-        }
-        $data['cart_products'] = DB::table('cart_products')
-            ->select(
-                'cart_products.id',
-                'cart_products.product_name',
-                'cart_products.image',
-                'cart_products.properties',
-                'unit_price_cn',
-                'unit_price_vn',
-                'cart_id'
-            )
-            ->whereIn("cart_products.id", $product_id)
-            ->orderByDesc("created_at")
-            ->get()->toArray();
-        $data['cart_Shop'] = DB::table('carts')->whereIn('id', $idShop)->get();
-        $totalByShopProduct = [];
-        $total_quantity_byShop = [];
-        $data['totalQuantityOrder'] = 0;
-        foreach ($data['cart_Shop'] as $index => $item) {
-            $totalByShopProduct[$item->id] = 0;
-            $total_quantity_byShop[$item->id] = 0;
-            foreach ($data['cart_products'] as $it) {
-                if ($item->id == $it->cart_id) {
-                    $totalByShopProduct[$item->id] += $it->unit_price_vn * $data['product_quantity'][$it->id];
-                    $total_quantity_byShop[$item->id] += $data['product_quantity'][$it->id];
-                    $data['totalQuantityOrder'] += $data['product_quantity'][$it->id];
+            // dd();
+
+            $data['note'] = $request->note;
+            $data['total_money_product'] = 0;
+            $data['total_money_product_byShop'] = [];
+
+            $data['fee'] = [];
+            $data['totalFee'] = 0;
+            $data['request'] = json_encode($request->input());
+            $data['total_money'] = 0;
+            $data['money_deposit'] = 0;
+            $data['money_deposite_byShop'] = [];
+            $idShop = [];
+            $purchase_fee = [];
+            $invetory_fee = [];
+            foreach ($request->data as $item) {
+                $idShop[] = $item['id'];
+            }
+            // Sai truy vấn
+            $data['cart_products'] = DB::table('cart_products')
+                ->select(
+                    'cart_products.id',
+                    'cart_products.product_name',
+                    'cart_products.image',
+                    'cart_products.properties',
+                    'unit_price_cn',
+                    'unit_price_vn',
+                    'cart_id'
+                )
+                ->whereIn("cart_products.id",  array_keys($data['product_quantity']))
+                ->orderByDesc("created_at")
+                ->get()->toArray();
+            $data['cart_Shop'] = DB::table('carts')->whereIn('id', $idShop)->get();
+            $totalByShopProduct = [];
+            $total_quantity_byShop = [];
+            $data['totalQuantityOrder'] = 0;
+            foreach ($data['cart_Shop'] as $index => $item) {
+                $totalByShopProduct[$item->id] = 0;
+                $total_quantity_byShop[$item->id] = 0;
+                foreach ($data['cart_products'] as $it) {
+
+                    if ($item->id == $it->cart_id) {
+
+                        $totalByShopProduct[$item->id] += $it->unit_price_vn * $data['product_quantity'][$it->id];
+                        $total_quantity_byShop[$item->id] += $data['product_quantity'][$it->id];
+                        $data['totalQuantityOrder'] += $data['product_quantity'][$it->id];
+                    }
+                }
+
+                $purchase_fee[$item->id] = getFeePurchase(
+                    config('const.config.PURCHASE_FEE'),
+                    $totalByShopProduct[$item->id]
+                ) *  $totalByShopProduct[$item->id] / 100;
+                $data['fee'][$item->id] = (array)[
+                    [
+                        'name' => 'Tiền hàng',
+                        'value' =>   $totalByShopProduct[$item->id]
+                    ],
+                    [
+                        'name' => 'Phí mua hàng',
+                        'value' => $purchase_fee[$item->id]
+                    ]
+                ];
+                if ($is_inventory[$item->id]) {
+                    $invetoryfeeItem = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity_byShop[$item->id]);
+                    $invetory_fee[$item->id] = $invetoryfeeItem *  $total_quantity_byShop[$item->id];
+                    array_push($data['fee'][$item->id], (array) [
+                        'name' => 'Phí kiểm hàng',
+                        'value' => $invetory_fee[$item->id]
+                    ]);
+                }
+                $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
+                $data['totalFee'] += +$purchase_fee[$item->id]  + $inventorytotal;
+                $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id]  + $inventorytotal;
+            }
+
+            foreach ($data['fee'] as $index => $value) {
+                $data['money_deposite_byShop'][$index] = 0;
+
+                foreach ($value as $vl) {
+                    if ($vl) {
+                        $data['total_money'] += $vl['value'];
+                        $data['money_deposite_byShop'][$index] += $vl['value'] / 2;
+                    }
                 }
             }
+            $data['money_deposite'] = $data['total_money'] / 2;
 
-            $purchase_fee[$item->id] = getFeePurchase(
-                config('const.config.PURCHASE_FEE'),
-                $totalByShopProduct[$item->id]
-            ) *  $totalByShopProduct[$item->id] / 100;
-            $data['fee'][$item->id] = (array)[
-                [
-                    'name' => 'Tiền hàng',
-                    'value' =>   $totalByShopProduct[$item->id]
-                ],
-                [
-                    'name' => 'Phí mua hàng',
-                    'value' => $purchase_fee[$item->id]
-                ]
-            ];
-            if ($is_inventory[$item->id]) {
-                $invetoryfeeItem = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity_byShop[$item->id]);
-                $invetory_fee[$item->id] = $invetoryfeeItem *  $total_quantity_byShop[$item->id];
-                array_push($data['fee'][$item->id], (array) [
-                    'name' => 'Phí kiểm hàng',
-                    'value' => $invetory_fee[$item->id]
-                ]);
-            }
-            $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
-            $data['totalFee'] += +$purchase_fee[$item->id]  + $inventorytotal;
-            $data['total_money_byShop'][$item->id] = $totalByShopProduct[$item->id] + $purchase_fee[$item->id]  + $inventorytotal;
+            return response()->json([
+                'data'   => $data
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                'message'   => $th->getMessage()
+            ], 500);
         }
-
-        foreach ($data['fee'] as $index => $value) {
-            $data['money_deposite_byShop'][$index] = 0;
-
-            foreach ($value as $vl) {
-                if ($vl) {
-                    $data['total_money'] += $vl['value'];
-                    $data['money_deposite_byShop'][$index] += $vl['value'] / 2;
-                }
-            }
-        }
-        $data['money_deposite'] = $data['total_money'] / 2;
-
-        return response()->json([
-            'data'   => $data
-        ], 200);
-        // } catch (\Throwable $th) {
-        //     return response()->json([
-        //         'error' => true,
-        //         'message'   => $th->getMessage()
-        //     ], 500);
-        // }
     }
 
     public function cartCreate(Request $request)
     {
-        $deposite_money = $request->money_deposite;
-        $data_order = $request->data;
-        $input = [];
-        $idShop  = [];
-        $id_Address = $request->data['id_address'];
+        try {
+            $deposite_money = $request->money_deposite;
+            $data_order = $request->data;
+            $input = [];
+            $idShop  = [];
+            $id_Address = $request->data['id_address'];
 
-        foreach ($request['data']['data'] as $item) {
-            $idShop[] = $item['id'];
-        }
-        foreach ($data_order["ids"] as $key => $value) {
-            if ($value) {
-                $input[$key] = $value;
+            foreach ($request['data']['data'] as $item) {
+                $idShop[] = $item['id'];
             }
-        }
-        $inventory = $data_order['option']['inventory'];
-        $wood_packing = $data_order['option']['goodWorking'];
-        $separately_wood_packing = $data_order['option']['ownGood'];
-        $checkedwoods = [];
-        $checkedwoodPacking = [];
-        $note = [];
-        $inventory = [];
-        foreach ($wood_packing as $key => $item) {
-            if ($item) {
-                $checkedwoods[$key] = $item;
-            }
-        }
-        foreach ($separately_wood_packing as $key => $item) {
-            if ($item) {
-                $checkedwoodPacking[$key] = $item;
-            }
-        }
-        foreach ($data_order['note'] as $key => $item) {
-            if ($item) {
-                $note[$key] = $item;
-            }
-        }
-        foreach ($data_order["option"]["inventory"] as $key => $item) {
-            $inventory[$key] = $item;
-        }
-        // if (isset($data_order->opt_wood_packing)) {
-        //     $wood_packing = false;
-        //     $separately_wood_packing = true;
-        // }
-        // $note = $data_order["note"] ? $data_order["note"] : '';
-
-        $quantityArray = [];
-        // dd($data_order["quantity"]);
-
-        foreach ($data_order["quantity"] as $key => $value) {
-            foreach (array_keys($input) as $it) {
-                if ($value && $it == $key) {
-                    $quantityArray[$key] = $value;
+            foreach ($data_order["ids"] as $key => $value) {
+                if ($value) {
+                    $input[$key] = $value;
                 }
             }
-        }
-        $point_user = Auth()->user()->point;
-        if ($deposite_money > $point_user) {
-            return response()->json([
-                'error' => true,
-                'message'   => "Tài khoản không đủ vui lòng nạp thêm!"
-            ], 500);
-        }
-        if (empty($input)) {
-            return response()->json([
-                'error' => true,
-                'message'   => "Không có sản phẩm"
-            ], 500);
-        } else {
-            // lấy ra những sản phẩm được chọn
-            $keyInput = array_keys($input);
-        }
-        // Lẫy dữ liệu cartProducts
-        $cartProducts = DB::table('cart_products')
-            ->select(
-                'cart_products.id',
-                'cart_products.user_id',
-                'cart_products.source',
-                'cart_products.cart_id',
-                'cart_products.product_id',
-                'cart_products.product_name',
-                'cart_products.propertiesId',
-                'cart_products.properties',
-                'cart_products.price_cn',
-                'cart_products.price',
-                'cart_products.note',
-                'cart_products.quantity_min',
-                'cart_products.original_price',
-                'cart_products.promotion_price',
-                'cart_products.price_table',
-                'cart_products.stock',
-                'cart_products.url',
-                'cart_products.image',
-                'cart_products.image_detail',
-                'carts.shop_id',
-                'carts.shop_name',
-                'carts.shop_url',
-                'cart_products.unit_price_cn',
-                'cart_products.unit_price_vn'
-            )
-            ->join('carts', 'cart_products.cart_id', 'carts.id')
-            ->whereIn("cart_products.id", $keyInput)
-            ->get()->toArray();
-        //tao order
-        $total_quantity = array_sum($quantityArray);
-        $wood_packing_fee = 0;
-        $separately_wood_packing_fee = 0;
-        foreach ($checkedwoods as $item) {
-            if ($item) {
-                $wood_packing_fee += getFeeConfigNumber(config('const.config.wood_fee'));
+            $inventory = $data_order['option']['inventory'];
+            $wood_packing = $data_order['option']['goodWorking'];
+            $separately_wood_packing = $data_order['option']['ownGood'];
+            $checkedwoods = [];
+            $checkedwoodPacking = [];
+            $note = [];
+            $inventory = [];
+            foreach ($wood_packing as $key => $item) {
+                if ($item) {
+                    $checkedwoods[$key] = $item;
+                }
             }
-        }
-        foreach ($separately_wood_packing as $item) {
-            if ($item) {
-                $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.own_wood_fee'));
+            foreach ($separately_wood_packing as $key => $item) {
+                if ($item) {
+                    $checkedwoodPacking[$key] = $item;
+                }
             }
-        }
-        $Shop = CartModel::whereIn("id", $idShop)->get();
-        if (isset($inventory)) {
-            $inventory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity) * $total_quantity;
-        }
-        $dataShopInsert = [];
-        $generateCode = new GenerateCode();
-        $orderCode = $generateCode->generateCodeOrder();
+            foreach ($data_order['note'] as $key => $item) {
+                if ($item) {
+                    $note[$key] = $item;
+                }
+            }
+            foreach ($data_order["option"]["inventory"] as $key => $item) {
+                $inventory[$key] = $item;
+            }
+            // if (isset($data_order->opt_wood_packing)) {
+            //     $wood_packing = false;
+            //     $separately_wood_packing = true;
+            // }
+            // $note = $data_order["note"] ? $data_order["note"] : '';
 
-        $order = OrderModel::create([
-            'user_id' => Auth::id(),
-            'partner_id' => 1,
-            'order_status_id' => config('const.order_status.deposited'),
-            'wood_packing_fee' => isset($wood_packing_fee) && $wood_packing_fee ? +$wood_packing_fee : 0,
-            'separately_wood_packing_fee' => isset($separately_wood_packing_fee) && +$separately_wood_packing_fee
-                ? $separately_wood_packing_fee : 0,
-            'inventory_fee' => isset($inventory_fee) && $inventory_fee ? +$inventory_fee : 0,
-            'deposit_amount' => - ($deposite_money),
-        ]);
-        foreach ($Shop as $key => $item) {
-            $dataShopInsert[] = [
-                'shop_id' => $item->shop_id,
-                'shop_name' => $item->shop_name,
-                'shop_url' => $item->shop_url,
-                'order_id' => $order->id,
-                'note' => isset($note[$item->id]) ? $note[$item->id] : "",
-                'source' => $item->source
-            ];
-        }
-        OrderDetail::insert($dataShopInsert);
-        $total_price = 0;
-        foreach ($cartProducts as $key => $value) {
-            //tao orderProducts
-            $orderProducts = OrderProductModel::create([
+            $quantityArray = [];
+            // dd($data_order["quantity"]);
+
+            foreach ($data_order["quantity"] as $key => $value) {
+                foreach (array_keys($input) as $it) {
+                    if ($value && $it == $key) {
+                        $quantityArray[$key] = $value;
+                    }
+                }
+            }
+            $point_user = Auth()->user()->point;
+            if ($deposite_money > $point_user) {
+                return response()->json([
+                    'error' => true,
+                    'message'   => "Tài khoản không đủ vui lòng nạp thêm!"
+                ], 500);
+            }
+            if (empty($input)) {
+                return response()->json([
+                    'error' => true,
+                    'message'   => "Không có sản phẩm"
+                ], 500);
+            } else {
+                // lấy ra những sản phẩm được chọn
+                $keyInput = array_keys($input);
+            }
+            // Lẫy dữ liệu cartProducts
+            $cartProducts = DB::table('cart_products')
+                ->select(
+                    'cart_products.id',
+                    'cart_products.user_id',
+                    'cart_products.source',
+                    'cart_products.cart_id',
+                    'cart_products.product_id',
+                    'cart_products.product_name',
+                    'cart_products.propertiesId',
+                    'cart_products.properties',
+                    'cart_products.price_cn',
+                    'cart_products.price',
+                    'cart_products.note',
+                    'cart_products.quantity_min',
+                    'cart_products.original_price',
+                    'cart_products.promotion_price',
+                    'cart_products.price_table',
+                    'cart_products.stock',
+                    'cart_products.url',
+                    'cart_products.image',
+                    'cart_products.image_detail',
+                    'carts.shop_id',
+                    'carts.shop_name',
+                    'carts.shop_url',
+                    'cart_products.unit_price_cn',
+                    'cart_products.unit_price_vn'
+                )
+                ->join('carts', 'cart_products.cart_id', 'carts.id')
+                ->whereIn("cart_products.id", $keyInput)
+                ->get()->toArray();
+            //tao order
+            $total_quantity = array_sum($quantityArray);
+            $wood_packing_fee = 0;
+            $separately_wood_packing_fee = 0;
+            foreach ($checkedwoods as $item) {
+                if ($item) {
+                    $wood_packing_fee += getFeeConfigNumber(config('const.config.wood_fee'));
+                }
+            }
+            foreach ($separately_wood_packing as $item) {
+                if ($item) {
+                    $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.own_wood_fee'));
+                }
+            }
+            $Shop = CartModel::whereIn("id", $idShop)->get();
+            if (isset($inventory)) {
+                $inventory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity) * $total_quantity;
+            }
+            $dataShopInsert = [];
+            $generateCode = new GenerateCode();
+            $orderCode = $generateCode->generateCodeOrder();
+
+            $order = OrderModel::create([
                 'user_id' => Auth::id(),
                 'partner_id' => 1,
-                'order_id' => $order->id,
-                'product_id' => $value->product_id,
-                'source' => $value->source,
-                'product_name' => $value->product_name,
-                'propertiesId' => $value->propertiesId,
-                'properties' => $value->properties,
-                'price' => $value->unit_price_vn * $quantityArray[$value->id],
-                'quantity_min' => $value->quantity_min,
-                'price_table' => $value->price_table,
-                'original_price' => $value->original_price,
-                'promotion_price' => $value->promotion_price,
-                'quantity_bought' => $quantityArray[$value->id],
-                'stock' => $value->stock,
-                'url' => $value->url,
-                'image_link' => $value->image,
-                'image_detail' => $value->image_detail,
-                'order_status_id' => 1,
+                'order_status_id' => config('const.order_status.deposited'),
+                'wood_packing_fee' => isset($wood_packing_fee) && $wood_packing_fee ? +$wood_packing_fee : 0,
+                'separately_wood_packing_fee' => isset($separately_wood_packing_fee) && +$separately_wood_packing_fee
+                    ? $separately_wood_packing_fee : 0,
+                'inventory_fee' => isset($inventory_fee) && $inventory_fee ? +$inventory_fee : 0,
+                'deposit_amount' => - ($deposite_money),
             ]);
-            $total_price += $orderProducts->price;
-        }
-        $purchase_fee = getFeePurchase(
-            config('const.config.PURCHASE_FEE'),
-            $total_price
-        ) * $total_price / 100;
+            foreach ($Shop as $key => $item) {
+                $dataShopInsert[] = [
+                    'shop_id' => $item->shop_id,
+                    'shop_name' => $item->shop_name,
+                    'shop_url' => $item->shop_url,
+                    'order_id' => $order->id,
+                    'note' => isset($note[$item->id]) ? $note[$item->id] : "",
+                    'source' => $item->source
+                ];
+            }
+            OrderDetail::insert($dataShopInsert);
+            $total_price = 0;
+            foreach ($cartProducts as $key => $value) {
+                //tao orderProducts
+                $orderProducts = OrderProductModel::create([
+                    'user_id' => Auth::id(),
+                    'partner_id' => 1,
+                    'order_id' => $order->id,
+                    'product_id' => $value->product_id,
+                    'source' => $value->source,
+                    'product_name' => $value->product_name,
+                    'propertiesId' => $value->propertiesId,
+                    'properties' => $value->properties,
+                    'price' => $value->unit_price_vn * $quantityArray[$value->id],
+                    'quantity_min' => $value->quantity_min,
+                    'price_table' => $value->price_table,
+                    'original_price' => $value->original_price,
+                    'promotion_price' => $value->promotion_price,
+                    'quantity_bought' => $quantityArray[$value->id],
+                    'stock' => $value->stock,
+                    'url' => $value->url,
+                    'image_link' => $value->image,
+                    'image_detail' => $value->image_detail,
+                    'order_status_id' => 1,
+                ]);
+                $total_price += $orderProducts->price;
+            }
+            $purchase_fee = getFeePurchase(
+                config('const.config.PURCHASE_FEE'),
+                $total_price
+            ) * $total_price / 100;
 
-        $order->purchase_fee = $purchase_fee;
-        $order->order_code = $orderCode;
-        $order->address_id = $id_Address['id'];
-        $order->total_price = $total_price;
-        $order->id_warehouse = $id_Address['region_id'];
-        $order->save();
-        $totalPriceOrder = $order->total_price + $order->total_price_order;
-        DB::table('orders')->where('id', $order->id)->update(['total_price_order' => $totalPriceOrder]);
+            $order->purchase_fee = $purchase_fee;
+            $order->order_code = $orderCode;
+            $order->address_id = $id_Address['id'];
+            $order->total_price = $total_price;
+            $order->id_warehouse = $id_Address['region_id'];
+            $order->save();
+            $totalPriceOrder = $order->total_price + $order->total_price_order;
+            DB::table('orders')->where('id', $order->id)->update(['total_price_order' => $totalPriceOrder]);
 
-        // lấy cartId trùng với những sản phẩm được chọn trong cart
-        $getCartId = DB::table('cart_products')
-            ->select('cart_products.cart_id')
-            ->whereIn('cart_products.id', $keyInput)
-            ->get();
-        $carId = $getCartId;
-        $cartId = [];
-        foreach ($carId as $car) {
-            $cartId[] = $car->cart_id;
-        }
-        // xóa cartId phẩm đã chọn
-        DB::table('cart_products')
-            ->whereIn("cart_products.id", $keyInput)
-            ->update(['cart_products.is_delete' => true]);
+            // lấy cartId trùng với những sản phẩm được chọn trong cart
+            $getCartId = DB::table('cart_products')
+                ->select('cart_products.cart_id')
+                ->whereIn('cart_products.id', $keyInput)
+                ->get();
+            $carId = $getCartId;
+            $cartId = [];
+            foreach ($carId as $car) {
+                $cartId[] = $car->cart_id;
+            }
+            // xóa cartId phẩm đã chọn
+            DB::table('cart_products')
+                ->whereIn("cart_products.id", $keyInput)
+                ->update(['cart_products.is_delete' => true]);
 
 
-        // tính số lượng sản phẩm trong cart
-        $countCartProducts = DB::table('cart_products')
-            ->select('cart_products.id', 'cart_products.cart_id')
-            ->whereIn('cart_products.cart_id', $cartId)
-            ->where('cart_products.is_delete', false)
-            ->count();
-        //xóa cart nếu trong cart k còn cartProduct
-        if ($countCartProducts === 0) {
-            DB::table('carts')
-                ->whereIn('carts.id', $cartId)
-                ->update(['carts.is_delete' => true]);
-        }
-        //tao packet
-        PacketModel::create([
-            'user_id' => Auth::id(),
-            'partner_id' => 1,
-            'order_id' =>  $order->id,
-            'status' => 0,
-            'price_unit' => config('const.price.price_unit'),
-            'opt_order_checking' => isset($inventory) ? true : false,
-            'opt_wood_packing' => isset($checkedwoods) ? true : false,
-            'opt_separate_wood_packing' => isset($checkedwoodPacking) ? true : false,
-        ]);
-        // checkedwoodPacking
-        // checkedwoods
-        // sub point user and create transaction
-        User::where('id', Auth::id())
-            ->update([
-                'point' => $point_user - $deposite_money
+            // tính số lượng sản phẩm trong cart
+            $countCartProducts = DB::table('cart_products')
+                ->select('cart_products.id', 'cart_products.cart_id')
+                ->whereIn('cart_products.cart_id', $cartId)
+                ->where('cart_products.is_delete', false)
+                ->count();
+            //xóa cart nếu trong cart k còn cartProduct
+            if ($countCartProducts === 0) {
+                DB::table('carts')
+                    ->whereIn('carts.id', $cartId)
+                    ->update(['carts.is_delete' => true]);
+            }
+            //tao packet
+            PacketModel::create([
+                'user_id' => Auth::id(),
+                'partner_id' => 1,
+                'order_id' =>  $order->id,
+                'status' => 0,
+                'price_unit' => config('const.price.price_unit'),
+                'opt_order_checking' => isset($inventory) ? true : false,
+                'opt_wood_packing' => isset($checkedwoods) ? true : false,
+                'opt_separate_wood_packing' => isset($checkedwoodPacking) ? true : false,
             ]);
-        TransactionModel::create([
-            'partner_id' => 1,
-            'user_id' => Auth::id(),
-            'order_id' =>  $order->id,
-            'type_id' => config('const.type_transaction.deposited'),
-            'content' => 'Đặt cọc cho đơn hàng ' . $orderCode,
-            'point' => -$deposite_money,
-        ]);
-
-        return response()->json([
-            'error' => false,
-            'message'   => "Đặt hàng Thành công",
-            'data' => ''
-        ], 200);
-        // } catch (\Throwable $th) {
-        //     return response()->json([
-        //         'error' => true,
-        //         'message'   => $th->getMessage()
-        //     ], 500);
-        // }
+            // checkedwoodPacking
+            // checkedwoods
+            // sub point user and create transaction
+            User::where('id', Auth::id())
+                ->update([
+                    'point' => $point_user - $deposite_money
+                ]);
+            TransactionModel::create([
+                'partner_id' => 1,
+                'user_id' => Auth::id(),
+                'order_id' =>  $order->id,
+                'type_id' => config('const.type_transaction.deposited'),
+                'content' => 'Đặt cọc cho đơn hàng ' . $orderCode,
+                'point' => -$deposite_money,
+            ]);
+            $log = new AppLogController();
+            $log->insertLog(Auth::id(), "Đặt đơn hàng $orderCode thành công");
+            return response()->json([
+                'error' => false,
+                'message'   => "Đặt hàng Thành công",
+                'data' => ''
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => true,
+                'message'   => $th->getMessage()
+            ], 500);
+        }
     }
     public function getAddressUser($id)
     {
