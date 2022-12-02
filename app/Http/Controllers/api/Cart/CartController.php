@@ -292,6 +292,7 @@ class CartController extends Controller
         $inventory = $data_order['option']['inventory'];
         $wood_packing = $data_order['option']['goodWorking'];
         $separately_wood_packing = $data_order['option']['ownGood'];
+
         $checkedwoods = [];
         $checkedwoodPacking = [];
         $note = [];
@@ -306,6 +307,7 @@ class CartController extends Controller
                 $checkedwoodPacking[$key] = $item;
             }
         }
+
         foreach ($data_order['note'] as $key => $item) {
             if ($item) {
                 $note[$key] = $item;
@@ -381,14 +383,15 @@ class CartController extends Controller
         $separately_wood_packing_fee = 0;
         foreach ($checkedwoods as $item) {
             if ($item) {
-                $wood_packing_fee += getFeeConfigNumber(config('const.config.wood_fee'));
+                $wood_packing_fee += getFeeConfigNumber(config('const.config.WOOD_FEE'));
             }
         }
-        foreach ($separately_wood_packing as $item) {
+        foreach ($checkedwoodPacking as $item) {
             if ($item) {
-                $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.own_wood_fee'));
+                $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.OWN_WOOD_FEE'));
             }
         }
+
         $Shop = CartModel::whereIn("id", $idShop)->get();
         if (isset($inventory)) {
             $inventory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity) * $total_quantity;
@@ -455,7 +458,7 @@ class CartController extends Controller
         $order->total_price = $total_price;
         $order->id_warehouse = $id_Address['region_id'];
         $order->save();
-        $totalPriceOrder = $order->total_price + $order->total_price_order + $order->inventory_fee;
+        $totalPriceOrder = $order->total_price + $order->total_price_order + $order->inventory_fee + $order->wood_packing_fee + $order->separately_wood_packing_fee;
         $remaining_amount = $totalPriceOrder - $deposite_money;
         DB::table('orders')->where('id', $order->id)->update([
             'remaining_amount' => $remaining_amount,
