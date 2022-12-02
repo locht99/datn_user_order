@@ -169,11 +169,7 @@
                                 @confirm="deleteProductCart(listCartProduct.id, index, index2, listCartProduct.quantity)">
                                 <i class="fas fa-trash-alt bg-red-500 p-2 text-white rounded"></i>
                               </a-popconfirm>
-                              <!-- <label for="" v-on:click=""
-                              class="cursor-pointer absolute left-[-11px]"
-                              :class="isTrash[listCartProduct.id] ? 'block' : 'hidden'">
-                              
-                            </label> -->
+
                             </div>
                           </div>
                         </td>
@@ -544,8 +540,9 @@ export default {
             }
           });
         }
+
         let cart_shop = this.listTotalCart.data.fee[cartid];
-        let feePay = cart_shop[1].value;
+        let feePay = this.listTotalCart.data.feebyShop[cartid];
         let moneyPay = cart_shop[0].value;
         this.objPayment.provisional = moneyPay;
         this.objPayment.fee = feePay;
@@ -567,7 +564,7 @@ export default {
         this.is_loading = true;
         cartCheckoutByProduct({ ids: this.checkBoxItem, quantity: this.quantity, inventory: this.checkGoods }).then((response) => {
           this.objPayment.provisional = response.data.totalMoney;
-          this.objPayment.fee = response.data.feePurchase;
+          this.objPayment.fee = response.data.feeAll;
           this.objPayment.money_deposite = response.data.money_deposite;
           this.objPayment.point = moneyProfile.point;
           this.objPayment.quantity = response.data.quantity;

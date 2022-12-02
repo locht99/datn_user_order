@@ -22,6 +22,7 @@ class OrderModel extends Model
         'shop_name',
         'shop_url',
         'global_shipping_fee',
+        'remaining_amount',
         'china_shipping_fee',
         'purchase_fee',
         'inventory_fee',
@@ -65,7 +66,8 @@ class OrderModel extends Model
     {
         return $this->hasMany(OrderProductModel::class, 'order_id', 'id');
     }
-    function source(){
+    function source()
+    {
         return $this->hasMany(OrderDetail::class, 'order_id', 'id');
     }
 }

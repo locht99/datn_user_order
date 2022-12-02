@@ -103,7 +103,7 @@ class Transaction
             $user->point = $user->point += $request['amount'];
             $user->save();
             $log = new AppLogController();
-            $log->insertLog($itemOrderId->user_id, "Nạp số tiền" . $request["amount"] . 'vào tài khoản');
+            $log->insertLog($itemOrderId->user_id, " Nạp số tiền" . number_format($request["amount"]) . ' vào tài khoản');
         }
         event(new TransactionSent($res, $itemOrderId->user_id));
         // $transactions= $user->messages()->create
