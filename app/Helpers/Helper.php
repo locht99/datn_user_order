@@ -49,6 +49,5 @@ function getFeeConfigNumber($opt_fee)
     $fee_check = DB::table('configs')->where('key', $opt_fee)
         ->pluck('value')
         ->first();
-    dd($fee_check);
     return $fee_check;
 }
