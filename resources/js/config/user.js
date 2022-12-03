@@ -27,6 +27,13 @@ export function getUser() {
 }
 
 export function newAddress(data){
-    console.log(data)
     return instance.post('/user/new-address', data);
+}
+
+export function forgotPassword(params){
+    return instance.post('/user/forgot-password', params)
+}
+
+export function resetPassword(params, token){
+    return instance.post('/user/reset-password/'+token, params)
 }

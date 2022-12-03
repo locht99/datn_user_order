@@ -12,6 +12,8 @@ import RegisterComponent from "./components/auth/RegisterComponent";
 import CreateTransaction from './components/user/Transaction/CreateTransactionComponent.vue';
 import NewAddressComponent from "./components/user/NewAddressComponent"
 import FeeService from "./components/user/FeeServiceComponent.vue"
+import ForgotPasswordComponent from "./components/user/ForgotPasswordComponent"
+import ResetPasswordComponent from "./components/user/ResetPasswordComponent"
 const routes = [
     {
         path: "/",
@@ -61,6 +63,16 @@ const routes = [
         path: "/user/new-address",
         meta: { requiresAuth: true },
         component: NewAddressComponent,
+    },
+    {
+        path: "/user/forgot-password",
+        meta: { notLogin: true },
+        component: ForgotPasswordComponent,
+    },
+    {
+        path: "/user/reset-password",
+        meta: { notLogin: true },
+        component: ResetPasswordComponent,
     },
     {
         path: "/login",

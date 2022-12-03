@@ -31,19 +31,16 @@
               class="absolute top-14 right-0 w-60 rounded-lg shadow-md shadow-gray-400 bg-[#ff3f3a] text-white px-5 z-50">
               <ul>
                 <li class="border-b py-3">
-                  <router-link to="/user/profile" class="text-base font-semibold">Thông tin cá nhân</router-link>
+                  <router-link to="/user/profile" class="text-base font-semibold text-white">Thông tin cá nhân</router-link>
                 </li>
                 <li class="border-b py-3">
-                  <router-link to="user/new-address" class="text-base font-semibold">Cập nhật địa chỉ</router-link>
+                  <router-link to="user/new-address" class="text-base font-semibold text-white">Cập nhật địa chỉ</router-link>
                 </li>
                 <li class="border-b py-3">
-                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
-                </li>
-                <li class="border-b py-3">
-                  <router-link to="" class="text-base font-semibold">Đổi mật khẩu</router-link>
+                  <router-link to="/user/forgot-password" class="text-base font-semibold text-white">Đổi mật khẩu</router-link>
                 </li>
                 <li class="py-3">
-                  <router-link to="" @click="logout()" class="text-base font-semibold">Đăng xuất</router-link>
+                  <router-link to="" @click="logout()" class="text-base font-semibold text-white">Đăng xuất</router-link>
                 </li>
               </ul>
             </div>
