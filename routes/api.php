@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\api\Auth\UserController;
 use App\Http\Controllers\api\Cart\CartController;
+use App\Http\Controllers\api\Complain\ComplainController;
+use App\Http\Controllers\api\CreateCartConTroller;
 use App\Http\Controllers\api\ExtensionController;
 use App\Http\Controllers\api\Log\AppLogController;
 use App\Http\Controllers\api\Order\OrderController;
@@ -57,6 +59,9 @@ Route::middleware('auth:api,web')->group(function ()
 
         Route::post('history-detail', [OrderController::class, 'historyDetail']);
     });
+    //khiếu nại
+    Route::get("get-complain",[ComplainController::class,"getComplain"]);
+
 
     //Thông báo
     Route::prefix('transaction')->group(function () {

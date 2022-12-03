@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-modal :value="showModalAction" width="1000px"
+        <a-modal v-model="this.showModalAction" width="1000px"
             :title="showModalAddNewAddress == true ? 'Thêm địa chỉ mới' : 'Danh sách địa chỉ'">
             <!--content-->
 

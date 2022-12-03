@@ -37,7 +37,10 @@
         <router-link to="contact" class="text-white flex font-semibold text-lg pl-3 py-2 rounded-lg"><img
             src="/images/menu-icon/contact.png" alt=""><span class="pl-2">Liên hệ</span></router-link>
       </li>
-
+      <li class="menuItem my-6 rounded-lg">
+        <router-link to="complain" class="text-white flex font-semibold text-lg pl-3 py-2 rounded-lg"><i class="fa-regular fa-comment-dots"></i>
+        <span class="pl-2">Khiếu nại</span></router-link>
+      </li>
     </ul>
   </nav>
 </template>
