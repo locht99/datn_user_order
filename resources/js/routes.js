@@ -6,13 +6,13 @@ import Order from "./components/user/OrderComponent";
 import OrderDetail from "./components/user/OrderDetailComponent"
 import Transaction from "./components/user/TransactionComponent";
 import Contact from "./components/user/ContactComponent";
+import Complain from "./components/user/ComplainComponent";
 import ProfileComponent from "./components/ProfileComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import CreateTransaction from './components/user/Transaction/CreateTransactionComponent.vue';
 import NewAddressComponent from "./components/user/NewAddressComponent"
-const routes = [
-    {
+const routes = [{
         path: "/",
         component: UserLayout,
         meta: { requiresAuth: true },
@@ -45,6 +45,10 @@ const routes = [
                 path: "/contact",
                 component: Contact,
             },
+            {
+                path: "/complain",
+                component: Complain,
+            }
         ],
     },
     {
