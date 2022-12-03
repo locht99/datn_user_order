@@ -2,15 +2,12 @@
 
 use App\Http\Controllers\api\Auth\UserController;
 use App\Http\Controllers\api\Cart\CartController;
-use App\Http\Controllers\api\CreateCartConTroller;
 use App\Http\Controllers\api\ExtensionController;
 use App\Http\Controllers\api\Log\AppLogController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Transaction\TransactionController;
 use App\Http\Controllers\TestController;
 use App\Http\GenerateCodeOrder\GenerateCode;
-use App\Http\Transaction\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +30,9 @@ Route::get('/test', [TestController::class, 'index']);
 Route::post('/login', [UserController::class, 'getLogin']);
 Route::post('/register', [UserController::class, 'getRegister']);
 
+Route::post('/user/forgot-password', [UserController::class, 'forgotPassword']);
+Route::post('/user/reset-password/{token}', [UserController::class, 'resetPassword']);
+
 // protected api
 Route::middleware('auth:api,web')->group(function () 
 {
@@ -40,6 +40,7 @@ Route::middleware('auth:api,web')->group(function ()
     Route::get('/user', [UserController::class, 'getUserInfo']);
     Route::put('/update-user', [UserController::class, 'UpdateUser']);
     Route::post('/user/new-address', [UserController::class, 'newAddress']);
+    
     Route::get('/logs', [AppLogController::class, 'getLog']);
     //Đơn hàng
     Route::prefix('order')->group(function () {

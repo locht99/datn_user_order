@@ -235,7 +235,7 @@
                 </div>
             </form>
             <div class="text-center font-semibold">
-                <router-link class="hover:text-red-500" to=""
+                <router-link class="hover:text-red-500" to="/user/forgot-password"
                     >Quên mật khẩu</router-link
                 >
                 /

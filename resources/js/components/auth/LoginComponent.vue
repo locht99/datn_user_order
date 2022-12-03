@@ -93,7 +93,7 @@
                 </div>
             </form>
             <div class="text-center font-semibold">
-                <router-link class="hover:text-red-500" to="">Quên mật khẩu</router-link>
+                <router-link class="hover:text-red-500" to="/user/forgot-password">Quên mật khẩu</router-link>
                 /
                 <router-link class="hover:text-red-500" to="/register">Đăng kí</router-link>
             </div>
@@ -141,8 +141,8 @@ export default {
                         }else{
                             this.$router.back();
                         }
+                        this.lazyLoad = false
                     }, 1500)
-                    this.lazyLoad = false
                 }).catch(error => {
                     this.checkSubmit = false
                     this.statusLogin = false
