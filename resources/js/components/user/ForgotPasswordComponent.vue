@@ -126,11 +126,12 @@ export default {
                     this.lazyLoad = false;
                     this.dataAccount.email = ""
                     this.checkSubmit = false
+                    this.errors = {}
                 })
                 .catch((error) => {
                     this.status = false;
                     this.errors = error.response.data.errors;
-                    if(error.data.message){
+                    if(error?.data?.message){
                         this.status = "oop"
                         this.statusMessage = error.data.message
                         this.dataAccount.email = ""
