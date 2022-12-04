@@ -12,7 +12,7 @@
         <thead>
           <tr class="bg-gray-100">
             <th>STT</th>
-            <th>Mã đơn hàng</th>
+            <!-- <th>Mã đơn hàng</th> -->
             <th>Loại giao dịch</th>
             <th>Nội dung</th>
             <th>Tiền giao dịch</th>
@@ -23,7 +23,7 @@
           <tr v-for="(transaction, index) in listTransaction" :key="index"
             class="border-b border-gray-300 text-center h-12">
             <td>{{ ++index }}</td>
-            <td>{{ transaction.order_id }}</td>
+            <!-- <td>{{ transaction.order_id }}</td> -->
             <td>{{ transaction.type_name }}</td>
             <td>{{ transaction.content }}</td>
             <td>{{ formatPrice(transaction.point) }}</td>
