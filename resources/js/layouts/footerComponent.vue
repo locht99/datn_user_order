@@ -91,7 +91,7 @@
 
                                             <div class="content-bank mt-3">
                                                 <div>
-                                                    <p>Chủ tài khoản: <span>VU CONG LUC</span></p>
+                                                    <p>Chủ tài khoản: <span class="font-semibold"> VU CONG LUC</span></p>
                                                 </div>
                                                 <div>
                                                     <p>STK: 9978942425</p>
@@ -108,7 +108,7 @@
 
                                             <div class="content-bank mt-3">
                                                 <div>
-                                                    <p>Chủ tài khoản: <span>VU CONG LUC</span></p>
+                                                    <p>Chủ tài khoản: <span class="font-semibold">VU CONG LUC</span></p>
                                                 </div>
                                                 <div>
                                                     <p>STK: 9978942425</p>
@@ -124,7 +124,7 @@
 
                                             <div class="content-bank mt-3">
                                                 <div>
-                                                    <p>Chủ tài khoản: <span>VU CONG LUC</span></p>
+                                                    <p>Chủ tài khoản: <span class="font-semibold">VU CONG LUC</span></p>
                                                 </div>
                                                 <div>
                                                     <p>STK: 9978942425</p>
