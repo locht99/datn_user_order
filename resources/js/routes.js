@@ -19,39 +19,44 @@ const routes = [{
     path: "/",
     component: UserLayout,
     meta: { requiresAuth: true },
-    children: [{
-        path: "/",
-        component: Home,
-        title: 'Homehh'
-    },
-    {
-        path: "/cart",
-        component: Cart,
-    },
-    {
-        path: "/order",
-        component: Order,
-    },
-    {
-        path: "/order-detail/:id",
-        component: OrderDetail,
-    },
-    {
-        path: "/transaction",
-        component: Transaction,
-    },
-    {
-        path: "/transaction/create",
-        component: CreateTransaction
-    },
-    {
-        path: "/contact",
-        component: Contact,
-    },
-    {
-        path: "/complain",
-        component: Complain,
-    }
+    children: [
+        {
+            path: "/",
+            component: Home,
+            title: 'Homehh'
+        },
+        {
+            path: "/cart",
+            component: Cart,
+        },
+        {
+            path: "/order",
+            component: Order,
+        },
+        {
+            path: "/order-detail/:id",
+            component: OrderDetail,
+        },
+        {
+            path: "/transaction",
+            component: Transaction,
+        },
+        {
+            path: "/transaction/create",
+            component: CreateTransaction
+        },
+        {
+            path: "/contact",
+            component: Contact,
+        },
+        {
+            path: "/complain",
+            component: Complain,
+        },
+        {
+            path: "/fee",
+            component: FeeService,
+        }
     ],
 },
 {

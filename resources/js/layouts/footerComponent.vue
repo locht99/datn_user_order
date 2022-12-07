@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h-[350px]">
+        <div class="h-[350px] absolute">
             <a-row :gutter="16" class="w-full drop-shadow-md rounded-[8px] bg-white p-3">
                 <a-col :span="16">
                     <div class="head">
