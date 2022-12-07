@@ -169,8 +169,7 @@ class CartController extends Controller
                 $product_id[$it['id']] = $it['quantity'];
             }
             $data['product_quantity'] = $product_id;
-
-            // dd();
+            $data['stock_product']  = [];
 
             $data['note'] = $request->note;
             $data['total_money_product'] = 0;
@@ -188,7 +187,6 @@ class CartController extends Controller
             foreach ($request->data as $item) {
                 $idShop[] = $item['id'];
             }
-            // Sai truy vấn
             $data['cart_products'] = DB::table('cart_products')
                 ->select(
                     'cart_products.id',
@@ -197,7 +195,8 @@ class CartController extends Controller
                     'cart_products.properties',
                     'unit_price_cn',
                     'unit_price_vn',
-                    'cart_id'
+                    'cart_id',
+                    'stock'
                 )
                 ->whereIn("cart_products.id",  array_keys($data['product_quantity']))
                 ->orderByDesc("created_at")
@@ -212,7 +211,17 @@ class CartController extends Controller
                 foreach ($data['cart_products'] as $it) {
 
                     if ($item->id == $it->cart_id) {
-
+                        $data['stock_product'][$it->id] = [
+                            "",
+                            ""
+                        ];
+                        if ($data['product_quantity'][$it->id] >= $it->stock) {
+                            // return response()->json(["message" => ""]);
+                            $data["stock_product"][$it->id] = [
+                                "Chúng tôi sẽ cố gắng mua đủ số lượng sản phẩm quý khách yêu cầu, tuy nhiên việc này không được đảm bảo.",
+                                "Sản phẩm tồn kho " . $it->stock
+                            ];
+                        }
                         $totalByShopProduct[$item->id] += $it->unit_price_vn * $data['product_quantity'][$it->id];
                         $total_quantity_byShop[$item->id] += $data['product_quantity'][$it->id];
                         $data['totalQuantityOrder'] += $data['product_quantity'][$it->id];
@@ -251,7 +260,6 @@ class CartController extends Controller
 
             foreach ($data['fee'] as $index => $value) {
                 $data['money_deposite_byShop'][$index] = 0;
-
                 foreach ($value as $vl) {
                     if ($vl) {
                         $data['total_money'] += $vl['value'];
@@ -444,6 +452,7 @@ class CartController extends Controller
                 'image_link' => $value->image,
                 'image_detail' => $value->image_detail,
                 'order_status_id' => 1,
+                'shop_id'=>$value->shop_id
             ]);
             $total_price += $orderProducts->price;
         }
