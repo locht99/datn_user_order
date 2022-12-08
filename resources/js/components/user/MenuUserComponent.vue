@@ -58,7 +58,17 @@ export default ({
   },
   mounted() {
     const menuItem = document.querySelectorAll(".menuItem")
+    
+
     menuItem.forEach((e) => {
+      if(e.querySelector('a').getAttribute('href') == location.pathname){
+        menuItem.forEach(e => {
+          e.style.backgroundColor = "transparent"
+        })
+        e.style.backgroundColor = "#E93B3B"
+      }
+
+
       e.addEventListener("click", () => {
         menuItem.forEach(e => {
           e.style.backgroundColor = "transparent"

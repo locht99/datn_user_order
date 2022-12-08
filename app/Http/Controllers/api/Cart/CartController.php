@@ -520,6 +520,8 @@ class CartController extends Controller
         ]);
         $log = new AppLogController();
         $log->insertLog(Auth::id(), "Đặt đơn hàng $orderCode thành công");
+        // Send noti in telegram group
+        sendMessageTeleGroup($orderCode);
         return response()->json([
             'error' => false,
             'message'   => "Đặt hàng Thành công",
@@ -562,4 +564,6 @@ class CartController extends Controller
             return response()->json(['error' => 'Có lỗi xảy ra vui lòng liên hệ quản trị viên']);
         }
     }
+
+    
 }
