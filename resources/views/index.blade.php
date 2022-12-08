@@ -13,7 +13,7 @@
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="shortcut icon" href="/images/favicon.jpg" type="image/x-icon"/>
+    <link rel="shortcut icon" href="https://firebasestorage.googleapis.com/v0/b/my-app-7bb3f.appspot.com/o/d87a77e44d2e9470cd3f.jpg?alt=media&token=91ae9a66-9a99-46cf-bcd0-d3a78081adeb" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <!-- Styles -->
