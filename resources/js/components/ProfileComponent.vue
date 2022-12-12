@@ -11,7 +11,7 @@
     </section>
     <section class="image1">
         <img
-            src="/images/user-default.png"
+            src="https://firebasestorage.googleapis.com/v0/b/my-app-7bb3f.appspot.com/o/user-default.png?alt=media&token=cf90e60d-08c7-48f5-8a3c-406a0fe71df9"
             alt=" "
             class="max-w-32 max-h-32 w-auto h-auto m-auto rounded-full border-2 border-orange-500 overflow-hidden select-auto cursor-pointer bg-white"
         />
@@ -137,7 +137,6 @@ export default {
             getUser()
                 .then((res) => {
                     this.userInfo = res.data;
-                    console.log(res);
                 })
                 .finally(() => {
                     this.isLoading = false;

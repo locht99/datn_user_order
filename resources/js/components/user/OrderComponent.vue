@@ -470,8 +470,6 @@ export default {
                     .then((res) => {
                         this.trackingStatusOderId = res.data.data.historyDetail.order;
                         this.listStatusDetail = res.data.data.historyDetail.tracking_status;
-                        console.log(this.trackingStatusOderId);
-
                     })
                     .catch((error) => {
                         this.is_loading_status = false;

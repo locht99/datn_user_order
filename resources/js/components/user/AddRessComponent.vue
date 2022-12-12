@@ -259,7 +259,6 @@ export default {
         getAddressUser() {
             let User = JSON.parse(window.localStorage.getItem("user"));
             getAddress(User.id).then((response) => {
-                console.log(response.data);
                 const isItem = response.data.find((item) => item.is_default == 1);
                 window.localStorage.setItem("is_default_Address", JSON.stringify(isItem));
                 this.dataAddress = response.data;

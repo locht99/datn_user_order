@@ -756,7 +756,6 @@ export default {
 
     },
     cartQuantity(listCartProduct, index, index2) {
-      console.log(this.quantity);
       if (listCartProduct.quantity <= 0) {
         this.$swal("Số lượng không được nhỏ hơn 1");
 
