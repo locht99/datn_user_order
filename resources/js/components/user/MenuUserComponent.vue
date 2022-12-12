@@ -43,6 +43,9 @@
       </li>
     </ul>
   </nav>
+  <a target="_blank" href="https://docs.google.com/document/d/1AaJgB1qErAH2Ka_m0T7IQ6IlLVnhXu_BAgAnJWERNDg/edit?usp=sharing"
+         class="text-white font-semibold text-base py-2 rounded-lg text-center w-full flex justify-center">
+         <i class="fa-regular pt-1 fa-file"></i><span class="pl-2">Hướng dẫn đặt hàng</span></a>
 </template>
 
 <script>
