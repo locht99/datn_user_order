@@ -58,7 +58,11 @@
                                     <span class="font-bold"> {{product.properties}}.</span>
                                 </li>
                                 <li>
-                                    Quantity ( Số lượng ):
+                                    Quantity ( Số lượng mua được):
+                                    <span class="font-bold">{{product.quantity_received}}.</span>
+                                </li>
+                                <li>
+                                    Quantity ( Số lượng bạn mua):
                                     <span class="font-bold">{{product.quantity_bought}}.</span>
                                 </li>
                                 <li>

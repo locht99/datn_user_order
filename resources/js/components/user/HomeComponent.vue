@@ -187,8 +187,10 @@ export default {
                 })
                 .finally(() => {
                     this.is_loading = false;
-                    this.showModal = true;
-                    this.show_modal_noti = true;
+                    if(this.notifications[0].is_active == 1){
+                        this.showModal = true;
+                        this.show_modal_noti = true;
+                    }
                 });
         },
         showModalNoti(data) {
