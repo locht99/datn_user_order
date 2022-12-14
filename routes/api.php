@@ -36,13 +36,12 @@ Route::post('/user/forgot-password', [UserController::class, 'forgotPassword']);
 Route::post('/user/reset-password/{token}', [UserController::class, 'resetPassword']);
 
 // protected api
-Route::middleware('auth:api,web')->group(function () 
-{
+Route::middleware('auth:api,web')->group(function () {
 
     Route::get('/user', [UserController::class, 'getUserInfo']);
     Route::put('/update-user', [UserController::class, 'UpdateUser']);
     Route::post('/user/new-address', [UserController::class, 'newAddress']);
-    
+    Route::get('/logout', [UserController::class, 'logout']);
     Route::get('/logs', [AppLogController::class, 'getLog']);
     //Đơn hàng
     Route::prefix('order')->group(function () {
@@ -60,25 +59,25 @@ Route::middleware('auth:api,web')->group(function ()
         Route::post('history-detail', [OrderController::class, 'historyDetail']);
     });
     //khiếu nại
-    Route::get("get-complain",[ComplainController::class,"getComplain"]);
+    Route::get("get-complain", [ComplainController::class, "getComplain"]);
 
 
     //Thông báo
     Route::prefix('transaction')->group(function () {
-        Route::post('create',[TransactionController::class,'createTransaction']);
-        Route::get('type-transaction',[TransactionController::class,'getTypeTransaction']);
-        Route::get('type-payment',[TransactionController::class,'getTypePayment']);
+        Route::post('create', [TransactionController::class, 'createTransaction']);
+        Route::get('type-transaction', [TransactionController::class, 'getTypeTransaction']);
+        Route::get('type-payment', [TransactionController::class, 'getTypePayment']);
         Route::get('get-transaction', [TransactionController::class, 'getTransaction']);
-        Route::get('generateCode',[GenerateCode::class,'generateCodeTransaction']);
-        Route::get("fetchTransaction",[TransactionController::class,'fetchTransaction']);
+        Route::get('generateCode', [GenerateCode::class, 'generateCodeTransaction']);
+        Route::get("fetchTransaction", [TransactionController::class, 'fetchTransaction']);
     });
     Route::prefix('cart')->group(function () {
         Route::get('list', [CartController::class, 'getCart']);
         Route::post('create', [CartController::class, 'cartCreate']);
     });
     Route::delete("cart-product/{id}", [CartController::class, 'removeProduct']);
-    Route::post("cart-deleteAll",[CartController::class,'deleteAllCart']);
+    Route::post("cart-deleteAll", [CartController::class, 'deleteAllCart']);
     Route::post("cart-checkout", [CartController::class, "cartCheckout"]);
-    Route::post("cart-checkoutByProduct",[CartController::class,"cartCheckByProduct"]);
-    Route::get("get-address/{id}",[CartController::class,'getAddressUser']);
+    Route::post("cart-checkoutByProduct", [CartController::class, "cartCheckByProduct"]);
+    Route::get("get-address/{id}", [CartController::class, 'getAddressUser']);
 });

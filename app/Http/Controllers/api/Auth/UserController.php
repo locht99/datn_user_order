@@ -58,17 +58,18 @@ class UserController extends Controller
         ]);
     }
 
-    public function getRegister(ApiUserRegisterRequest $request){
+    public function getRegister(ApiUserRegisterRequest $request)
+    {
         try {
             $newUser = User::query()->create([
                 'partner_id' => 1,
                 'username' => $request->username,
-                'email' => $request->email, 
+                'email' => $request->email,
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
                 'uid' => 0
-            ]); 
-          
+            ]);
+
             Address::query()->create([
                 'user_id' => $newUser->id,
                 'name' => $newUser->username,
@@ -86,25 +87,27 @@ class UserController extends Controller
         }
     }
 
-    public function getUserInfo(){
-    
-        $address = Address::where('user_id',Auth::id())->first();
+    public function getUserInfo()
+    {
+
+        $address = Address::where('user_id', Auth::id())->first();
         Auth::user()->address = $address->province;
         Auth::user()->name = $address->name;
         return response()->json(Auth::user());
     }
 
-    public function UpdateUser(Request $request){
+    public function UpdateUser(Request $request)
+    {
         try {
-             User::where('id',Auth::id())->update([
+            User::where('id', Auth::id())->update([
                 'username' => $request->username,
-                'email' => $request->email, 
+                'email' => $request->email,
                 'phone' => $request->phone,
-             ]);
-          
-             Address::where('id',Auth::id())->update([
+            ]);
+
+            Address::where('id', Auth::id())->update([
                 'address' => $request->address,
-             ]);
+            ]);
             return response()->json("Chỉnh sửa thành công !");
         } catch (\Throwable $th) {
             return response()->json([
@@ -114,11 +117,12 @@ class UserController extends Controller
         }
     }
 
-    public function newAddress(UserAddressRequest $request){
-        try{
+    public function newAddress(UserAddressRequest $request)
+    {
+        try {
             $isDefault = null;
             $user = User::query()->find(Auth::id());
-            if($request->is_default){
+            if ($request->is_default) {
                 $isDefault = 1;
                 $resetCurrentDefault = Address::where('user_id', Auth::id())->where('is_default', 1)->update([
                     "is_default" => null
@@ -142,7 +146,6 @@ class UserController extends Controller
                 "message" => $th->getMessage()
             ]);
         }
-
     }
 
 
@@ -150,8 +153,8 @@ class UserController extends Controller
     {
         try {
             $user = User::where('email', $request->email)->first();
-            if(!$user){
-                return response()->json(['errors'=>['email' => ['Email không tồn tại trong hệ thống']]], 422);
+            if (!$user) {
+                return response()->json(['errors' => ['email' => ['Email không tồn tại trong hệ thống']]], 422);
             }
             $passwordReset = PasswordReset::updateOrCreate([
                 'email' => $user->email,
@@ -200,6 +203,20 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => __('Thay đổi mật khẩu thành công!')
+        ]);
+    }
+    public function logoutApi()
+    {
+      
+    }
+    public function logout()
+    {
+        if (Auth::check()) {
+            Auth::user()->AauthAcessToken()->delete();
+            Auth::logout();
+        }
+        return response()->json([
+            "message" => __('Đăng xuất thành công')
         ]);
     }
 }

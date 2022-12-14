@@ -19,3 +19,6 @@ export function getCodeTransaction() {
 export function checkOrCreateTransaction() {
     return instance.get("/transaction/checkOrCreateTransaction");
 }
+export function getExchangeRate() {
+    return instance.get("/get-exchange-rate");
+}
