@@ -44,8 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
-    public function messages(){
+
+    public function messages()
+    {
         return $this->hasMany(TransactionModel::class);
+    }
+    public function AauthAcessToken()
+    {
+        return $this->hasMany('\App\OauthAccessToken');
     }
 }

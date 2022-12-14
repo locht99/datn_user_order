@@ -28,7 +28,7 @@
                         </div>
                         <div class="mt-3">
                             <div>
-                                <p class="font-semibold mx-2">Tỷ giá: 3500VNĐ = 1 Tệ</p>
+                                <p class="font-semibold mx-2">Tỷ giá: {{formatPrice(this.exchangeRate)}} = 1 Tệ</p>
                             </div>
                         </div>
                         <div class="mt-3 mx-2">
@@ -99,7 +99,7 @@ import { createTransaction, getTypeTransaction, getCodeTransaction, getPayment, 
 // import pusher
 import Pusher from 'pusher-js';
 import { Swal } from 'sweetalert2/dist/sweetalert2';
-
+import { getExchangeRate } from '../../../config/transaction.js';
 export default {
     watch: {
         $route: {
@@ -121,13 +121,20 @@ export default {
             data: [],
             dataPayment: [],
             OrderCode: '',
-            redirect: ''
+            redirect: '',
+            exchangeRate: 0
         }
     },
     setup() {
 
     },
     methods: {
+        formatPrice(value) {
+            return new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "VND",
+            }).format(value);
+        },
         getTypeTransaction() {
 
             getTypeTransaction().then((response) => {
@@ -164,6 +171,13 @@ export default {
             const resultCode = urlParams.get("resultCode");
 
         },
+        getExchange() {
+            getExchangeRate().then((res) => {
+                const { data } = res;
+                console.log(data);
+                this.exchangeRate = data;
+            });
+        },
         echoTransaction() {
 
         }
@@ -174,6 +188,7 @@ export default {
         this.getTypePayment();
         this.getGenerateCode();
         this.fetchTransaction();
+        this.getExchange();
         // console.log($Auth.check());
         let user = JSON.parse(window.localStorage.getItem("user"));
         // console.log(window.Echo.private('eventTransaction'+user.id).listen('TransactionSent'));

@@ -203,7 +203,9 @@
                                 <div
                                     class="flex items-center justify-between w-full py-1 text-sm font-semibold border-b border-gray-300 lg:py-3 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                                     <div>
-                                        Tổng tiền {{ this.listInfo['express_shipping_fee'] == "0.00" ? '(tạm tính)' : ''}}:
+                                        Tổng tiền {{ this.listInfo['express_shipping_fee'] == "0.00" ? '(tạm tính)' :
+                                                ''
+                                        }}:
                                     </div>
                                     <div>
                                         <span class="ml-2 text-red-500">{{
@@ -409,9 +411,9 @@ export default {
         },
 
         searchs() {
-            if (this.search == '') {
-                return this.$swal.fire('Chưa có thông tin mã đơn hàng!');
-            }
+            // if (this.search == '') {
+            //     return this.$swal.fire('Chưa có thông tin mã đơn hàng!');
+            // }
             this.allChecked = true;
             this.listStatus.forEach((value) => {
                 this.checkBoxStatus[value.order_status_id] = false;
@@ -429,6 +431,8 @@ export default {
             this.getFilterOrderByUser();
         },
         fillterAll() {
+            console.log(this.allChecked);
+            console.log(Object.keys(this.arr_status_id).length)
             if (Object.keys(this.arr_status_id).length == 0) {
                 // this.allChecked = true;
                 return this.$swal.fire('Đang chọn trạng thái tất cả!');
