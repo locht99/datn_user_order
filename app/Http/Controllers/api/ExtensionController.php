@@ -147,7 +147,7 @@ class ExtensionController extends Controller
             $cart_product->update($cart_product_data);
         } else {
             $log = new AppLogController();
-            $content = "Thêm sản phẩm " . $cart_product_data['product_name'] . "vào giỏ hàng";
+            $content = $cart_product_data['product_name'] . "vào giỏ hàng";
             $log->insertLog($uid, "Thêm sản phẩm $content");
             CartProductModel::create($cart_product_data);
         }

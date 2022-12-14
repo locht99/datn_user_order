@@ -1,20 +1,13 @@
 <template>
-    <section
-        style="height: 568px; max-height: 568px"
-        class="homepage-content grid gap-4 mt-10"
-    >
-        <section
-            class="border rounded-xl shadow-md shadow-gray-400 px-5 max-h-[568px] h-auto overflow-hidden relative"
-        >
+    <section style="height: 568px; max-height: 568px" class="homepage-content grid gap-4 mt-10">
+        <section class="border rounded-xl shadow-md shadow-gray-400 px-5 max-h-[568px] h-auto overflow-hidden relative">
             <loading v-model:active="is_loading" :is-full-page="false" />
             <p v-show="!is_loading" class="my-5 items-center flex">
                 <b class="mx-2 text-lg">Đã đặt gần đây: </b>
-                <span class="text-lg font-semibold text-gray-500"
-                    >{{ listLimit.length }} sản phẩm</span
-                >
+                <span class="text-lg font-semibold text-gray-500">{{ listLimit.length }} sản phẩm</span>
             </p>
 
-            <table class="w-full" v-show="listLimit.length > 0">
+            <table class="w-full">
                 <thead class="sticky">
                     <tr class="bg-gray-100 h-12 table w-full box-border">
                         <th class="w-1/4 text-left pl-10">Tên sản phẩm</th>
@@ -23,15 +16,12 @@
                         <th class="w-1/4 text-left pl-12">Trạng thái</th>
                     </tr>
                 </thead>
-                <tbody class="block max-h-[438px] overflow-y-auto">
-                    <tr
-                        v-for="item in listLimit"
-                        :key="item.id"
-                        class="h-16 border-b border-gray-300 table w-full box-border"
-                    >
+                <tbody v-show="listLimit.length > 0" class="block max-h-[438px] overflow-y-auto">
+                    <tr v-for="item in listLimit" :key="item.id"
+                        class="h-16 border-b border-gray-300 table w-full box-border">
                         <td class="py-4 flex items-center pl-8 mt-1">
                             <a :href="item.url" class="mx-2 underline text-sm">{{
-                                item.product_name
+                                    item.product_name
                             }}</a>
                             <span>x{{ item.quantity_bought }}</span>
                         </td>
@@ -42,54 +32,44 @@
                         <td class="w-1/4 pl-16 font-semibold">{{ item.status_name }}</td>
                     </tr>
                 </tbody>
+                <tbody v-show="listLimit.length <= 0">
+                    <div class="flex justify-center items-center" style="height: 400px;">
+                        <p class="font-bold text-center px-3">
+                            Bạn chưa có đơn hàng nào!
+                        </p>
+                    </div>
+                </tbody>
             </table>
-            <div
-                v-show="!is_loading"
-                class="w-full flex flex-col items-center justify-center"
-                style="height: 100%; padding-bottom: 150px"
-            >
-                <span class="font-semibold text-lg"
-                    >Bạn chưa có đơn hàng nào!</span
-                >
-            </div>
+
         </section>
 
         <section class="border rounded-xl shadow-md shadow-gray-400 relative">
-            <loading
-                v-model:active="is_loading_activity"
-                :is-full-page="false"
-            />
+            <loading v-model:active="is_loading_activity" :is-full-page="false" />
             <p class="flex justify-center items-center my-8">
                 <img src="/images/payper-send.png" alt="" class="mx-2" />
                 <b class="mx-2 text-lg">Hoạt động mới</b>
             </p>
             <div class="pt-5">
-                <div
-                    v-for="(item, index) in listLog"
-                    :key="index"
-                    class="flex px-[25px] m-auto h-[90px]"
-                    :class="{ 'no-line': index == listLog.length - 1 }"
-                >
+                <div v-for="(item, index) in listLog" :key="index" class="flex px-[25px] m-auto h-[90px]"
+                    :class="{ 'no-line': index == listLog.length - 1 }">
                     <span class="font-semibold text-md w-[100px]">{{
-                        item.created_at
+                            item.created_at
                     }}</span>
                     <div class="relative">
-                        <p
-                            class="break-point inline-block relative w-[17px] h-[17px]"
-                            :class="{
-                                'bg-[#E93B3B]':
-                                    item.content.includes('Thêm sản phẩm'),
-                                'bg-[#5672fd]':
-                                    item.content.includes('Nạp tiền cho'),
-                                'bg-[#FEF745]':
-                                    item.content.includes('Đặt cọc tiền cho'),
-                            }"
-                        ></p>
+                        <p class="break-point inline-block relative w-[17px] h-[17px]" :class="{
+                            'bg-[#E93B3B]':
+                                item.content.includes('Thêm sản phẩm'),
+                            'bg-[#5672fd]':
+                                item.content.includes('Nạp tiền cho'),
+                            'bg-[#FEF745]':
+                                item.content.includes('Đặt cọc tiền cho'),
+                        }"></p>
                     </div>
                     <span class="w-[200px] font-semibold">{{ item.content }}</span>
                 </div>
             </div>
-            <div v-show="listLog.length == 0 && is_loading_activity == false" class="flex justify-center items-center" style="height: 400px;">
+            <div v-show="listLog.length == 0 && is_loading_activity == false" class="flex justify-center items-center"
+                style="height: 400px;">
                 <p class="font-semibold text-center px-3">
                     Bạn chưa có hoạt động nào gần đây.
                 </p>
@@ -107,7 +87,8 @@
             <div
                 class="modal-cart border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none ">
                 <!--header-->
-                <div class="flex items-start justify-between px-5 pb-1 border-b border-solid border-slate-200 rounded-t">
+                <div
+                    class="flex items-start justify-between px-5 pb-1 border-b border-solid border-slate-200 rounded-t">
                     <div>
                         <h4 class="text-xl font-bold pt-5"><i class="fa-regular fa-bell"></i> Thông báo</h4>
                     </div>
@@ -148,7 +129,7 @@ export default {
         $route: {
             immediate: true,
             handler(to, from) {
-                document.title ='Đặt hàng trung gian Việt - Trung';
+                document.title = 'Đặt hàng trung gian Việt - Trung';
             }
         },
     },
@@ -187,8 +168,10 @@ export default {
                 })
                 .finally(() => {
                     this.is_loading = false;
-                    this.showModal = true;
-                    this.show_modal_noti = true;
+                    if (this.notifications[0].is_active == 1) {
+                        this.showModal = true;
+                        this.show_modal_noti = true;
+                    }
                 });
         },
         showModalNoti(data) {
@@ -214,12 +197,14 @@ export default {
 .homepage-content {
     grid-template-columns: 2fr 1fr;
 }
+
 .break-point {
     margin: 5px 25px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
 }
+
 .break-point:after {
     content: "";
     width: 5px;
@@ -228,12 +213,14 @@ export default {
     position: absolute;
     top: 17px;
 }
+
 .no-line .break-point::after {
     position: unset;
     width: 0;
     height: 0;
 }
-.detail-order{
+
+.detail-order {
     background-color: #ff3f3a;
 }
 </style>
