@@ -100,16 +100,21 @@
                           <input type="checkbox" v-model="checkBox[index]" v-on:click="checkAllByShop(index)"
                             class="rounded-md cursor-pointer focus:ring-0 w-5 h-5 border-2 border-gray-400" />
                         </th>
-
                         <th class="text-lg text-left pl-8">Sản phẩm</th>
                         <th class="text-lg text-left pl-8">Số lượng</th>
                         <th class="text-lg text-left pl-8">Tiền hàng</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-for="(listCartProduct, index2) in cart.cart_products" :key="index2">
+                      <tr class="bg-white border"
+                        v-if="stock_product[listCartProduct.id][0] != '' && stock_product[listCartProduct.id][1] != ''">
+                        <td colspan="5">
+                          <p class="font-semibold text-red-600 mt-3 pl-3">{{ stock_product[listCartProduct.id][0] }}</p>
+                        </td>
+                      </tr>
                       <tr class="items-center  pb-2" v-on:mouseover="mouseover(listCartProduct.id)"
-                        v-on:mouseleave="mouseleave(listCartProduct.id)"
-                        v-for="(listCartProduct, index2) in cart.cart_products" :key="index2">
+                        v-on:mouseleave="mouseleave(listCartProduct.id)">
+
                         <td class="pl-8">
                           <input type="checkbox" v-on:click="checkByItem(listCartProduct.id, index)"
                             v-model="checkBoxItem[listCartProduct.id]"
@@ -134,22 +139,13 @@
                         </td>
                         <td class="pl-8">
                           <div class="inline-flex rounded-md shadow-sm">
-                            <!-- <button v-on:click="decreasingProduct(listCartProduct, index, index2)"
-                            class="py-2 px-4 text-sm font-medium text-white bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                            -
-                          </button> -->
-                            <!-- v-on:keyup="checkString(listCartProduct.quantity,listCartProduct, index, index2)" -->
+
                             <a-input-number id="inputNumber" @blur="cartQuantity(listCartProduct, index, index2)"
                               v-model:value="listCartProduct.quantity" />
-                            <!-- <input type="text" autocomplete="off" 
-                            class="py-2 text-sm font-medium w-[50px] text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"> -->
-                            <!-- <input type="hidden" :value="listCartProduct.quantity" /> -->
-                            <!-- <button v-on:click="increasingProduct(listCartProduct, index, index2)"
-                            class="py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                            +
-                          </button> -->
                           </div>
-
+                          <div v-if="stock_product[listCartProduct.id][1] != ''" class="font-semibold text-red-600">{{
+                              stock_product[listCartProduct.id][1]
+                          }}</div>
                         </td>
                         <td class="pl-8">
                           <p class="text-red-500 font-semibold text-lg">¥{{ listCartProduct.unit_price_cn }}</p>
@@ -452,7 +448,8 @@ export default {
       showModalAddress: false,
       id_address: {},
       info_Address: {},
-      count: 0
+      count: 0,
+      stock_product: []
 
     };
   },
@@ -803,7 +800,10 @@ export default {
         this.listCart = dataCheckout;
         this.totalPriceShop = data.total_money;
         this.totalQuantityShop = data.totalQuantityOrder;
+        this.stock_product = response.data.data.stock_product;
+
         this.syncItem = false;
+
 
       }).catch((error) => {
 
