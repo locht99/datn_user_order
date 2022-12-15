@@ -28,7 +28,7 @@
                         </div>
                         <div class="mt-3">
                             <div>
-                                <p class="font-semibold mx-2">Tỷ giá: {{formatPrice(this.exchangeRate)}} = 1 Tệ</p>
+                                <p class="font-semibold mx-2">Tỷ giá: {{ formatPrice(this.exchangeRate) }} = 1 Tệ</p>
                             </div>
                         </div>
                         <div class="mt-3 mx-2">
@@ -44,9 +44,16 @@
                                                     class="mb-3 block text-base font-medium text-[#07074D]">
                                                     Số tiền:
                                                 </label>
-                                                <input type="text" v-model="formTransaction.amount" name="amount"
+                                                <CurrencyInput v-model="formTransaction.amount" :options="{
+                                                    currency: 'VND',
+                                                    currencyDisplay: 'hidden',
+                                                    hideCurrencySymbolOnFocus: true,
+                                                    hideGroupingSeparatorOnFocus: false,
+                                                    hideNegligibleDecimalDigitsOnFocus: false,
+                                                }" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></CurrencyInput>
+                                                <!-- <input type="text" v-model="formTransaction.amount" name="amount"
                                                     id="amount" placeholder="Số tiền..."
-                                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" /> -->
                                             </div>
                                             <div class="mb-5">
                                                 <label for="type-payment" class="mb-3 block text-base font-medium">
@@ -100,6 +107,7 @@ import { createTransaction, getTypeTransaction, getCodeTransaction, getPayment, 
 import Pusher from 'pusher-js';
 import { Swal } from 'sweetalert2/dist/sweetalert2';
 import { getExchangeRate } from '../../../config/transaction.js';
+import CurrencyInput from '../../format_curency/CurrencyInput.vue';
 export default {
     watch: {
         $route: {
@@ -108,6 +116,9 @@ export default {
                 document.title = 'Nạp tiền';
             }
         },
+    },
+    components: {
+        CurrencyInput
     },
     data() {
         return {
