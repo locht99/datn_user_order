@@ -207,16 +207,18 @@ class UserController extends Controller
     }
     public function logoutApi()
     {
-      
     }
     public function logout()
     {
-        if (Auth::check()) {
-            Auth::user()->AauthAcessToken()->delete();
-            Auth::logout();
+        $tokenRepository = app('Laravel\Passport\TokenRepository');
+        $user = auth('api')->user();
+        if ($user) {
+            $tokenRepository->revokeAccessToken($user->token()->id);
+            return response()->json([
+                "message" => __('Đăng xuất thành công')
+            ]);
+        } else {
+            return 'already logged out';
         }
-        return response()->json([
-            "message" => __('Đăng xuất thành công')
-        ]);
     }
 }

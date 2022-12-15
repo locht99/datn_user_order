@@ -37,3 +37,6 @@ export function forgotPassword(params){
 export function resetPassword(params, token){
     return instance.post('/user/reset-password/'+token, params)
 }
+export function logout(){
+    return instance.get('/logout');
+}

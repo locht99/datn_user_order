@@ -163,6 +163,8 @@ class CartController extends Controller
     {
         try {
             $is_inventory = $request->inventory;
+            $is_wood_packing = $request->wood_packing;
+            $is_wood_working  = $request->woodWorking;
             $product_id = array_keys($request->ids);
             $product_id = [];
             foreach ($request->quantity as $it) {
@@ -250,6 +252,20 @@ class CartController extends Controller
                         'value' => $invetory_fee[$item->id]
                     ]);
                 }
+                // dd($is_wood_packing,$is_wood_working);
+                if ($is_wood_packing[$item->id]) {
+                    array_push($data['fee'][$item->id], (array) [
+                        'name' => 'Đóng gỗ riêng',
+                        'value' => 0
+                    ]);
+                }
+                if ($is_wood_working[$item->id]) {
+                    array_push($data['fee'][$item->id], (array) [
+                        'name' => 'Đóng gỗ ',
+                        'value' => 0
+                    ]);
+                }
+                // if()
                 $inventorytotal = isset($invetory_fee[$item->id]) ? $invetory_fee[$item->id] : 0;
                 $data['totalFee'] += +$purchase_fee[$item->id]  + $inventorytotal;
                 $data["feebyShop"][$item->id] = 0;
@@ -389,16 +405,16 @@ class CartController extends Controller
         $total_quantity = array_sum($quantityArray);
         $wood_packing_fee = 0;
         $separately_wood_packing_fee = 0;
-        foreach ($checkedwoods as $item) {
-            if ($item) {
-                $wood_packing_fee += getFeeConfigNumber(config('const.config.WOOD_FEE'));
-            }
-        }
-        foreach ($checkedwoodPacking as $item) {
-            if ($item) {
-                $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.OWN_WOOD_FEE'));
-            }
-        }
+        // foreach ($checkedwoods as $item) {
+        //     if ($item) {
+        //         $wood_packing_fee += getFeeConfigNumber(config('const.config.WOOD_FEE'));
+        //     }
+        // }
+        // foreach ($checkedwoodPacking as $item) {
+        //     if ($item) {
+        //         $separately_wood_packing_fee += getFeeConfigNumber(config('const.config.OWN_WOOD_FEE'));
+        //     }
+        // }
 
         $Shop = CartModel::whereIn("id", $idShop)->get();
         if (isset($inventory)) {
@@ -452,7 +468,7 @@ class CartController extends Controller
                 'image_link' => $value->image,
                 'image_detail' => $value->image_detail,
                 'order_status_id' => 1,
-                'shop_id'=>$value->shop_id
+                'shop_id' => $value->shop_id
             ]);
             $total_price += $orderProducts->price;
         }
@@ -573,6 +589,4 @@ class CartController extends Controller
             return response()->json(['error' => 'Có lỗi xảy ra vui lòng liên hệ quản trị viên']);
         }
     }
-
-    
 }
