@@ -603,21 +603,23 @@ export default {
     checkOwn(cartid) {
       this.ownGood[cartid] = !this.ownGood[cartid];
       this.woodWorking[cartid] = false;
-      this.feeCartByShop[cartid].push({ "name": "Đóng gỗ riêng", "value": 0 });
-      this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ');
-      if (this.ownGood[cartid] == false) {
-        this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ riêng');
-      }
+      // this.feeCartByShop[cartid].push({ "name": "Đóng gỗ riêng", "value": 0 });
+      // this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ');
+      // if (this.ownGood[cartid] == false) {
+      //   this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ riêng');
+      // }
+      this.checkOutCart();
+
     },
     checkWoodWorking(cartid) {
       this.woodWorking[cartid] = !this.woodWorking[cartid];
       this.ownGood[cartid] = false;
-      this.feeCartByShop[cartid].push({ "name": "Đóng gỗ", "value": 0 });
-      this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ riêng');
-      if (this.woodWorking[cartid] == false) {
-        this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ');
-
-      }
+      // this.feeCartByShop[cartid].push({ "name": "Đóng gỗ", "value": 0 });
+      // this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ riêng');
+      // if (this.woodWorking[cartid] == false) {
+      //   this.feeCartByShop[cartid] = this.feeCartByShop[cartid].filter((item) => item.name != 'Đóng gỗ');
+      // }
+      this.checkOutCart();
 
     },
 
@@ -788,7 +790,10 @@ export default {
         ids: this.checkBoxItem,
         data: this.listCart || value,
         quantity: this.quantity || quantityItem,
-        inventory: this.checkGoods
+        inventory: this.checkGoods,
+        wood_packing: this.ownGood,
+        woodWorking: this.woodWorking
+
       }
       cartCheckout(data).then((response) => {
         const { data } = response.data;

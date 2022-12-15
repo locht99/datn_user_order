@@ -431,7 +431,7 @@ export default {
             this.getFilterOrderByUser();
         },
         fillterAll() {
-   
+
             if (this.allChecked == true) {
                 // this.allChecked = true;
                 return this.$swal.fire('Đang chọn trạng thái tất cả!');

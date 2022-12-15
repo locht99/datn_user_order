@@ -1,19 +1,19 @@
 <template>
     <div>
-        <a-modal v-model="this.showModalAction" width="1000px"
+        <a-modal v-model:visible="this.showModalAction" width="1000px"
             :title="showModalAddNewAddress == true ? 'Thêm địa chỉ mới' : 'Danh sách địa chỉ'">
             <!--content-->
 
             <template #footer>
                 <div v-if="showModalAddNewAddress == false">
 
-                    <a-button key="back">Return</a-button>
+                    <a-button key="back">Quay lại</a-button>
                     <a-button key="submit" type="primary" :loading="loading" @click="toggleModalAddRess()">Lưu thay đổi
                     </a-button>
                 </div>
                 <div v-else>
 
-                    <a-button key="back">Return</a-button>
+                    <a-button key="back">Quay lại</a-button>
                     <a-button key="submit" type="primary" :loading="loading" @click="registerNewAddress()">Lưu thay đổi
                     </a-button>
                 </div>
@@ -39,6 +39,9 @@
                                         <!-- <a-radio-group v-on:click="checkedAddress(text)" v-model:value="text">
                                             <a-radio :value="text"></a-radio>
                                         </a-radio-group> -->
+                                    </template>
+                                    <template v-if="column.dataIndex == 'ward'">
+                                        {{ record.ward }}, {{ record.district }}, {{ record.province }}
                                     </template>
                                 </template>
                             </a-table>

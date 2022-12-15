@@ -63,7 +63,7 @@
 <script>
 import axios from "axios";
 import MenuUserComponent from "../components/user/MenuUserComponent.vue";
-import { getUser } from "../config/user";
+import { getUser, logout as logoutUser } from "../config/user";
 export default {
   components: { MenuUserComponent },
 
@@ -101,11 +101,11 @@ export default {
     logout() {
       let token = localStorage.getItem('token')
       if (token) {
-        localStorage.removeItem('token');
-        axios.get('/logout').then((res) => {
+        logoutUser().then((res) => {
+          localStorage.removeItem('token');
+          this.$router.replace("/login")
 
         });
-        this.$router.replace("/login")
       }
     }
   },
