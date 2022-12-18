@@ -163,7 +163,16 @@
                                         }}</span>
                                     </div>
                                 </div>
-
+                                <div
+                                    class="flex items-center justify-between w-full py-1 text-sm font-semibold border-b border-gray-300 lg:py-3 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                                    <div>
+                                        Phí đóng gỗ:
+                                    </div>
+                                    <div>
+                                        <span class="ml-2">{{ formatPrice(this.listInfo['wood_packing_fee'])
+                                        }}</span>
+                                    </div>
+                                </div>
                                 <div
                                     class="flex items-center justify-between w-full py-1 text-sm font-semibold border-b border-gray-300 lg:py-3 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                                     <div>
