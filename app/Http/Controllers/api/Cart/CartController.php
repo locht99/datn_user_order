@@ -463,9 +463,9 @@ class CartController extends Controller
                 'product_name' => $value->product_name,
                 'propertiesId' => $value->propertiesId,
                 'properties' => $value->properties,
-                'price' => $value->unit_price_vn * $quantityArray[$value->id],
+                'price' => $value->unit_price_vn,
                 'quantity_min' => $value->quantity_min,
-                'price_table' => $value->price_table,
+                'price_table' => $value->unit_price_vn * $quantityArray[$value->id],
                 'original_price' => $value->original_price,
                 'promotion_price' => $value->promotion_price,
                 'quantity_bought' => $quantityArray[$value->id],
@@ -476,7 +476,7 @@ class CartController extends Controller
                 'order_status_id' => 1,
                 'shop_id' => $value->shop_id
             ]);
-            $total_price += $orderProducts->price;
+            $total_price += $orderProducts->price_table;
         }
         $purchase_fee = getFeePurchase(
             config('const.config.PURCHASE_FEE'),
