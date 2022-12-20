@@ -331,7 +331,6 @@ class CartController extends Controller
                 $checkedwoodPacking[$key] = $item;
             }
         }
-
         foreach ($data_order['note'] as $key => $item) {
             if ($item) {
                 $note[$key] = $item;
@@ -417,8 +416,15 @@ class CartController extends Controller
         // }
 
         $Shop = CartModel::whereIn("id", $idShop)->get();
-        if (isset($inventory)) {
-            $inventory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity) * $total_quantity;
+        // dd($inventory);
+        foreach ($inventory as $item) {
+            foreach ($item as $it) {
+                if (isset($item)) {
+                    if ($it['name'] == 'Phí kiểm hàng') {
+                        $inventory_fee = getFeeConfig(config('const.config.CHECKING_FEE'), $total_quantity) * $total_quantity;
+                    }
+                }
+            }
         }
         $dataShopInsert = [];
         $generateCode = new GenerateCode();
@@ -457,9 +463,9 @@ class CartController extends Controller
                 'product_name' => $value->product_name,
                 'propertiesId' => $value->propertiesId,
                 'properties' => $value->properties,
-                'price' => $value->unit_price_vn * $quantityArray[$value->id],
+                'price' => $value->unit_price_vn,
                 'quantity_min' => $value->quantity_min,
-                'price_table' => $value->price_table,
+                'price_table' => $value->unit_price_vn * $quantityArray[$value->id],
                 'original_price' => $value->original_price,
                 'promotion_price' => $value->promotion_price,
                 'quantity_bought' => $quantityArray[$value->id],
@@ -470,7 +476,7 @@ class CartController extends Controller
                 'order_status_id' => 1,
                 'shop_id' => $value->shop_id
             ]);
-            $total_price += $orderProducts->price;
+            $total_price += $orderProducts->price_table;
         }
         $purchase_fee = getFeePurchase(
             config('const.config.PURCHASE_FEE'),
@@ -525,8 +531,8 @@ class CartController extends Controller
             'status' => 0,
             'price_unit' => config('const.price.price_unit'),
             'opt_order_checking' => isset($inventory) ? true : false,
-            'opt_wood_packing' => isset($checkedwoods) ? true : false,
-            'opt_separate_wood_packing' => isset($checkedwoodPacking) ? true : false,
+            'opt_wood_packing' => collect($checkedwoods)->count() != 0 ? true : false,
+            'opt_separate_wood_packing' => collect($checkedwoodPacking)->count() != 0 ? true : false,
         ]);
         // checkedwoodPacking
         // checkedwoods
