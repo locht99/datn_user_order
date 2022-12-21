@@ -335,6 +335,15 @@
                     <div
                       class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                       <div>
+                        Tổng tiền
+                      </div>
+                      <div>
+                        <span class="ml-2">{{ formatPrice(objPayment.totalPriceOder) }}đ</span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between w-full py-2 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                      <div>
                         Đặt cọc 50%
                       </div>
                       <div>
@@ -440,7 +449,8 @@ export default {
         money_deposite: 0,
         point: 0,
         quantity: 0,
-        lackMoney: 0
+        lackMoney: 0,
+        totalPriceOder: 0
       },
       cartid: 0,
       index: 0,
@@ -545,7 +555,7 @@ export default {
         this.objPayment.fee = feePay;
         this.objPayment.money_deposite = this.listTotalCart.data.money_deposite_byShop[cartid];
         this.objPayment.point = moneyProfile.point;
-
+        this.objPayment.totalPriceOder = this.listTotalCart.data.total_money_byShop[cartid];
       }
       Object.keys(this.checkBoxItem).forEach((ele) => {
         if (this.checkBoxItem[ele]) {
@@ -565,6 +575,7 @@ export default {
           this.objPayment.money_deposite = response.data.money_deposite;
           this.objPayment.point = moneyProfile.point;
           this.objPayment.quantity = response.data.quantity;
+          this.objPayment.totalPriceOder = response.data.totalMoney + response.data.feeAll;
         }).finally(() => {
           this.is_loading = false;
         });

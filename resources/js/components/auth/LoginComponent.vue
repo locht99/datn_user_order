@@ -53,6 +53,12 @@
                 <router-link class="hover:text-red-500" to="/user/forgot-password">Quên mật khẩu</router-link>
                 /
                 <router-link class="hover:text-red-500" to="/register">Đăng kí</router-link>
+                <div>
+                    <p>Hotline: 0383530895</p>
+                </div>   
+                <div>
+                    <p>Copyright © Đặt Hàng Việt Trung</p>
+                </div>
             </div>
         </div>
     </div>
