@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="ml-3">
                                         <div class="font-semibold">
-                                            ¥1 = 3,630₫
+                                            ¥1 = {{ formatPrice(exchangeRate) }}
                                         </div>
                                         <div>Tỷ giá nhân dân tệ</div>
                                     </div>
@@ -91,7 +91,8 @@
 
                                             <div class="content-bank mt-3">
                                                 <div>
-                                                    <p>Chủ tài khoản: <span class="font-semibold"> VU CONG LUC</span></p>
+                                                    <p>Chủ tài khoản: <span class="font-semibold"> VU CONG LUC</span>
+                                                    </p>
                                                 </div>
                                                 <div>
                                                     <p>STK: 9978942425</p>
@@ -148,7 +149,32 @@
     </div>
 </template>
 <script>
-
+import { getExchangeRate } from '../config/transaction';
+export default {
+    data() {
+        return {
+            exchangeRate: null
+        }
+    },
+    created() {
+        this.getExchange();
+    },
+    methods: {
+        getExchange() {
+            getExchangeRate().then((res) => {
+                const { data } = res;
+                console.log(data);
+                this.exchangeRate = data;
+            });
+        },
+        formatPrice(value) {
+            return new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "VND",
+            }).format(value);
+        },
+    }
+}
 </script>
 <style>
 
