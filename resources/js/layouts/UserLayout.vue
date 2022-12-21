@@ -2,7 +2,7 @@
   <div class="flex m-auto w-[98%] h-screen py-4">
     <aside class="w-72 rounded-xl  h-screen relative z-10 bg-[#ff3f3a]">
       <div class="logo w-3/4 m-auto p-6 border-b border-solid">
-        <img class="border-none m-auto" src="/images/logo.png" alt="" />
+        <img class="border-none m-auto" src="/images/logo-v2.png" alt="" />
       </div>
       <menu-user-component />
       <div class="bg-layout-bar w-full h-screen absolute bottom-0 -z-10 rounded-xl bg-top bg-cover"></div>
