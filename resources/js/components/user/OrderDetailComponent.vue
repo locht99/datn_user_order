@@ -115,6 +115,7 @@ export default {
             this.is_loading = true;
             getOrderProductDetail(this.$route.params.id)
             .then((res) => {
+                console.log(res);
                 if(res.data.status == 404){
                     this.$swal.fire(res.data.data.message);
                 }else{

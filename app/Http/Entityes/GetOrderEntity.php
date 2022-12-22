@@ -131,7 +131,19 @@ class GetOrderEntity extends Controller
     {
         $order_products = DB::table('order_products')
             ->join('order_statuses', 'order_products.order_status_id', 'order_statuses.id')
-            ->select('order_statuses.status_name', 'order_products.product_name', 'order_products.source', 'order_products.properties', 'order_products.quantity_bought', 'order_products.promotion_price', 'order_products.original_price', 'order_products.price', 'order_products.image_link', 'order_products.url')
+            ->select(
+                'order_statuses.status_name',
+                'order_products.product_name',
+                'order_products.source',
+                'order_products.properties',
+                'order_products.quantity_bought',
+                'order_products.promotion_price',
+                'order_products.original_price',
+                'order_products.price',
+                'order_products.quantity_received',
+                'order_products.image_link',
+                'order_products.url'
+            )
             ->where('order_products.order_id', $order_id)
             ->where('order_products.user_id', auth()->user()->id)
             ->get();
