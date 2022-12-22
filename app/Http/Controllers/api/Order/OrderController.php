@@ -77,12 +77,10 @@ class OrderController extends Controller
             }
             $orderDetail = $this->getOrderEntity->orderProductDetail($order_id);
             return response()->json([
-
                 'status' => 200,
                 'data' => [
                     'orderDetail' => $orderDetail,
                 ]
-
             ],200);
         }
         
