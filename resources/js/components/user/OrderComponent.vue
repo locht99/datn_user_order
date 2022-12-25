@@ -163,7 +163,7 @@
                                         }}</span>
                                     </div>
                                 </div>
-                                <div
+                                <div v-if="this.listInfo['inventory_fee'] != 0"
                                     class="flex items-center justify-between w-full py-1 text-sm font-semibold border-b border-gray-300 lg:py-3 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                                     <div>
                                         Phí kiểm hàng:
@@ -173,13 +173,16 @@
                                         }}</span>
                                     </div>
                                 </div>
-                                <div
+                                <div v-if="this.listInfo['separately_wood_packing_fee'] != 0 || this.listInfo['wood_packing_fee'] != 0"
                                     class="flex items-center justify-between w-full py-1 text-sm font-semibold border-b border-gray-300 lg:py-3 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                                     <div>
-                                        Phí đóng gỗ:
+                                        Phí đóng gỗ {{ this.listInfo['separately_wood_packing_fee'] != 0 ? "riêng" : ""
+                                        }}:
                                     </div>
                                     <div>
-                                        <span class="ml-2">{{ formatPrice(this.listInfo['wood_packing_fee'])
+                                        <span class="ml-2">{{ this.listInfo['separately_wood_packing_fee'] != 0 ?
+                                                formatPrice(this.listInfo['separately_wood_packing_fee']) :
+                                                formatPrice(this.listInfo['wood_packing_fee'])
                                         }}</span>
                                     </div>
                                 </div>
@@ -510,6 +513,7 @@ export default {
                 })
                     .then((res) => {
                         this.listInfo = res.data.data.orderInfo.order;
+                        console.log(this.listInfo);
                         this.listSource = res.data.data.orderInfo.source;
                         this.address = res.data.data.orderInfo.address;
                     })
